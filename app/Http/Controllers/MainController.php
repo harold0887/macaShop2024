@@ -140,6 +140,36 @@ class MainController extends Controller
         switch (request('status')) {
             case 'approved':
 
+
+                //Actualizar status de orden
+                $order->update([
+                    'status' => "approved",
+                ]);
+
+                //Esto es nuevo
+                $products = Order_Details::where('order_id', $order->id)->where('product_id', '!=', null)->get();
+                $packages = Order_Details::where('order_id', $order->id)->where('package_id', '!=', null)->get();
+                $membreships = Order_Details::where('order_id', $order->id)->where('membership_id', '!=', null)->get();
+                $materialesComprados = false; //iniciar en falso, por que no sabemos que inlcuye la orden
+                //Si incluye productos o paquetes, se cambia a true para enviar email de compra
+                if ($products->count() > 0 || $packages->count() > 0) {
+                    $materialesComprados = true;
+                }
+                //enviar correo de materiales
+                if ($materialesComprados) {
+                    $notificacion = new PaymentApprovedEmail($order);
+                    Mail::to($order->user->email) //enviar correo al cliente
+                        ->send($notificacion);
+                }
+
+                //enviar correo de membresias
+                foreach ($membreships as $membresia) {
+                    $correoCopia = new PaymentApprovedMembership($membresia->membership_id, $order);
+                    Mail::to($order->user->email)
+                        ->send($correoCopia);
+                }
+
+
                 return redirect()->route('order.show', [$order->id])->with('paySuccess', 'El pago ha sido realizado con éxito.');
                 break;
             case 'pending':
