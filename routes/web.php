@@ -52,10 +52,10 @@ use App\Http\Controllers\WebhooksControllerArnold;
 
 
 
+Route::get('/demo', [HomeController::class, 'index'])->name('home1'); //Listo
 
 
-
-Route::get('/', [HomeController::class, 'index'])->name('home'); //Listo
+Route::get('/', [HomeController::class, 'mantenimiento'])->name('home'); //Listo
 Route::get('/banned', [HomeController::class, 'banned'])->name('banned');
 
 
