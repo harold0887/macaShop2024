@@ -17,7 +17,7 @@ class WebhooksController extends Controller
         $idMP = $request["data"]["id"]; //obtener el id de Mercado Pago
 
         //obtener el pago completo en json
-        $response = Http::get("https://api.mercadopago.com/v1/payments/$idMP" . "?access_token=" . config('services.mercadopago.token'));
+        $response = Http::get("https://api.mercadopago.com/v1/payments/$idMP" . "?access_token=APP_USR-2311547743825741-013023-3721797a3fbdf97bf2d4ff3f58000481-269113557");
 
 
 
