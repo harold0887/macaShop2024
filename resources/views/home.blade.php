@@ -14,7 +14,7 @@
         <div class="d-block d-lg-none">
             <div class="row">
                 <div class="col-4 d-flex align-items-center  ">
-                    <img class="w-100" src=" {{ asset('./img/logo2.png') }} " alt="">
+                    <img class="w-100" src=" {{ asset('./img/logo3.png') }} " alt="">
                 </div>
                 <div class="col-8 ">
                     <div class="row text-center">

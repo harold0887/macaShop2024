@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top  shadow-sm">
   <div class="container-fluid">
     <div class="navbar-wrapper  d-flex text-left px-0">
-      <a class="navbar-brand py-0 d-block d-lg-none  mx-0" href="{{route('home')}}"><img src=" {{ asset('./img/logo2.png') }} " alt="" width="75"></a>
+      <a class="navbar-brand py-0 d-block d-lg-none  mx-0" href="{{route('home')}}"><img src=" {{ asset('./img/logo3.png') }} " alt="" width="75"></a>
       <div class="navbar-minimize">
         <button id="minimizeSidebar" class="btn btn-just-icon btn-white btn-fab btn-round">
           <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>

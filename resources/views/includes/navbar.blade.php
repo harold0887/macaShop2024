@@ -28,14 +28,14 @@
     <div class="navbar-wrapper d-none d-lg-block px-0 mx-0">
       <a class="navbar-brand px-0 mx-0" style="padding: 0px !important">
 
-        <a class="navbar-brand py-0" href="{{route('home')}}" style="font-family: 'Fredericka the Great'"><img class="logo-main" src=" {{ asset('./img/logo2.png') }} " alt=""></a>
+        <a class="navbar-brand py-0" href="{{route('home')}}" style="font-family: 'Fredericka the Great'"><img class="logo-main" src=" {{ asset('./img/logo3.png') }} " alt=""></a>
       </a>
     </div>
 
     @else
     <div class="navbar-wrapper  px-0">
       <a class="navbar-brand  mx-0 p-0" href="{{ route('home') }}">
-      <img class="logo-main"  src=" {{ asset('./img/logo2.png') }} " alt="" >
+      <img class="logo-main"  src=" {{ asset('./img/logo3.png') }} " alt="" >
       </a>
     </div>
     @endif
