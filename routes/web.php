@@ -144,7 +144,7 @@ Route::POST('createOrder', [MainController::class, 'createOrder'])->name('shop.c
 
 Route::group(['middleware' => ['role:admin']], function () {
   Route::get('/link', function () {
-    $target = '/home3/materi65/maca/storage/app/public';
+    $target = '/home3/materi65/shop2024/storage/app/public';
     $link =   '/home3/materi65/public_html/storage';
     symlink($target, $link);
     echo "Link done";
@@ -152,6 +152,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
   Route::get('/foo', function () {
     Artisan::call('storage:link');
+    echo "storage done";
   });
 
 
