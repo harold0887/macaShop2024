@@ -144,6 +144,7 @@ class MainController extends Controller
                 //Actualizar status de orden
                 $order->update([
                     'status' => "approved",
+                    'payment_id'=>request('payment_id')
                 ]);
 
                 //Esto es nuevo

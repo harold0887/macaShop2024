@@ -45,7 +45,7 @@
                             <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite	 animate__slow "><span>Oferta</span></div>
                             @endif
                             <div class="card-header card-header-image mt-2" data-header-animation="false">
-                                <a href="{{route('membership.show',$membership->id)}}">
+                                <a href="{{route('membership.show',$membership->slug)}}">
                                     <img class="img" src="{{ Storage::url($membership->itemMain) }} ">
                                 </a>
                             </div>
@@ -68,7 +68,7 @@
                                     @endif
                                 </div>
                                 <h3 class="card-title   text-base my-2">
-                                    <a href="{{route('membership.show',$membership->id)}}"><span class="text-xs">Membresía {{ $membership->title }}</span></a>
+                                    <a href="{{route('membership.show',$membership->slug)}}"><span class="text-xs">Membresía {{ $membership->title }}</span></a>
                                 </h3>
                                 <div class="card-description">
                                     <span class="text-primary text-uppercase fw-bold h3 d-block text-center">

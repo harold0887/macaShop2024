@@ -24,7 +24,7 @@
         <div class="row  justify-content-center mt-5">
             @if (isset($packages) && $packages->count() > 0)
             @foreach ($packages as $package)
-            <div class="col-10 col-md-4 col-lg-3 " style="position: relative; padding:5px !important">
+            <div class="col-11 col-md-4 col-lg-3 " style="position: relative; padding:5px !important">
                 <div class="  card card-primary card-product">
 
                     <div class="card-header card-header-image" data-header-animation="true">
@@ -70,7 +70,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer  d-flex justify-content-center">
                         <a href=" {{route('paquete.show',$package->slug)}} " class="btn   btn-link text-primary">
                             Ver materiales didácticos incluidos
                         </a>
