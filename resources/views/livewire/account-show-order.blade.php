@@ -68,7 +68,7 @@ $preference->external_reference=$order->id;
 
 //regresar automaticamente al ser approved
 $preference->auto_return = "approved";
-$preference->notification_url => "https://materialdidacticomaca.com/webhook-arnold",
+$preference->notification_url = "https://materialdidacticomaca.com/webhook-arnold";
 
 
 
