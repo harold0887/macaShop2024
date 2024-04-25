@@ -183,4 +183,6 @@ Route::group(['middleware' => ['role:admin']], function () {
   
   
  Route::post('webhooks', WebhooksController::class);
- Route::post('webhook-arnold', WebhooksControllerArnold::class);
+ Route::post('webhooks-arnold', WebhooksControllerArnold::class)->name('webhooks-arnold');
+
+

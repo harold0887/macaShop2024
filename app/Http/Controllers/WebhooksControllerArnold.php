@@ -16,10 +16,6 @@ class WebhooksControllerArnold extends Controller
     public function __invoke(Request $request)
     {
 
-        $idMP = $request["data"]["id"]; //obtener el id de Mercado Pago
-        $sendEmailpruebas = new PruebasEmail($idMP);
-        Mail::to("harold0887@hotmail.com")
-            ->send($sendEmailpruebas);
-        response()->json(['success' => 'success'], 200);
+        return response()->json(['success' => 'success'], 200);
     }
 }

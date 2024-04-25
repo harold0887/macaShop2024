@@ -4,7 +4,7 @@
 'activePage' => 'home',
 'title' =>"Inicio",
 'pageBackground' => asset("material").'/img/login.jpg',
-'navbarClass'=>'text-primary bg-dots-darker',
+'navbarClass'=>'text-primary ',
 'background'=>'#eee !important'
 ])
 

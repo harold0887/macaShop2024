@@ -230,7 +230,7 @@ function showFilters() {
 //activar modal al enviar, se cierra al retornar controlador
 function showModalLoad() {
   $(
-    "#create-product-admin,#create-membership-admin,#create-package,#edit-package,#edit-product-admin, #resend-verified"
+    "#create-product-admin,#create-membership-admin,#create-package,#edit-package,#edit-product-admin, #resend-verified, #forgot-password"
   ).submit(() => {
     $("#modal-spinner").modal("show");
   });

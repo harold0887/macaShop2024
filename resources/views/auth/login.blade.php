@@ -4,13 +4,12 @@
 'activePage' => 'login',
 'title' => __('Login'),
 'pageBackground' => asset("material").'/img/markus-spiske-187777.jpg',
-'navbarClass'=>'text-primary bg-dots-darker',
+'navbarClass'=>'text-primary',
 'background'=>'#eee !important'
 ])
 
 @section('content')
 <div class="container">
-
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <form class="form" method="POST" action="{{ route('login') }}">
@@ -60,7 +59,7 @@
                         </button>
                     </div>
                     <div class="card-footer justify-content-center">
-                        <span class="card-description mx-3">¿No tienes cuenta?  </span>
+                        <span class="card-description mx-3">¿No tienes cuenta? </span>
                         <a href="{{ route('register') }}" class="nav-link  text-primary">
                             <div class="d-flex align-items-center">
                                 <i class="material-icons mr-1">person_add</i>
@@ -77,7 +76,7 @@
                 <div class="col-6">
                     @if (Route::has('password.request'))
                     <a href="{{ route('password.request') }}" style="text-decoration: none !important;">
-                        <small class="text-light fw-bold" >{{ __('Forgot password') }} ?</small>
+                        <small class="text-white fw-bold">{{ __('Forgot password') }} ?</small>
                     </a>
                     @endif
                 </div>
@@ -87,6 +86,23 @@
 </div>
 
 @endsection
+@if (session('status'))
+@push('js')
+<script>
+    $.notify({
+        icon: "check_circle",
+        message: "{{session('status')}}",
+    }, {
+        type: "success",
+        timer: 3000,
+        placement: {
+            from: "top",
+            align: "right",
+        },
+    });
+</script>
+@endpush
+@endif
 
 @push('js')
 <script>
@@ -98,4 +114,6 @@
         }, 700);
     });
 </script>
+
+
 @endpush

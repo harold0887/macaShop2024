@@ -122,9 +122,18 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::registerView(function () {
             return view('auth.register');
         });
+
+        //reestablecer contraseña vista para ingresar email y enviar link
         Fortify::requestPasswordResetLinkView(function () {
             return view('auth.passwords.forgot-password');
         });
+
+        //reestablecer contraseña vista para cambiar la contraseña
+        Fortify::resetPasswordView(function (Request $request) {
+            return view('auth.passwords.reset', ['request' => $request]);
+        });
+
+
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));

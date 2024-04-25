@@ -3,8 +3,8 @@
 'classPage' => 'login-page',
 'activePage' => 'login',
 'title' => 'Restablecer contraseña',
-'pageBackground' => asset("material").'/img/login.jpg',
-'navbarClass'=>'text-primary bg-dots-darker',
+'pageBackground' => asset("material").'/img/bg-pricing.jpg',
+'navbarClass'=>'text-primary',
 'background'=>'#eee !important'
 ])
 
@@ -12,14 +12,21 @@
 <div class="container">
   <div class="row align-items-center">
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-      <form class="form" method="POST" action="{{ route('password.email') }}">
+      <form id="forgot-password" class="form" method="POST" action="{{ route('password.email') }}">
         @csrf
 
         <div class="card card-login card-hidden mb-3">
-          <div class="card-header card-header-primary text-center">
+        <div class="card-header card-header-primary d-flex align-items-center justify-content-center ">
+            <span class="material-symbols-outlined mr-2">
+              passkey
+            </span>
             <h4 class="card-title"><strong>{{ __('Reset Password') }}</strong></h4>
           </div>
+  
           <div class="card-body">
+            <div class="text-center">
+              <span class="text-muted">Ingresa tu correo electrónico para recibir un link y reestablecer tu contarseña.</span>
+            </div>
             <div class="bmd-form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
               <div class="input-group">
                 <div class="input-group-prepend">

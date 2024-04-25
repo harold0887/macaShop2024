@@ -2,6 +2,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+                <form id="create-product-admin" action="{{ route('webhooks-arnold') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-info">
+                        pruebass
+                    </button>
+
+
+                </form>
+            </div>
+            <div class="col-12">
                 <div class="row justify-content-between">
                     <div class="col-12    d-flex justify-content-center">
                         <div class="search-panels w-75">

@@ -4,7 +4,7 @@
 'activePage' => 'register',
 'title' => __('Register'),
 'pageBackground' => asset("material").'/img/register.jpg',
-'navbarClass'=>'text-primary bg-dots-darker',
+'navbarClass'=>'text-primary',
 'background'=>'#eee !important'
 ])
 
