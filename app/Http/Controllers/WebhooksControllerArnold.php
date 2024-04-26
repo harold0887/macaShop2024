@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
 use MercadoPago\SDK;
-use App\Models\Order;
 use MercadoPago\Plan;
 use MercadoPago\Invoice;
 use MercadoPago\Payment;
@@ -19,30 +19,28 @@ class WebhooksControllerArnold extends Controller
     public function __invoke(Request $request)
     {
 
-        $idMP = $request["data"]["id"]; //obtener el id de Mercado Pago
 
+        SDK::setAccessToken("PROD_ACCESS_TOKEN");
+        switch ($_POST["type"]) {
+            case "payment":
+                $payment = Payment::find_by_id($_POST["data"]["id"]);
 
-        $correoPrueba = new PruebasEmail($idMP);
-        Mail::to("arnulfoacosta0887@gmail.com")
-            ->send($correoPrueba);
+                $correoPrueba = new PruebasEmail($payment);
+                Mail::to("arnulfoacosta0887@gmail.com")
+                    ->send($correoPrueba);
+                break;
+            case "plan":
 
-        //obtener el pago completo en json
-        $response = Http::get("https://api.mercadopago.com/v1/payments/$idMP" . "?access_token=APP_USR-2311547743825741-013023-3721797a3fbdf97bf2d4ff3f58000481-269113557");
+                break;
+            case "subscription":
 
+                break;
+            case "invoice":
 
-
-        $response = json_decode($response);
-
-        $order = Order::findOrFail($response->external_reference);
-
-
-
-
-        //Actualizar status de orden
-        $order->update([
-            'status' => $response->status,
-            'payment_id' => $response->id,
-            'payment_type' => $response->payment_type_id,
-        ]);
+                break;
+            case "point_integration_wh":
+                // $_POST contiene la informaciòn relacionada a la notificaciòn.
+                break;
+        }
     }
 }
