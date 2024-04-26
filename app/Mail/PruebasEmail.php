@@ -17,7 +17,7 @@ class PruebasEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($idMP, )
+    public function __construct($idMP)
     {
         $this->idMercado=$idMP;
         
