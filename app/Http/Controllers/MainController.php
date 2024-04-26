@@ -144,7 +144,7 @@ class MainController extends Controller
                 //Actualizar status de orden
                 $order->update([
                     'status' => "approved",
-                    'payment_id'=>request('payment_id')
+                    'payment_id' => request('payment_id')
                 ]);
 
                 //Esto es nuevo
@@ -174,6 +174,11 @@ class MainController extends Controller
                 return redirect()->route('order.show', [$order->id])->with('paySuccess', 'El pago ha sido realizado con éxito.');
                 break;
             case 'pending':
+                //Actualizar status de orden
+                $order->update([
+                    'status' => "pending",
+                    'payment_id' => request('payment_id')
+                ]);
                 return redirect()->route('order.show', [$order->id])->with('payPending', 'El pago está  en proceso de validación.');
                 break;
             case 'in_process':
