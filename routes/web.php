@@ -150,6 +150,13 @@ Route::group(['middleware' => ['role:admin']], function () {
     echo "Link done";
   });
 
+  Route::get('/storage-link', function () {
+    $target = storage_path('app/public');
+    $link =   $_SERVER['DOCUMENT_ROOT'].'/storage';
+    symlink($target, $link);
+    echo "storage link success";
+  });
+
   Route::get('/foo', function () {
     Artisan::call('storage:link');
     echo "storage done";
