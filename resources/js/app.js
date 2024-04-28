@@ -320,7 +320,7 @@ Livewire.on('info', ({ message }) => {
 
 Livewire.on('showProductDetails', ({ title, itemMain, items }) => {
   $("#title-product-modal-view").text(title);
-  $("#itemMain-product-modal-view").attr("src", "/storage/" + itemMain);
+  $("#itemMain-product-modal-view").attr("src", "/public/storage/" + itemMain);
   $('#product-view').modal('show');
 
   //clear items and reload
@@ -330,7 +330,7 @@ Livewire.on('showProductDetails', ({ title, itemMain, items }) => {
   var $json = items;
   $.each($json, function (index, valores) {
     var c = valores.photo;
-    $("#items-product-modal-view").append("<img class='rounded w-100 shadow border mt-2' src='/storage/" + c + "' alt='' >")
+    $("#items-product-modal-view").append("<img class='rounded w-100 shadow border mt-2' src='/public/storage/" + c + "' alt='' >")
   })
 
 
