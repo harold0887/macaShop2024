@@ -315,7 +315,7 @@
             })
         },
         select: function(event, ui) {
-            window.location.href = "https://demo.materialdidacticomaca.com/tienda/productos/" + ui.item.value
+            window.location.href = "https://materialdidacticomaca.com/tienda/productos/" + ui.item.value
         },
 
     })
