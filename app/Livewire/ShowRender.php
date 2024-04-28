@@ -164,7 +164,7 @@ class ShowRender extends Component
                         'id_user' => Auth::user()->id,
                     ]);
                     $this->dispatch('alertDownload', message: "<span class='text-sm'><b>Importante !</b> - Si tiene problemas con la descarga, se recomienda descargar desde una computadora.</span>");
-                    return Storage::download('public/' . $product->document, $product->name);
+                    return Storage::download($product->document, $product->name);
                 } catch (\Throwable $th) {
                     $this->dispatch('error', message: 'Error al descargar el documento - ' . $th->getMessage());
                 }

@@ -132,7 +132,7 @@ class IndexProducts extends Component
     {
         try {
             $document = Product::findOrFail($id);
-            return Storage::download('public/' . $document->document, $document->title);
+            return Storage::download( $document->document, $document->title);
         } catch (Throwable $th) {
             $this->dispatch('error', message: 'Error al descargar el documento - ' . $th->getMessage());
         }
