@@ -162,7 +162,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($products as $product)
-                                    <tr class="{{ $product->percentage > 0 ? 'text-danger' : '' }} {{ Storage::exists('public/'.$product->document) ? '' : 'table-danger' }} {{ Storage::exists('public/'.$product->itemMain) ? '' : 'table-danger' }}  ">
+                                    <tr class="{{ $product->percentage > 0 ? 'text-danger' : '' }} {{ Storage::exists($product->document) ? '' : 'table-danger' }} {{ Storage::exists($product->itemMain) ? '' : 'table-danger' }}  ">
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->title }}</td>
                                         <td>{{ $product->price }}</td>

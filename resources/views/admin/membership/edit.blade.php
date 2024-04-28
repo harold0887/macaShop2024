@@ -86,7 +86,7 @@
                                     <h4 class="title">Imagen principal</h4>
                                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                         <div class="fileinput-new thumbnail" style="height:300px !important">
-                                            @if ($membership->itemMain && Storage::exists('public/'.$membership->itemMain))
+                                            @if ($membership->itemMain && Storage::exists($membership->itemMain))
                                             <img src="{{ Storage::url($membership->itemMain)  }}" alt="...">
                                             @else
                                             <img src="{{ asset('material') }}/img/image_placeholder.jpg" alt="...">

@@ -128,7 +128,7 @@
                                     <h4 class="title ">Documento</h4>
                                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                         <div class="fileinput-new thumbnail" style="height:300px !important">
-                                            @if ($product->document && Storage::exists('public/'.$product->document))
+                                            @if ($product->document && Storage::exists($product->document))
                                             <img src="{{ asset('img') }}/docs/{{$product->format}}.png" alt="...">
                                             <span class="m-2 text-base">{{$product->title}}.{{ $product->format }}</span>
 
@@ -159,7 +159,7 @@
                                     <h4 class="title">Imagen principal</h4>
                                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                         <div class="fileinput-new thumbnail" style="height:300px !important">
-                                            @if ($product->itemMain && Storage::exists('public/'.$product->itemMain))
+                                            @if ($product->itemMain && Storage::exists($product->itemMain))
                                             <img src="{{ Storage::url($product->itemMain)  }}" alt="...">
                                             @else
                                             <img src="{{ asset('material') }}/img/image_placeholder.jpg" alt="...">
@@ -221,7 +221,7 @@
                                     <h4 class="title">Video (opcional)</h4>
                                     <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                         <div class="fileinput-new thumbnail" style="height:300px !important">
-                                            @if ($product->video && Storage::exists('public/'.$product->video))
+                                            @if ($product->video && Storage::exists($product->video))
                                             <video class="  w-75 " src="{{ Storage::url($product->video) }}" autoplay muted loop></video>
                                             @else
                                             <img src="{{ asset('material') }}/img/image_placeholder.jpg" alt="...">

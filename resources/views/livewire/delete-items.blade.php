@@ -13,7 +13,7 @@
         </button>
     </div>
     @endif
-    @if($product->itemMain && Storage::exists('public/'.$product->itemMain))
+    @if($product->itemMain && Storage::exists($product->itemMain))
     <div class="col-3 col-lg-1 text-center">
         <div class="fileinput-new thumbnail">
             <img class="w-100" src="{{Storage::url($product->itemMain)}}" alt="...">
@@ -24,7 +24,7 @@
         </button>
     </div>
     @endif
-    @if($product->document && Storage::exists('public/'.$product->document))
+    @if($product->document && Storage::exists($product->document))
     <div class="col-3 col-lg-1 text-center">
         <div class="fileinput-new thumbnail">
             <img src="{{ asset('img') }}/docs/{{$product->format}}.png" alt="..." width="100">

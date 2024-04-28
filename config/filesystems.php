@@ -39,7 +39,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'public/storage',//se cambio para usar public en env
+            'url' => env('APP_URL') . 'public/storage', //se cambio para usar public en env
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -55,6 +55,15 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => false,
         ],
+
+
+        // maca 2024
+        'maca' => [
+            'driver' => 'local',
+            'root' => storage_path('app'),
+            'visibility' => 'publics',
+        ],
+
 
     ],
 

@@ -70,7 +70,7 @@
 
                                                                     @else
 
-                                                                    @if(Storage::exists('public/'.$product->document))
+                                                                    @if(Storage::exists($product->document))
                                                                     <div wire:loading.remove>
                                                                         <button class="btn btn-outline-info btn-round w-100" wire:click.prevent="download('{{ $product->id }}')">
                                                                             <i class="material-icons">download</i> Descargar
