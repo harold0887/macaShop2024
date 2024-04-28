@@ -80,13 +80,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['auth', 'verified']], function () {
       Route::get('customer/orders', [MainController::class, 'customerOrders'])->name('customer.orders');
       Route::get('customer/orders/{id}', AccountShowOrder::class)->name('order.show');
+      Route::get('customer/products', AccountProducts::class)->name('customer.products');
+      Route::get('customer/packages', [MainController::class, 'customerPackages'])->name('customer.packages');
+      Route::get('customer/packages/{id}', AccountShowPackages::class)->name('customer.packages-show');
+      Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
+      Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
     });
-
-    Route::get('customer/products', AccountProducts::class)->name('customer.products');
-    Route::get('customer/packages', [MainController::class, 'customerPackages'])->name('customer.packages');
-    Route::get('customer/packages/{id}', AccountShowPackages::class)->name('customer.packages-show');
-    Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
-    Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
   });
 });
 
@@ -152,7 +151,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
   Route::get('/storage-link', function () {
     $target = storage_path('app/public');
-    $link =   $_SERVER['DOCUMENT_ROOT'].'/storage';
+    $link =   $_SERVER['DOCUMENT_ROOT'] . '/storage';
     symlink($target, $link);
     echo "storage link success";
   });
@@ -187,9 +186,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     return 'View cache has been cleared';
   });
 });
-  
-  
- Route::post('webhooks', WebhooksController::class);
- Route::post('webhooks-arnold', WebhooksControllerArnold::class)->name('webhooks-arnold');
 
 
+Route::post('webhooks', WebhooksController::class);
+Route::post('webhooks-arnold', WebhooksControllerArnold::class)->name('webhooks-arnold');
