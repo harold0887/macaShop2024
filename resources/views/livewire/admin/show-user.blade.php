@@ -7,7 +7,7 @@
                     <div class="card card-profile {{$user->status == 0 ?'border border-danger': ''}} ">
                         <div class="card-avatar">
                             @if(isset($user->picture))
-                            <img class="avatar border-gray" src="{{ Storage::url(Auth::user()->picture) }}" alt="...">
+                            <img class="avatar border-gray" src="{{ Storage::url($user->picture) }}" alt="...">
                             @else
                             <img src="{{ asset('material') }}/img/placeholder.jpg" alt="...">
                             @endif

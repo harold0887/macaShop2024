@@ -49,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profilePicture()
     {
         if ($this->picture) {
-            return "/storage/{$this->picture}";
+            return "/public/storage/{$this->picture}";
         }
 
         return 'http://i.pravatar.cc/200';
