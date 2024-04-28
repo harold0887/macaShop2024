@@ -93,7 +93,7 @@ class AccountShowOrder extends Component
                         return response()->download($file, $this->product->title . ".pdf");
                     }
                 } else {
-                    $file = "./storage/" . $this->product->document;
+                    $file = "public/storage/" . $this->product->document;
                     return response()->download($file, $this->product->title . "." . $this->product->format);
                 }
             } else {

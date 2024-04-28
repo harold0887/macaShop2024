@@ -26,7 +26,7 @@ class AddLicense
         //Agregar folio a PDFs
         $pdf = new Fpdi();
         set_time_limit(0);
-        $patch = "./storage/" . $this->product->document;
+        $patch = "public/storage/" . $this->product->document;
 
         $pageCount = $pdf->setSourceFile($patch);
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
@@ -51,7 +51,7 @@ class AddLicense
         //Agregar folio a PDF
         $pdf = new Fpdi();
         set_time_limit(0);
-        $patch = "./storage/" . $this->product->document;
+        $patch = "public/storage/" . $this->product->document;
         //$pdf->setSourceFile($patch);
         $pageCount = $pdf->setSourceFile($patch);
         for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {

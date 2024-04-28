@@ -79,7 +79,7 @@ class FreeRender extends Component
                     $this->dispatch('alertDownload', message: "<span class='text-sm'><b>Importante !</b> - Si tiene problemas con la descarga, se recomienda descargar desde una computadora.</span>");
                     
                     //return Storage::download($product->document, $product->name);
-                    $file = "./storage/" . $product->document;
+                    $file = "public/storage/" . $product->document;
                     return response()->download($file, $product->title . "." . $product->format);
                 } catch (\Throwable $th) {
                     $this->dispatch('error', message: 'Error al descargar el documento - ' . $th->getMessage());
