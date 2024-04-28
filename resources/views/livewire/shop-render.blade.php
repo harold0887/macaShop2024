@@ -129,7 +129,7 @@
                             <div class="card-footer">
                                 <p class="text-muted text-start mt-2">
                                     {{ Str::limit($membership->information, $limit = 80, $end = '...') }}
-                                    <a href=" {{route('membership.show',$membership->id)}} " style="text-decoration: none;">
+                                    <a href=" {{route('membership.show',$membership->slug)}} " style="text-decoration: none;">
                                         más informacion
                                     </a>
                                 </p>
