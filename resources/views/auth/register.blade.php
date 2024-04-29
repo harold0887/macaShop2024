@@ -52,7 +52,7 @@
                                                 <i class="material-icons">mail</i>
                                             </span>
                                         </div>
-                                        <input type="text" class="form-control" name="email" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
+                                        <input type="email" class="form-control" name="email" placeholder="{{ __('Email') }}" value="{{ old('email') }}" required>
 
                                     </div>
                                     @if ($errors->has('email'))

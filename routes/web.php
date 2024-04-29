@@ -71,7 +71,10 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
+Route::group(['middleware' => ['auth', 'verified']], function () {
 
+  Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
+});
 
 
 Route::group(['middleware' => ['auth']], function () {
@@ -83,7 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('customer/products', AccountProducts::class)->name('customer.products');
       Route::get('customer/packages', [MainController::class, 'customerPackages'])->name('customer.packages');
       Route::get('customer/packages/{id}', AccountShowPackages::class)->name('customer.packages-show');
-      Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
+
       Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
     });
   });
