@@ -25,7 +25,7 @@ Queda estrictamente prohibido:
 </small>
 <br>
 <a href="https://wa.me/message/GUNXZZ666PN3I1" target="_blank">
-    <img src="materialdidacticomaca.com/img/whatsapp1.png" alt="logo WhatsApp" width="60">
+    <img src="materialdidacticomaca.com/img/whatsapp1.png" alt="logo WhatsApp" width="50">
 </a>
 
 @endcomponent
