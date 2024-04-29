@@ -72,7 +72,7 @@ class EnvioMaterial extends Mailable
         } else { //enviar Power point o pdf sin folio
 
             return [
-                Attachment::fromPath('storage/' . $this->document)
+                Attachment::fromPath('public/storage/' . $this->document)
                     ->as($this->name)
             ];
         }
