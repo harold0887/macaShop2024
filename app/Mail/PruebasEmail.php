@@ -13,14 +13,15 @@ class PruebasEmail extends Mailable
 {
     use Queueable, SerializesModels;
     public $idMercado;
+    public $type;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($idMP)
+    public function __construct($idMP, $type)
     {
-        $this->idMercado=$idMP;
-        
+        $this->idMercado = $idMP;
+        $this->type = $type;
     }
 
     /**

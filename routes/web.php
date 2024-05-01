@@ -1,12 +1,13 @@
 <?php
 
+use App\Models\Order;
 use App\Livewire\CartRender;
 use App\Livewire\FreeRender;
 use App\Livewire\ShopRender;
 use App\Livewire\ShowRender;
 use App\Livewire\PackageShow;
-use App\Livewire\EnviosRender;
 
+use App\Livewire\EnviosRender;
 use App\Livewire\PackageRender;
 use App\Livewire\Admin\ShowUser;
 use App\Livewire\MembershipShow;
@@ -14,8 +15,8 @@ use App\Livewire\AccountProducts;
 use App\Livewire\AccountShowOrder;
 use App\Livewire\MembershipRender;
 use Illuminate\Support\Facades\Auth;
-use App\Livewire\AccountShowPackages;
 
+use App\Livewire\AccountShowPackages;
 use App\Livewire\Admin\IndexComments;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IpController;
@@ -187,6 +188,35 @@ Route::group(['middleware' => ['role:admin']], function () {
   Route::get('/view-clear', function () {
     Artisan::call('view:clear');
     return 'View cache has been cleared';
+  });
+
+  // pruebas cURL MP:
+  Route::get('/curl', function () {
+    $ACCESS_TOKEN = "APP_USR-2311547743825741-013023-3721797a3fbdf97bf2d4ff3f58000481-269113557"; //aqui cargamos el token
+    $curl = curl_init(); //iniciamos la funcion curl
+
+    curl_setopt_array($curl, array(
+      //ahora vamos a definir las opciones de conexion de curl
+      CURLOPT_URL => "https://api.mercadopago.com/v1/payments/77035052505", //aqui iria el id de tu pago
+      CURLOPT_CUSTOMREQUEST => "GET", // el metodo a usar, si mercadopago dice que es post, se cambia GET por POST.
+      CURLOPT_RETURNTRANSFER => true, //esto es importante para que no imprima en pantalla y guarde el resultado en una variable
+      CURLOPT_ENCODING => "",
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_HTTPHEADER => array(
+        'Authorization: Bearer ' . $ACCESS_TOKEN
+      ),
+    ));
+
+
+
+    $response = curl_exec($curl); //ejecutar CURL
+    $response = json_decode($response, true); //a la respuesta obtenida de CURL la guardamos en una variable con formato json.
+
+
+    //$order = Order::findOrFail($response['external_reference']);
+    return $response;
   });
 });
 
