@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Mail\PruebasEmail;
 use Illuminate\Http\Request;
 use App\Models\Order_Details;
 use App\Mail\PaymentApprovedEmail;
@@ -14,27 +15,81 @@ class WebhooksController extends Controller
 {
     public function __invoke(Request $request)
     {
+        // Obtain the x-signature value from the header
+        $xSignature = $_SERVER['HTTP_X_SIGNATURE'];
+        $xRequestId = $_SERVER['HTTP_X_REQUEST_ID'];
         $idMP = $request["data"]["id"]; //obtener el id de Mercado Pago
 
-        //obtener el pago completo en json
-        $response = Http::get("https://api.mercadopago.com/v1/payments/$idMP" . "?access_token=APP_USR-2311547743825741-013023-3721797a3fbdf97bf2d4ff3f58000481-269113557");
+
+        // Obtain Query params related to the request URL
+        $queryParams = $_GET;
+
+        // Extract the "data.id" from the query params
+        $dataID = isset($queryParams['data.id']) ? $queryParams['data.id'] : '';
+
+        // Separating the x-signature into parts
+        $parts = explode(',', $xSignature);
+
+        // Initializing variables to store ts and hash
+        $ts = null;
+        $hash = null;
+
+        // Iterate over the values to obtain ts and v1
+        foreach ($parts as $part) {
+            // Split each part into key and value
+            $keyValue = explode('=', $part, 2);
+            if (count($keyValue) == 2) {
+                $key = trim($keyValue[0]);
+                $value = trim($keyValue[1]);
+                if ($key === "ts") {
+                    $ts = $value;
+                } elseif ($key === "v1") {
+                    $hash = $value;
+                }
+            }
+        }
+
+        // actualizar informacion de la orden y eviar notificaciones
 
 
 
-        $response = json_decode($response);
+
+        $ACCESS_TOKEN = config('services.mercadopago.token'); //aqui cargamos el token
+        $curl = curl_init(); //iniciamos la funcion curl
+
+        curl_setopt_array($curl, array(
+            //ahora vamos a definir las opciones de conexion de curl
+            CURLOPT_URL => "https://api.mercadopago.com/v1/payments/" . $idMP, //aqui iria el id de tu pago
+            CURLOPT_CUSTOMREQUEST => "GET", // el metodo a usar, si mercadopago dice que es post, se cambia GET por POST.
+            CURLOPT_RETURNTRANSFER => true, //esto es importante para que no imprima en pantalla y guarde el resultado en una variable
+            CURLOPT_ENCODING => "",
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer ' . $ACCESS_TOKEN
+            ),
+        ));
 
 
-        $order = Order::findOrFail($response->external_reference);
+
+        $response = curl_exec($curl); //ejecutar CURL
+        $response = json_decode($response, true); //a la respuesta obtenida de CURL la guardamos en una variable con formato json.
+
+
+        $order = Order::findOrFail($response['external_reference']);
 
 
 
 
         //Actualizar status de orden
         $order->update([
-            'status' => $response->status,
-            'payment_id' => $response->id,
-            'payment_type' => $response->payment_type_id,
+            'status' => $response['status'],
+            'payment_id' => $response['id'],
+            'payment_type' => $response['payment_type_id'],
         ]);
+
+
 
 
         //Esto es nuevo
@@ -50,20 +105,20 @@ class WebhooksController extends Controller
             $materialesComprados = true;
         }
 
-        switch ($response->status) {
+        switch ($response['status']) {
             case 'approved':
                 //enviar correo de materiales
                 if ($materialesComprados) {
-                    $notificacion = new PaymentApprovedEmail($order);
+                    $confirmacionOrder = new PaymentApprovedEmail($order);
                     Mail::to($order->user->email) //enviar correo al cliente
-                        ->send($notificacion);
+                        ->send($confirmacionOrder);
                 }
 
                 //enviar correo de membresias
                 foreach ($membreships as $membresia) {
-                    $correoCopia = new PaymentApprovedMembership($membresia->membership_id, $order);
+                    $confirmacionMembership = new PaymentApprovedMembership($membresia->membership_id, $order);
                     Mail::to($order->user->email)
-                        ->send($correoCopia);
+                        ->send($confirmacionMembership);
                 }
                 break;
             case 'pending':

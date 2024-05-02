@@ -114,9 +114,9 @@ class WebhooksControllerArnold extends Controller
         switch ($response['status']) {
             case 'approved':
 
-                $correoPrueba = new PruebasEmail($order, "Entro hasta el aproval");
-                Mail::to("arnulfoacosta0887@gmail.com")
-                    ->send($correoPrueba);
+                // $correoPrueba = new PruebasEmail($order, "Entro hasta el aproval");
+                // Mail::to("arnulfoacosta0887@gmail.com")
+                //     ->send($correoPrueba);
 
                 //enviar correo de materiales
                 if ($materialesComprados) {
@@ -124,9 +124,9 @@ class WebhooksControllerArnold extends Controller
                     Mail::to($order->user->email) //enviar correo al cliente
                         ->send($confirmacionOrder);
 
-                    $confirmacionOrder1 = new PaymentApprovedEmail($order);
-                    Mail::to("arnulfoacosta0887@gmail.com") //enviar correo de prueba
-                        ->send($confirmacionOrder1);
+                    // $confirmacionOrder1 = new PaymentApprovedEmail($order);
+                    // Mail::to("arnulfoacosta0887@gmail.com") //enviar correo de prueba
+                    //     ->send($confirmacionOrder1);
                 }
 
                 //enviar correo de membresias
@@ -135,9 +135,9 @@ class WebhooksControllerArnold extends Controller
                     Mail::to($order->user->email)
                         ->send($confirmacionMembership);
 
-                    $confirmacionMembership1 = new PaymentApprovedMembership($membresia->membership_id, $order);
-                    Mail::to("arnulfoacosta0887@gmail.com") //enviar correo de prueba
-                        ->send($confirmacionMembership1);
+                    // $confirmacionMembership1 = new PaymentApprovedMembership($membresia->membership_id, $order);
+                    // Mail::to("arnulfoacosta0887@gmail.com") //enviar correo de prueba
+                    //     ->send($confirmacionMembership1);
                 }
                 break;
             case 'pending':
