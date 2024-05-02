@@ -1,10 +1,22 @@
 <div class="row">
-    <div class="border-zigzag  mb-3">
-    </div>
+    <div class="col-12 mb-3">
+        <div class="row justify-content-center">
+            <div class="col-auto  px-0">
+                <div style="width: 80px !important;" class="  ">
+                    @include('includes.svg.prueba')
+                </div>
+            </div>
+            <div class="col-auto r d-flex align-items-center px-0">
+                <h1 class="text-center text-primary text-2xl  lg:text-4xl font-bold ">
+                    Conoce nuestras novedades
+                </h1>
+            </div>
+            <div class="col-12">
+                <p class="text-center text-muted"> ¡Descubre nuestros materiales didácticos más recientes! </p>
+            </div>
+        </div>
 
-    <h1 class="text-center text-primary text-2xl  lg:text-4xl font-bold mb-3">
-        Conoce nuestras novedades
-    </h1>
+    </div>
 
     <div class="novedades-autoplay px-0 mb-0 pb-0">
         @if (isset($products) && $products->count() > 0)

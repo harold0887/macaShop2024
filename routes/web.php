@@ -1,13 +1,12 @@
 <?php
 
-use App\Models\Order;
 use App\Livewire\CartRender;
 use App\Livewire\FreeRender;
 use App\Livewire\ShopRender;
 use App\Livewire\ShowRender;
 use App\Livewire\PackageShow;
-
 use App\Livewire\EnviosRender;
+
 use App\Livewire\PackageRender;
 use App\Livewire\Admin\ShowUser;
 use App\Livewire\MembershipShow;
@@ -15,8 +14,8 @@ use App\Livewire\AccountProducts;
 use App\Livewire\AccountShowOrder;
 use App\Livewire\MembershipRender;
 use Illuminate\Support\Facades\Auth;
-
 use App\Livewire\AccountShowPackages;
+
 use App\Livewire\Admin\IndexComments;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IpController;
@@ -72,22 +71,19 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
-
-  Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
-});
 
 
 Route::group(['middleware' => ['auth']], function () {
 
+
   Route::middleware(['auth.banned', 'ip.banned'])->group(function () {
+    Route::get('customer/orders/{id}', AccountShowOrder::class)->name('order.show');
     Route::group(['middleware' => ['auth', 'verified']], function () {
       Route::get('customer/orders', [MainController::class, 'customerOrders'])->name('customer.orders');
-      Route::get('customer/orders/{id}', AccountShowOrder::class)->name('order.show');
       Route::get('customer/products', AccountProducts::class)->name('customer.products');
       Route::get('customer/packages', [MainController::class, 'customerPackages'])->name('customer.packages');
       Route::get('customer/packages/{id}', AccountShowPackages::class)->name('customer.packages-show');
-
+      Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
       Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
     });
   });
@@ -192,7 +188,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
   // pruebas cURL MP:
   Route::get('/curl', function () {
-    $ACCESS_TOKEN = "APP_USR-2311547743825741-013023-3721797a3fbdf97bf2d4ff3f58000481-269113557"; //aqui cargamos el token
+    $ACCESS_TOKEN = config('services.mercadopago.token'); //aqui cargamos el token
     $curl = curl_init(); //iniciamos la funcion curl
 
     curl_setopt_array($curl, array(
@@ -215,7 +211,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     $response = json_decode($response, true); //a la respuesta obtenida de CURL la guardamos en una variable con formato json.
 
 
-    //$order = Order::findOrFail($response['external_reference']);
     return $response;
   });
 });

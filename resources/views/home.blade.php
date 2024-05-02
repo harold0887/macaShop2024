@@ -95,7 +95,7 @@
 
             </div>
         </div>
-        <div class="row justify-content-between mt-0 ">
+        <div class="row justify-content-between mt-0 mb-lg-4">
 
             <div class="col-6 col-md-3 p-1 text-center">
                 <a href="{{route('shop.index')}}">
@@ -126,7 +126,11 @@
                 </a>
             </div>
         </div>
+        <livewire:novedades />
+        <livewire:best-seler />
+
         <div class="row mt-3">
+           
             <div class="col-12">
                 <h1 class=" lg:pt-5 md:text-3xl  text-center  text-xl text-muted">La mejor opción para <span class="fw-bold text-primary">personas que enseñan desde el corazón.</span></h1>
                 <p class="text-center mx-2 text-justify">¿Buscas material didáctico o material para decorar el aula? en
@@ -213,8 +217,7 @@
                 </div>
             </div>
         </div>
-        <livewire:best-seler />
-        <livewire:novedades />
+
 
 
 
