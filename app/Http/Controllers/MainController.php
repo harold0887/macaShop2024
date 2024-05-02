@@ -127,7 +127,7 @@ class MainController extends Controller
 
 
 
-        return redirect()->route('order.show', [$newOrder->id])->with('createSuccessOrder','order create success');
+        return redirect()->route('order.show', [$newOrder->id])->with('createSuccessOrder', 'order create success');
     }
 
     //envios reales pagina web
@@ -142,10 +142,10 @@ class MainController extends Controller
 
 
                 // //Actualizar status de orden
-                // $order->update([
-                //     'status' => "approved",
-                //     'payment_id' => request('payment_id')
-                // ]);
+                $order->update([
+                    'status' => "approved",
+                    'payment_id' => request('payment_id')
+                ]);
 
                 // //Esto es nuevo
                 // $products = Order_Details::where('order_id', $order->id)->where('product_id', '!=', null)->get();
