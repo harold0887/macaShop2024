@@ -111,7 +111,7 @@ class WebhooksControllerArnold extends Controller
             $materialesComprados = true;
         }
 
-        switch ($response->status) {
+        switch ($response['status']) {
             case 'approved':
 
                 $correoPrueba = new PruebasEmail($order, "Entro hasta el aproval");

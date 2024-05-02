@@ -48,9 +48,9 @@ Queda estrictamente prohibido:
 </small>
 <br>
 <div class="justify-contente-center border">
-<a href="https://wa.me/message/GUNXZZ666PN3I1" target="_blank">
-    <img src="{{ asset('img/whatsapp1.png') }}" alt="logo WhatsApp" width="60">
-</a>
+    <a href="https://wa.me/message/GUNXZZ666PN3I1" target="_blank">
+        <img src="materialdidacticomaca.com/img/whatsapp1.png" alt="logo WhatsApp" width="50">
+    </a>
 </div>
 
 @endcomponent
