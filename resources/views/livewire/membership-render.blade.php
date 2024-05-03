@@ -57,9 +57,9 @@
             </div>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center px-lg-5">
             @foreach ($memberships as $membership)
-            <div class="col-11 col-md-4 col-lg-3 mb-4 {{($membership->discount_percentage < $membership->price) ? 'order-first order-lg-0' : '' }}" style="position: relative">
+            <div class="col-11 col-md-4 col-lg-4 px-lg-5 mb-4 {{($membership->discount_percentage < $membership->price) ? 'order-first order-lg-0' : '' }}" style="position: relative">
                 <div class=" animate__animated  animate__shakeX animate__repeat-1	 animate__slow  card card-primary card-product {{($membership->discount_percentage < $membership->price) ? 'border  border-primary' : 'border' }}" style=" overflow: hidden;">
                     @if ($membership->discount_percentage > 0)
 

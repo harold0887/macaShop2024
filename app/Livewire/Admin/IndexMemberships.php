@@ -29,15 +29,33 @@ class IndexMemberships extends Component
         $memberships = Membership::orderBy($this->sortField, $this->sortDirection)
             ->where('title', 'like', '%' . $this->search . '%')
             ->orWhere('id', 'like', '%' . $this->search . '%')
-            ->withCount(['sales' => function ($query) {
+            ->withCount(['sales as salesAll' => function ($query) {
                 $query->whereHas('order', function ($query) {
                     $query
                         ->where('status', 'approved')
-                        ->where('payment_type', '!=', 'externo');
+                        ->whereNotIn('customer_id', [1,5,8218]);
+                });
+            }])
+            ->withCount(['sales as salesWeb' => function ($query) {
+                $query->whereHas('order', function ($query) {
+                    $query
+                        ->where('status', 'approved')
+                        ->where('payment_type', '!=', 'externo')
+                        ->whereNotIn('customer_id', [1,5,8218]);
+                });
+            }])
+            ->withCount(['sales as salesexternal' => function ($query) {
+                $query->whereHas('order', function ($query) {
+                    $query
+                        ->where('status', 'approved')
+                        ->where('payment_type', 'externo')
+                        ->whereNotIn('customer_id', [1,5,8218]);
                 });
             }])
 
             ->paginate(15);
+
+
         return view('livewire.admin.index-memberships', compact('memberships'));
     }
 

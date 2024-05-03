@@ -193,7 +193,35 @@
 
                                         <td>{{ $membership->price_with_discount }}</td>
                                         <td>{{ $membership->products->count() }}</td>
-                                        <td>{{ $membership->sales_count }}</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Web
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    {{ $membership->salesWeb }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Externo
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    {{ $membership->salesexternal }}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    Total
+                                                </div>
+                                                <div class="col-6 text-end">
+                                                    {{ $membership->salesAll }}
+                                                </div>
+                                            </div>
+
+
+
+                                        </td>
                                         <td>{{date_format(new DateTime($membership->start),'d-M-Y')}} </td>
                                         <td>{{date_format(new DateTime($membership->expiration),'d-M-Y')}} </td>
                                         <td>{{ $membership->vigencia }}</td>
