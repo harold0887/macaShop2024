@@ -16,7 +16,9 @@ class MembershipRender extends Component
 
         $memberships = Membership::where('status', true)
             ->where('expiration', '>', now())
+            ->orderBy('expiration','desc')
             ->get();
+
         return view('livewire.membership-render', compact('memberships'))
             ->extends('layouts.app', [
                 'class' => 'off-canvas-sidebar',

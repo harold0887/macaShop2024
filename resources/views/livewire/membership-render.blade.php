@@ -145,7 +145,7 @@
                             {{date_format(new DateTime($membership->expiration),'Y')}}
                         </span>
                         <p class="text-muted text-start m-3">
-                            {{ Str::limit($membership->information, $limit = 220, $end = '...') }}
+                            {{ $membership->information }}
                         </p>
                     </div>
                     <div class="card-footer">

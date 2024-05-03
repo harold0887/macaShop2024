@@ -29,6 +29,13 @@ class IndexMemberships extends Component
         $memberships = Membership::orderBy($this->sortField, $this->sortDirection)
             ->where('title', 'like', '%' . $this->search . '%')
             ->orWhere('id', 'like', '%' . $this->search . '%')
+            ->withCount(['sales' => function ($query) {
+                $query->whereHas('order', function ($query) {
+                    $query
+                        ->where('status', 'approved')
+                        ->where('payment_type', '!=', 'externo');
+                });
+            }])
 
             ->paginate(15);
         return view('livewire.admin.index-memberships', compact('memberships'));

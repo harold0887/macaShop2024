@@ -120,6 +120,18 @@
                                             Precio con descuento
                                         </th>
                                         <th>Materiales</th>
+                                        <th style="cursor:pointer" wire:click="setSort('sales_count')">
+                                            @if($sortField=='sales_count')
+                                            @if($sortDirection=='asc')
+                                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                                            @else
+                                            <i class="fa-solid fa-arrow-up-z-a"></i>
+                                            @endif
+                                            @else
+                                            <i class="fa-solid fa-sort mr-1"></i>
+                                            @endif
+                                            Ventas
+                                        </th>
                                         <th style="cursor:pointer" wire:click="setSort('start')">
                                             @if($sortField=='start')
                                             @if($sortDirection=='asc')
@@ -181,6 +193,7 @@
 
                                         <td>{{ $membership->price_with_discount }}</td>
                                         <td>{{ $membership->products->count() }}</td>
+                                        <td>{{ $membership->sales_count }}</td>
                                         <td>{{date_format(new DateTime($membership->start),'d-M-Y')}} </td>
                                         <td>{{date_format(new DateTime($membership->expiration),'d-M-Y')}} </td>
                                         <td>{{ $membership->vigencia }}</td>
