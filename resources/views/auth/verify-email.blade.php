@@ -2,7 +2,7 @@
 'class' => 'off-canvas-sidebar',
 'classPage' => 'login-page',
 'activePage' => 'profile',
-'title' =>"Inicio",
+'title' =>"Verify-email",
 'pageBackground' => asset("material").'/img/login.jpg',
 'navbarClass'=>'text-primary',
 'background'=>'#eee !important'
@@ -30,6 +30,9 @@
               @csrf
               <button type="submit" class="btn btn-primary  btn-round ">Enviar nuevo link</button>
             </form>
+            <p  class="card-description text-center my-4 text-sm">
+              Importante: Consultar tambien su bandeja de correos no deseados o buscar con la direccion de correo materiales.maca57@gmail.com
+            </p>
           </div>
         </div>
       </div>

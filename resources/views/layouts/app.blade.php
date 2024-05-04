@@ -194,6 +194,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <!-- End Data picker select range    -->
 
+     <!--  Ckeditor. -->
+     <script src="{{ asset('assets/ckeditor-full/ckeditor.js') }}"></script>
+
 
       <!-- se agrega app con time -->
     <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>

@@ -79,7 +79,7 @@
                             <div class="form-row mt-5">
                                 <div class="form-group col-md-12 ">
                                     <label class="bmd-label-floating" for="information">Informacion</label>
-                                    <textarea class="form-control border rounded mt-2" name="information" rows="5" value="">{{ old('information') }}</textarea>
+                                    <textarea class="ckeditor form-control border rounded mt-2" name="information" rows="5" value="">{{ old('information') }}</textarea>
                                     @error('information')
                                     <small class="text-danger"> {{ $message }} </small>
                                     @enderror

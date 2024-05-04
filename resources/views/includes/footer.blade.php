@@ -61,7 +61,7 @@
                 &copy;
                 <script>
                     document.write(new Date().getFullYear())
-                </script> Material didáctico MaCa by Sandra Cano <i class="material-icons ml-2 animate__animated  animate__pulse animate__infinite 	infinite	 animate__slow">favorite</i>
+                </script> Material didáctico MaCa by Sandra Cano <i class="material-icons ml-2 animate__animated  animate__pulse animate__infinite 	infinite">favorite</i>
             </div>
         </div>
 

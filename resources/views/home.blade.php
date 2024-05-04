@@ -106,15 +106,18 @@
             </div>
             <div class="col-6 col-md-3 p-1 text-center">
                 <a href="{{route('membership')}}">
-                    <div class="rounded bg-info">
-                        <img class="w-100" src="{{asset('img/preescolar.png')}}" alt="">
+                    <div class="rounded bg-info position-relative" style=" overflow: hidden !important;">
+                    <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite"><span>Preventa</span></div>
+                        <img class="w-100 rounded" src="{{asset('img/preescolar_preventa.png')}}" alt="">
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-3 p-1 text-center">
+
                 <a href="{{route('membership')}}">
-                    <div class="rounded bg-warning">
-                        <img class="w-100" src="{{asset('img/primaria.png')}}" alt="">
+                    <div class="rounded bg-warning position-relative" style=" overflow: hidden !important;">
+                        <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite"><span>Preventa</span></div>
+                        <img class="w-100 rounded" src="{{asset('img/primaria_preventa.png')}}" alt="">
                     </div>
                 </a>
             </div>
@@ -130,12 +133,12 @@
         <livewire:best-seler />
 
         <div class="row mt-3">
-           
+
             <div class="col-12">
                 <h1 class=" lg:pt-5 md:text-3xl  text-center  text-xl text-muted">La mejor opción para <span class="fw-bold text-primary">personas que enseñan desde el corazón.</span></h1>
                 <p class="text-center mx-2 text-justify">¿Buscas material didáctico o material para decorar el aula? en
                     <span class="text-primary">Material didáctico MaCa
-                        <span class="animate__animated  animate__pulse animate__infinite 	infinite	 animate__slow">💖</span>
+                        <span class="animate__animated  animate__pulse animate__infinite 	infinite	 ">💖</span>
                     </span> tenemos algo para ti.
                 </p>
                 <div class="row mt-5">
@@ -143,7 +146,7 @@
                         <div class="row ">
                             <div class="col-auto">
                                 <div class="rounded p-3 box-target">
-                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinit animate__slow text-primary">
+                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinit  text-primary">
                                         kid_star
                                     </span>
                                 </div>
@@ -157,7 +160,7 @@
                         <div class="row mt-2 mt-lg-5">
                             <div class="col-auto">
                                 <div class="rounded p-3 box-target">
-                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinite	 animate__slow text-primary">
+                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinite	 text-primary">
                                         card_membership
                                     </span>
                                 </div>
@@ -178,7 +181,7 @@
                         <div class="row mt-2 mt-lg-5">
                             <div class="col-auto">
                                 <div class="rounded p-3 box-target">
-                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinite	 animate__slow text-primary">
+                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinite text-primary">
                                         search
                                     </span>
 
@@ -195,7 +198,7 @@
                         <div class="row my-2 mt-lg-5">
                             <div class="col-auto">
                                 <div class="rounded p-3 box-target">
-                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinite	 animate__slow text-primary">
+                                    <span class="material-symbols-outlined animate__animated  animate__pulse animate__infinite 	infinite text-primary">
                                         check_circle
                                     </span>
                                 </div>

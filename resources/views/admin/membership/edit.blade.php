@@ -75,7 +75,7 @@
                             <div class="form-row mt-5">
                                 <div class="form-group col-md-12">
                                     <label for="information">Informacion</label>
-                                    <textarea class="form-control border mt-2 rounded" name="information" rows="5" value="">{{ old('information') ?: $membership->information }}</textarea>
+                                    <textarea class="ckeditor form-control border mt-2 rounded" name="information" rows="5" value="">{{ old('information') ?: $membership->information }}</textarea>
                                     @error('information')
                                     <small class="text-danger"> {{ $message }} </small>
                                     @enderror

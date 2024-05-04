@@ -39,11 +39,18 @@
                     @if (isset($products) && $products->count() > 2)
 
                     <div class="col-6 col-md-4 col-lg-3 " style="position: relative; padding:5px !important">
-                        <div class=" animate__animated  animate__shakeX animate__repeat-2	 animate__slow  mt-0 card card-primary card-product {{($membership->discount_percentage > 0) ? 'border  border-primary' : 'border' }}" style=" overflow: hidden;">
-                            @if ($membership->price > $membership->price_with_discount)
-
-                            <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite	 animate__slow "><span>Oferta</span></div>
+                        <div class=" animate__animated  animate__shakeX animate__repeat-2	  mt-0 card card-primary card-product {{($membership->discount_percentage > 0) ? 'border  border-primary' : 'border' }}" style=" overflow: hidden;">
+                            @if($membership->start > now())
+                            <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite"><span>Preventa</span></div>
+                            @else
+                            @if($membership->price > $membership->price_with_discount)
+                            <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite"><span>Oferta</span></div>
                             @endif
+                            @endif
+
+
+
+
                             <div class="card-header card-header-image mt-2" data-header-animation="false">
                                 <a href="{{route('membership.show',$membership->slug)}}">
                                     <img class="img" src="{{ Storage::url($membership->itemMain) }} ">
@@ -92,8 +99,40 @@
 
 
 
-                                <span class="text-center text-sm d-block">
-                                    Vigencia:
+                                <span class="text-center text-muted  d-block text-xxs">
+                                    <span class="d-block mb-1"> Vigencia:</span>
+
+                                    {{date_format(new DateTime($membership->start),'d')}} de
+                                    @if(date_format(new DateTime($membership->start),'M')=='Jan')
+                                    enero
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Feb')
+                                    febrero
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Mar')
+                                    marzo
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Apr')
+                                    abril
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='May')
+                                    mayo
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Jun')
+                                    junio
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Jul')
+                                    julio
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Aug')
+                                    agosto
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Sep')
+                                    septiembre
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Oct')
+                                    octubre
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Nov')
+                                    noviembre
+                                    @elseif(date_format(new DateTime($membership->start),'M')=='Dec')
+                                    diciembre
+                                    @endif
+                                    del
+                                    {{date_format(new DateTime($membership->start),'Y')}}
+
+
+                                    al
 
                                     {{date_format(new DateTime($membership->expiration),'d')}} de
                                     @if(date_format(new DateTime($membership->expiration),'M')=='Jan')
@@ -128,7 +167,7 @@
                             </div>
                             <div class="card-footer">
                                 <p class="text-muted text-start mt-2">
-                                    {{ Str::limit($membership->information, $limit = 80, $end = '...') }}
+                                    {!! Str::limit($membership->information, $limit = 80, $end = '...') !!}
                                     <a href=" {{route('membership.show',$membership->slug)}} " style="text-decoration: none;">
                                         más informacion
                                     </a>
@@ -355,5 +394,5 @@
         </div>
 
     </div>
-    
+
 </div>
