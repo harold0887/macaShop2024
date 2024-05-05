@@ -8,9 +8,11 @@ use Livewire\Component;
 use App\Models\Membership;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
+use App\Mail\PaymentReminder;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Mail;
 use MercadoPago\Resources\User\Sales;
+use Illuminate\Database\QueryException;
 
 class IndexSales extends Component
 {
@@ -22,6 +24,8 @@ class IndexSales extends Component
 
     public $sortDirection = 'desc';
     public $sortField = 'id';
+    public $link = '';
+    public $idSelect = 'ssss';
     public function updatingSearch()
     {
         $this->resetPage();
@@ -51,7 +55,7 @@ class IndexSales extends Component
         return view('livewire.admin.index-sales', compact('orders'));
     }
 
-   
+
 
     //sort
     public function setSort($field)
@@ -70,7 +74,7 @@ class IndexSales extends Component
         $this->reset(['search']);
     }
 
-    
+
     #[On('delete-sales')]
     public function delete($id)
     {
@@ -92,8 +96,64 @@ class IndexSales extends Component
         }
     }
 
+    #[On('send-reminder-cliete')]
+    public function reminder($id)
+    {
+        try {
 
-     // public function resendOrder($order)
+            $order = Order::findOrFail($id);
+            if ($order->link != null) {
+                $confirmacionOrder = new PaymentReminder($order);
+                Mail::to($order->user->email) //enviar correo al cliente
+                    ->send($confirmacionOrder);
+
+                $order->update([
+                    'payment_reminder' => $order->payment_reminder+1,
+                ]);
+
+                $this->dispatch(
+                    'success-auto-close',
+                    title: 'Enviado!',
+                    message: 'Se ha enviado la notificación de pago al cliente'
+                );
+            } else {
+                $this->dispatch('error', message: 'La orden no cuenta con link de pago');
+            }
+        } catch (QueryException $e) {
+
+            $this->dispatch('error', message: 'Error al enviar la notificación de pago - ' . $e);
+        }
+    }
+    #[On('send-reminder-prueba')]
+    public function reminderPrueba($id)
+    {
+        try {
+
+            $order = Order::findOrFail($id);
+            if ($order->link != null) {
+                $sendLinkPayment = new PaymentReminder($order);
+                Mail::to("arnulfoacosta0887@gmail.com") //enviar correo de prueba
+                    ->send($sendLinkPayment);
+
+                $this->dispatch(
+                    'success-auto-close',
+                    title: 'Enviado!',
+                    message: 'Se ha enviado la notificación de pago como prueba'
+                );
+            } else {
+                $this->dispatch('error', message: 'La orden no cuenta con link de pago');
+            }
+        } catch (QueryException $e) {
+
+            $this->dispatch('error', message: 'Error al enviar la notificación de pago - ' . $e);
+        }
+    }
+
+
+
+
+
+    // public function resendOrder($order)
     // {
     //     $materialesComprados = false;
     //     $MembresiasCompradas = [];
@@ -174,7 +234,7 @@ class IndexSales extends Component
     //         }
     //     }
     // }
- //actualizar orden desde mercado pago, se actualiza desde hobs
+    //actualizar orden desde mercado pago, se actualiza desde hobs
     // public function updateStatus($id)
     // {
     //     $response = Http::get("https://api.mercadopago.com/v1/payments/$id" . "?access_token=APP_USR-2311547743825741-013023-3721797a3fbdf97bf2d4ff3f58000481-269113557");

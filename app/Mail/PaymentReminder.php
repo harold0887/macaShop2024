@@ -11,28 +11,34 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PaymentApprovedEmail extends Mailable
+class PaymentReminder extends Mailable
 {
     use Queueable, SerializesModels;
-    public $message;
-    public $name;
+    public $userName;
     public $subject;
     public $order;
     public $url;
-    public $price;
-    public $date;
     public $products, $packages, $memberships;
 
+    public $subtotal, $descuento, $total;
 
-
-    public function __construct(Order $order)
+    /**
+     * Create a new message instance.
+     */
+    public function __construct(Order $order,)
     {
-        $this->subject = 'Confirmación de compra ' . $order->id;
-        $this->name = $order->user->name;
+
+        $this->subject = "Material didáctico MaCa - Regresa por tu carrito";
+        $this->userName = $order->user->name;
         $this->order = $order->id;
-        $this->url = "https://materialdidacticomaca.com/";
-        $this->price = $order->amount;
-        $this->date = $order->created_at;
+        $this->subtotal = $order->amount;
+        $this->descuento = $order->amount * .10;
+        $this->total = $this->subtotal - $this->descuento;
+
+
+        //$this->products = Order_Details::where('order_id', $this->order)->where('product_id', '!=', null)->get();
+        //$this->packages = Order_Details::where('order_id', $this->order)->where('package_id', '!=', null)->get();
+        //$this->membreships = Order_Details::where('order_id', $this->order)->where('membership_id', '!=', null)->get();
 
         $this->products = Order_Details::whereHas('order', function ($query) {
             $query->where('orders.id', $this->order);
@@ -49,6 +55,8 @@ class PaymentApprovedEmail extends Mailable
             $query->where('orders.id', $this->order);
         })->where('order_details.membership_id', '!=', null)
             ->get();
+
+        $this->url = $order->link;
     }
 
     /**
@@ -57,6 +65,7 @@ class PaymentApprovedEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+
             subject: $this->subject,
         );
     }
@@ -67,7 +76,7 @@ class PaymentApprovedEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.order-success',
+            markdown: 'mail.payment-reminder',
         );
     }
 

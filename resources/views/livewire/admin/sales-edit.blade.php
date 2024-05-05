@@ -51,10 +51,15 @@
                                             <option value="charged_back">charged_back</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-12 ">
+                                    <div class="form-group col-12 col-md-6">
+                                        <label class="bmd-label-floating">Link de Pago</label>
+                                        <input type="text" class="form-control" wire:model.defer="link">
+                                    </div>
+                                    <div class="form-group col-12 col-md-6">
                                         <label class="bmd-label-floating">Comentarios</label>
                                         <input type="text" class="form-control" wire:model.defer="comentario">
                                     </div>
+
                                 </div>
                             </div>
                             <div class="col-12 col-lg-2">
@@ -220,7 +225,7 @@
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
                                     <div class="col-12 col-md-9 align-self-center">
-                                        {{ $item->title }} 
+                                        {{ $item->title }}
                                     </div>
 
                                 </div>
@@ -235,7 +240,7 @@
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
                                     <div class="col-12 col-md-9 align-self-center">
-                                    {{ $item->title }}
+                                        {{ $item->title }}
                                     </div>
 
                                 </div>
@@ -251,7 +256,7 @@
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
                                     <div class="col-12 col-md-9 align-self-center">
-                                    {{ $item->title }}
+                                        {{ $item->title }}
                                     </div>
 
                                 </div>

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Request;
 class SalesEdit extends Component
 {
     protected $listeners = ['some-event2' => '$refresh'];
-    public $order, $ids, $patch, $search = '', $contacto, $status, $mercadoPago, $facebook, $comentario;
+    public $order, $ids, $patch, $search = '', $contacto, $status, $mercadoPago, $facebook, $comentario, $link;
     public $suma;
     protected $rules = [
         'contacto' => ['required', 'string'],
@@ -34,6 +34,7 @@ class SalesEdit extends Component
         $this->status = $this->order->status;
         $this->mercadoPago = $this->order->payment_id;
         $this->comentario = $this->order->contacto;
+        $this->link = $this->order->link;
     }
     public function render()
     {
@@ -231,6 +232,7 @@ class SalesEdit extends Component
                 'status' => $this->status,
                 'payment_id' => $this->mercadoPago,
                 'contacto' => $this->comentario,
+                'link' => $this->link,
             ]);
             User::findOrFail($this->order->customer_id)->update([
                 'whatsapp' => $this->contacto,

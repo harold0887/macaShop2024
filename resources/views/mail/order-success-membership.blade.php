@@ -19,7 +19,7 @@ CANTIDAD PAGADA: ${{$price}} MXN
 
 FECHA DE COMPRA: {{date_format(now(),'d-M-Y')}}
 
-VÁLIDO POR: Más de 100 recursos a lo largo del ciclo escolar.
+<!-- VÁLIDO POR: Más de 100 recursos a lo largo del ciclo escolar. -->
 
 
 

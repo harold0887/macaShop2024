@@ -431,13 +431,7 @@
                             <span class="fw-bold text-muted mr-2">Active: </span><span class="font-italic">{{ $order->active == 1 ? 'Yes' : 'No' }}</span>
                             <br>
                             <span class="fw-bold text-muted mr-2">Comentarios: </span><span class="font-italic">{{ $order->contacto }}</span>
-
                         </div>
-
-
-
-
-
                     </div>
                 </div>
             </div>

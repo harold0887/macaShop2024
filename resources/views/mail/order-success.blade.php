@@ -10,6 +10,27 @@ CANTIDAD PAGADA: ${{$price}} MXN
 FECHA DE COMPRA: {{date_format($date,'d-M-Y')}}
 
 
+<x-mail::table>
+    | Producto | Precio |
+    | ------------- | --------:|
+    @if(isset($memberships) && $memberships->count() > 0)
+    @foreach($memberships as $item)
+    | Membresía {{ $item->membership->title }} | {{$item->price}} |
+    @endforeach
+    @endif
+    @if(isset($packages) && $packages->count() > 0)
+    @foreach($packages as $item)
+    | {{$item->package->title}} | {{$item->price}} |
+    @endforeach
+    @endif
+    @if(isset($products) && $products->count() > 0)
+    @foreach($products as $item)
+    | {{$item->product->title}} | {{$item->price}} |
+    @endforeach
+    @endif
+    | | |
+    | Total | {{$price}} |
+</x-mail::table>
 
 
 
@@ -20,7 +41,7 @@ Sigue estos pasos para descargar los materiales didácticos.
     <li>Iniciar sesión con tu usuario y contraseña</li>
     <li>Ingresar a la sección de “Mis compras”.</li>
     <li>Da click en el botón detalle de compra.</li>
-    <li>Da click en el botón descargar.</li>
+    <li>Da click en el botón descargar o enviar a email.</li>
     <li>Disfruta el material didáctico.</li>
 </ol>
 <hr>

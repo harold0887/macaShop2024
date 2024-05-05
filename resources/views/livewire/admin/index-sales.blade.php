@@ -1,5 +1,6 @@
 <div class="content py-0 bg-white">
     @include('includes.spinner-livewire')
+    @include('includes.modal.form-link-pago')
     <div class="container-fluid">
 
         <div class="row">
@@ -222,12 +223,19 @@
                                         </td>
                                         <td class="td-actions">
                                             <div class="btn-group m-0 d-flex" style="box-shadow: none !important">
+
                                                 <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->id) }}">
                                                     <i class=" material-icons">visibility</i>
                                                 </a>
                                                 <a class="btn btn-success btn-link " href="{{ route('sales.edit', $order->id) }}">
                                                     <i class="material-icons">edit</i>
                                                 </a>
+                                                @if($order->status == 'create' && 2 > $order->payment_reminder )
+                                                <button class="btn btn-success btn-link text-primary" onclick="confirmSendEmail('{{ $order->id }}')">
+                                                    <i class="material-icons text-primary">mark_email_unread</i>
+                                                </button>
+                                                @endif
+
                                                 <button class="btn btn-success btn-link text-danger " onclick="confirmDelete('{{ $order->id }}', '{{ $order->status }}')">
                                                     <i class="material-icons text-danger">close</i>
                                                 </button>
@@ -256,12 +264,14 @@
 </div>
 
 
+
+
 <script>
     //Confirmar eliminar producto
     function confirmDelete(id, status) {
         swal({
             title: "¿Realmente quiere eliminar la venta: " + id + " con status " + status + " ? ",
-            type: "question",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
@@ -272,7 +282,32 @@
                     id: id
                 });
             } else {
-                Swal('Cancelado', 'Tu archivo está seguro :)');
+                swal('Cancelado', 'La compra está segura :)');
+            }
+        });
+    }
+
+    //Confirmar eliminar producto
+    function confirmSendEmail(id, status) {
+
+
+        swal({
+            title: "¿Realmente quiere enviar un recordatorio de pago para la orden: " + id + " ? ",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Enviar a cliente!",
+            cancelButtonText: "Cancelar"
+
+        }).then((result) => {
+            if (result.value) {
+                Livewire.dispatch('send-reminder-cliete', {
+                    id: id
+                });
+            } else {
+                swal('Cancelado', 'El envio se ha cancelado :)');
+
             }
         });
     }
