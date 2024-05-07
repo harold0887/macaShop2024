@@ -52,12 +52,11 @@
 
 
 
+   
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
 
-
-
-
+   
 
 
 
@@ -199,7 +198,7 @@
 
 
       <!-- se agrega app con time -->
-    <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>
+      <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>
 
     @stack('js')
     @livewireScripts
