@@ -52,11 +52,11 @@
 
 
 
-   
+
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
 
-   
+
 
 
 
@@ -88,7 +88,7 @@
     @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*'))
     @include('layouts.page_templates.admin')
 
-    @elseif(Route::is('profile.*','customer.*','order.*'))
+    @elseif(Route::is('profile.*','customer.*','order.*','paselista.*'))
     @include('layouts.page_templates.user')
 
     @elseif(Route::is('login','register','password.email','password.request','password.reset'))

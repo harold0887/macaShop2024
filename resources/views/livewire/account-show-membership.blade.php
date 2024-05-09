@@ -93,6 +93,8 @@
                                     </td>
                                     <td>
                                         <div class="row mx-0">
+
+                                            @if(now() >= $product->fecha_membresia)
                                             <div class="col-12">
                                                 <div wire:loading.remove>
                                                     <div>
@@ -121,6 +123,20 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @else
+                                            <div class="col-12 ">
+
+                                                <span class="text-primary text-base">Disponible a partir del {{date_format(new DateTime($product->fecha_membresia),'d-M-Y')}}</span>
+
+                                            </div>
+
+                                            @endif
+
+
+
+
+
+
                                         </div>
                                     </td>
                                 </tr>

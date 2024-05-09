@@ -75,17 +75,25 @@
             </li>
             <li class="nav-item{{ $activePage == 'packages' ? ' active' : '' }}">
                 <a class="nav-link" href="{{route('customer.packages')}}">
-                <i class="material-icons">library_add</i>
+                    <i class="material-icons">library_add</i>
                     <p>Mis Paquetes</p>
                 </a>
             </li>
             <li class="nav-item{{ $activePage == 'memberships' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('customer.memberships') }}">
-                <i class="material-icons">card_membership</i>
+                    <i class="material-icons">card_membership</i>
                     <p>Mis Membresías</p>
                 </a>
             </li>
-          
+            @role('admin')
+            <li class="nav-item{{ $activePage == 'paselista' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('paselista.index') }}">
+                    <i class="material-icons">checklist</i>
+                    <p>Pase de lista</p>
+                </a>
+            </li>
+            @endrole
+
 
 
 
