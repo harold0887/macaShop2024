@@ -25,7 +25,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\SalesControler;
 use App\Http\Controllers\GradeController;
-use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
@@ -86,9 +85,6 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('customer/packages/{id}', AccountShowPackages::class)->name('customer.packages-show');
       Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
       Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
-
-
-      Route::resource('customer/paselista', GrupoController::class);
     });
   });
 });

@@ -35,7 +35,7 @@
 
     <link href="{{ asset('css/text.min.css') }}" rel="stylesheet">
 
-    <!-- @vite(['resources/css/app.scss', 'resources/js/app.js']) -->
+    @vite(['resources/css/app.scss', 'resources/js/app.js'])
 
 
     <!-- CSS slick -->
@@ -53,7 +53,7 @@
 
 
 
-    <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('css/main.css') }}" rel="stylesheet"> -->
 
 
 
@@ -85,7 +85,7 @@
     </form>
 
 
-    @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*'))
+    @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support'))
     @include('layouts.page_templates.admin')
 
     @elseif(Route::is('profile.*','customer.*','order.*','paselista.*'))
@@ -198,7 +198,7 @@
 
 
       <!-- se agrega app con time -->
-      <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>
+      <!-- <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script> -->
 
     @stack('js')
     @livewireScripts
