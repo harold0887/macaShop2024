@@ -45,6 +45,10 @@
         </div>
         @else
 
+
+
+
+        @if (isset($products) && $products->count() > 0)
         <div class="col-12 text-muted">
             Ordernar Por:
             <br>
@@ -54,9 +58,6 @@
             <button type="button" class="btn btn-sm  mx-0 px-2  {{$sortDirection=='desc' && $sortField=='title' ? 'btn-success ' :'btn-outline-info'}}" wire:click="setSort('title', 'desc')">Nombre (Z-A)</button>
 
         </div>
-
-
-        @if (isset($products) && $products->count() > 0)
         <div class="col-12">
             <div class="card mt-0">
                 <div class="card-body px-0">
@@ -149,16 +150,7 @@
         </div>
         @else
         <div class="col-12 mt-5 text-center">
-            <span class="h4 text-muted">Aún no ha realizado ninguna compra, visite <a href=" {{ route('paquete') }} ">nuestra tienda</a> para comprar su primer paquete de materiales didácticos. <span>
-        </div>
-        <div class="col-12 text-center mt-5">
-            <a href="{{ route('paquete') }}" class="text-white btn btn-primary btn-lg btn-round">
-                <div class="d-flex align-items-center">
-                    <i class="material-icons  mr-2 ">shopping_bag</i>
-                    <span class="fw-bold">Ver tienda</span>
-                </div>
-
-            </a>
+            <span class="h4 text-muted">Aún no hay materiales didácticos disponibles, por favor espere a que inicie la membresía el {{date_format(new DateTime($membership->start),'d-M-Y')}}. <span>
         </div>
         @endif
         @endif
