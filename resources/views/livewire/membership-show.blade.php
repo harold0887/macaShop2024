@@ -171,6 +171,7 @@
                 </div>
                 <!-- row title -->
                 <div class="row">
+                    @if ($membership->products->count() > 0)
                     @foreach ($membership->products as $product)
                     <div class="col-6 col-md-4 col-lg-3 mb-4" style="position: relative; padding:5px !important">
                         <div class="card card-primary card-product  ">
@@ -209,6 +210,13 @@
                     </div>
 
                     @endforeach
+
+                    @else
+                    <div class="col-12 mt-5 text-center">
+                        <span class="h4 text-muted">La membresía está en preventa, por lo cual aún no hay materiales didácticos disponibles, agradecemos su comprensión. <span>
+                    </div>
+
+                    @endif
                 </div>
             </div>
         </div>

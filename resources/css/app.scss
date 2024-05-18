@@ -94,6 +94,13 @@ a {
     nuevos estilos
 ----------------------------------------------------- */
 
+.form-check .form-check-sign .check::before {
+  margin-top: 3px;
+  margin-left: 12px;
+}
+
+
+
 .off-canvas-sidebar .navbar.navbar-transparent {
   padding-top: 5px !important;
 }

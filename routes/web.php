@@ -87,7 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('customer/packages/{id}', AccountShowPackages::class)->name('customer.packages-show');
       Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
       Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
-      Route::resource('customer/paselista', GrupoController::class);
+      Route::resource('customer/grupos', GrupoController::class);
     });
   });
 });
@@ -97,7 +97,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['role:admin']], function () {
   Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
   Route::resource('dashboard/products', ProductsController::class)->except('delete');
-  Route::resource('dashboard/memberships', MembershipController::class)->except(['delete', 'show']);
+  Route::resource('dashboard/memberships', MembershipController::class)->except(['delete']);
   Route::resource('dashboard/category', CategoryController::class)->except('show');
   Route::resource('dashboard/package', PackageController::class)->except(['show', 'delete']);
   Route::resource('dashboard/degrees', GradeController::class)->except('show');

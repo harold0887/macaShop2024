@@ -24,7 +24,6 @@ class Membership extends Model
     {
         return $this->belongsToMany('App\Models\Product')
             ->whereNotIn('title', ['newsDesktop', 'newsMobile']);
-           
     }
 
 
@@ -34,6 +33,13 @@ class Membership extends Model
     public function  orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class, 'order_details', 'membership_id', 'order_id');
+    }
+
+    //Relacion muchos a muchos con Order
+    public function  ordersAprroved(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'order_details', 'membership_id', 'order_id')->where('status', 'approved')->whereNotIn('customer_id', [1, 5, 8218])
+        ->orderBy('created_at', 'desc');
     }
 
 

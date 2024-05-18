@@ -87,7 +87,7 @@
             </li>
             @role('admin')
             <li class="nav-item{{ $activePage == 'paselista' ? ' active' : '' }}">
-                <a class="nav-link" href="{{ route('paselista.index') }}">
+                <a class="nav-link" href="{{ route('grupos.index') }}">
                     <i class="material-icons">checklist</i>
                     <p>Pase de lista</p>
                 </a>

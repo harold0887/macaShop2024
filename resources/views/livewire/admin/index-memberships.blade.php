@@ -195,28 +195,23 @@
                                         <td>{{ $membership->products->count() }}</td>
                                         <td>
                                             <div class="row">
-                                                <div class="col-6">
-                                                    Web
-                                                </div>
-                                                <div class="col-6 text-end">
-                                                    {{ $membership->salesWeb }}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    Externo
-                                                </div>
-                                                <div class="col-6 text-end">
-                                                    {{ $membership->salesexternal }}
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    Total
-                                                </div>
-                                                <div class="col-6 text-end">
-                                                    {{ $membership->salesAll }}
-                                                </div>
+                                                <table>
+
+
+                                                    <tr style="background-color: #11ffee00 !important;">
+                                                        <td class="py-0 px-1">web</td>
+                                                        <td class="py-0 px-1"> {{ $membership->salesWeb }}</td>
+
+                                                    </tr>
+                                                    <tr style="background-color: #11ffee00 !important; ">
+                                                        <td class="py-0 px-1" style="border:none !important">Externo</td>
+                                                        <td class="py-0 px-1" style="border:none !important">{{ $membership->salesexternal }}</td>
+                                                    </tr>
+                                                    <tr style="background-color: #11ffee00 !important; ">
+                                                        <td class="py-0 px-1" style="border:none !important">Total</td>
+                                                        <td class="py-0 px-1" style="border:none !important">{{ $membership->salesAll }}</td>
+                                                    </tr>
+                                                </table>
                                             </div>
 
 
@@ -242,6 +237,9 @@
                                             </div>
                                         </td>
                                         <td class="td-actions">
+                                            <a class="btn  btn-link" href="{{ route('memberships.show', $membership->id) }}" target="_blank">
+                                                <i class="material-icons text-info">visibility</i>
+                                            </a>
                                             <a class="btn btn-success btn-link" href="{{ route('memberships.edit', $membership->id) }}">
                                                 <i class="material-icons">edit</i>
                                             </a>

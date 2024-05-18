@@ -181,10 +181,10 @@
                             {{date_format(new DateTime($membership->expiration),'Y')}}
                         </span>
                         <p class="text-muted text-start m-3">
-                        {!! $membership->information !!}
+                            {!! $membership->information !!}
                         </p>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer  d-flex justify-content-center">
                         <a href=" {{route('membership.show',$membership->slug)}} " class="btn   btn-link text-primary">
                             Ver materiales didácticos incluidos
                         </a>
@@ -192,7 +192,6 @@
                 </div>
             </div>
             @endforeach
-
             <div class="col-12 text-center text-sm md:text-base ld:text-base">
                 <span class="text-danger">Importante:</span>
                 <span class=" text-muted"> La membresía no incluyen todo el material didáctico de la TIENDA.</span>

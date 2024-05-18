@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Grupo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GrupoController extends Controller
 {
@@ -27,7 +29,31 @@ class GrupoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'escuela' => ['required'],
+            'grado_grupo' => 'required',
+            'ciclo_escolar' => 'required',
+            'color' => 'required',
+        ]);
+
+        try {
+            Grupo::create([
+                'escuela' => request('escuela'),
+                'grado_grupo' => request('grado_grupo'),
+                'cliclo_escolar' => request('ciclo_escolar'),
+                'materia' => $request->materia ? $request->materia : null,
+                'maestro' => $request->maestro ? $request->maestro : null,
+                'color' => request('color'),
+                'user_id' => Auth::user()->id,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+
+
+            return redirect()->route('grupos.index')->with('success', 'El grupo se ha creado con éxito');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error al guardar el grupo - ' . $th->getMessage());
+        }
     }
 
     /**
@@ -35,7 +61,12 @@ class GrupoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $group = Grupo::findOrFail($id);
+
+    
+
+
+        return view('customer.grupos.show', compact('group'));
     }
 
     /**

@@ -12,8 +12,8 @@
                 <ol class="breadcrumb my-0 text-xs lg:text-base">
                     <li class="breadcrumb-item"><a href="{{route('home')}}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{route('profile.edit')}}">Cuenta</a></li>
-                    <li class="breadcrumb-item"><a href="{{route('profile.edit')}}">Pase de lista</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Crear grupo</li>
+                    <li class="breadcrumb-item"><a href="{{route('grupos.index')}}">Mis grupos</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Nuevo grupo</li>
                 </ol>
             </nav>
         </div>
@@ -28,12 +28,128 @@
                             <div class="card-header">
 
                                 <p class="card-category">
-                                    Regresar a mis grupos.
+                                    <a href="{{ route('grupos.index') }}">Regresar a mis grupos.</a>
                                 </p>
                             </div>
                             <div class="card-body">
                                 <div class="row justify-content-center">
-                                   
+                                    <div class="col-md-6">
+                                        <div class="card ">
+                                            <div class="card-header card-header-primary card-header-icon">
+                                                <div class="card-icon">
+                                                    <i class="material-icons">school</i>
+                                                </div>
+                                                <h4 class="card-title">Crear nuevo grupo</h4>
+                                            </div>
+                                            <div class="card-body ">
+                                                <form id="create-product-admin" action="{{ route('grupos.store') }}" method="POST">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Escuela</label>
+                                                        <input type="text" class="form-control" name="escuela" value="{{ old('escuela') }}">
+                                                        @error('escuela')
+                                                        <small class="text-danger"> {{ $message }} </small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Grado y grupo</label>
+                                                        <input type="text" class="form-control" name="grado_grupo" value="{{ old('grado_grupo') }}">
+                                                        @error('grado_grupo')
+                                                        <small class="text-danger"> {{ $message }} </small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Ciclo escolar</label>
+                                                        <input type="text" class="form-control" name="ciclo_escolar" value="{{ old('ciclo_escolar') }}">
+                                                        @error('ciclo_escolar')
+                                                        <small class="text-danger"> {{ $message }} </small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating d-block">Selecciona un color para identificar al grupo</label>
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input" type="radio" name="color" value="primary" checked>
+                                                                <div class="bg-primary rounded" style="width: 25px !important; height:25px !important"></div>
+                                                                <span class="circle">
+                                                                    <span class="check"></span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input" type="radio" name="color" value="rose" {{ old('color') == 'secondary' ? 'checked' : '' }}>
+                                                                <div class="bg-secondary rounded" style="width: 25px !important; height:25px !important"></div>
+                                                                <span class="circle">
+                                                                    <span class="check"></span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input" type="radio" name="color" value="info" {{ old('color') == 'info' ? 'checked' : '' }}>
+                                                                <div class="bg-info rounded" style="width: 25px !important; height:25px !important"></div>
+                                                                <span class="circle">
+                                                                    <span class="check"></span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input" type="radio" name="color" value="success" {{ old('color') == 'success' ? 'checked' : '' }}>
+                                                                <div class="bg-success rounded" style="width: 25px !important; height:25px !important"></div>
+                                                                <span class="circle">
+                                                                    <span class="check"></span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input" type="radio" name="color" value="danger" {{ old('color') == 'danger' ? 'checked' : '' }}>
+                                                                <div class="bg-danger rounded" style="width: 25px !important; height:25px !important"></div>
+                                                                <span class="circle">
+                                                                    <span class="check"></span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <label class="form-check-label">
+                                                                <input class="form-check-input" type="radio" name="color" value="warning" {{ old('color') == 'warning' ? 'checked' : '' }}>
+                                                                <div class="bg-warning rounded" style="width: 25px !important; height:25px !important"></div>
+                                                                <span class="circle">
+                                                                    <span class="check"></span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                        @error('color')
+                                                        <small class="text-danger"> {{ $message }} </small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Materia (opcional)</label>
+                                                        <input type="text" class="form-control" name="materia" value="{{ old('materia') }}">
+                                                        @error('materia')
+                                                        <small class="text-danger"> {{ $message }} </small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="bmd-label-floating">Maestro(a) (opcional)</label>
+                                                        <input type="text" class="form-control" name="maestro" value="{{ old('maestro') }}">
+                                                        @error('maestro')
+                                                        <small class="text-danger"> {{ $message }} </small>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="card-footer ">
+                                                        <button type="submit" class="btn btn-fill btn-primary">Guardar</button>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

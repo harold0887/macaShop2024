@@ -14,12 +14,13 @@ return new class extends Migration
     {
         Schema::create('grupos', function (Blueprint $table) {
             $table->id();
-            $table->string('escuela')->nullable();
+            $table->string('escuela');
             $table->string('grado_grupo');
             $table->string('cliclo_escolar');
             $table->string('materia')->nullable();
             $table->string('maestro')->nullable();
-            $table->boolean('oculto')->default(0);
+            $table->string('color');
+            $table->boolean('oculto')->default('0');
             $table->BigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();

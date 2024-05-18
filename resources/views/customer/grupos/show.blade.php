@@ -5,5 +5,5 @@
 'menuParent'=>'orders',
 ])
 @section('content')
-<livewire:customer.index-grupos />
+<livewire:customer.show-grupos />
 @endsection
