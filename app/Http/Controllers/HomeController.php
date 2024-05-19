@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,7 @@ class HomeController extends Controller
             ->first();
         $comments = Comment::where('best', 1)
             ->where('status', 1)->get();
-            
+
 
         return view('home', compact('newsMobile', 'newsDesktop', 'comments'));
     }
@@ -38,6 +39,10 @@ class HomeController extends Controller
     public function dashboard()
     {
         return view('dashboard');
+    }
+    public function routes()
+    {
+        return view('admin.support-routes');
     }
     public function profile()
     {
@@ -60,9 +65,52 @@ class HomeController extends Controller
 
         return "verified users all";
     }
-        
+
     public function banned()
     {
         return view('banned');
     }
+
+    public function storagePersonal()
+    {
+        try {
+            $target = '/home3/materi65/shop2024/storage/app/public';
+            $link =   '/home3/materi65/public_html/storage';
+            symlink($target, $link);
+            return back()->with('success', 'storage link personal create success');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error al crear el storage link personal - ' . $th->getMessage());
+        }
+    }
+    public function storageMain()
+    {
+        try {
+            Artisan::call('storage:link');
+            return back()->with('success', 'storage link main create success');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error al crear el storage link - ' . $th->getMessage());
+        }
+    }
+    public function clearCache()
+    {
+        try {
+            Artisan::call('cache:clear');
+            return back()->with('success', 'Application cache has been cleared');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error al crear el storage link - ' . $th->getMessage());
+        }
+    }
+
+
+    public function viewCler()
+    {
+        try {
+            Artisan::call('view:clear');
+            return back()->with('success', 'View cache has been cleared');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error al crear el storage link - ' . $th->getMessage());
+        }
+    }
+
+    
 }

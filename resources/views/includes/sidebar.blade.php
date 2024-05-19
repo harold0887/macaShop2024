@@ -123,6 +123,12 @@
           <p>IPS</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'routes' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('support.routes') }}">
+          <i class="material-icons">alt_route</i>
+          <p>Rutas de apoyo</p>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

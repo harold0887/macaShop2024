@@ -396,15 +396,4 @@ $preference->save();
 @endpush
 
 
-
-<!-- @if(session('createSuccessOrder'))
-<script>
-    setTimeout(function() {
-        $(".mercadopago-button").click();
-    }, 2000)
-</script>
-@endif -->
-
-
-
 @include('includes.alert-error')

@@ -145,31 +145,15 @@ Route::POST('createOrder', [MainController::class, 'createOrder'])->name('shop.c
 //rutas de apoyo  
 
 Route::group(['middleware' => ['role:admin']], function () {
-  Route::get('/link', function () {
-    $target = '/home3/materi65/shop2024/storage/app/public';
-    $link =   '/home3/materi65/public_html/storage';
-    symlink($target, $link);
-    echo "Link done";
-  });
 
-  Route::get('/storage-link', function () {
-    $target = storage_path('app/public');
-    $link =   $_SERVER['DOCUMENT_ROOT'] . '/storage';
-    symlink($target, $link);
-    echo "storage link success";
-  });
-
-  Route::get('/foo', function () {
-    Artisan::call('storage:link');
-    echo "storage done";
-  });
+  Route::get('dashboard/routes', [HomeController::class, 'routes'])->name('support.routes');
+  Route::get('/storage-personal', [HomeController::class, 'storagePersonal'])->name('storage.personal');
+  Route::get('/storage-link', [HomeController::class, 'storageMain'])->name('storage.link');
+  Route::get('/clear-cache', [HomeController::class, 'clearCache'])->name('clear-cache');
+  Route::get('/view-clear', [HomeController::class, 'viewCler'])->name('view-clear');
 
 
-  // Clear application cache:
-  Route::get('/clear-cache', function () {
-    Artisan::call('cache:clear');
-    return 'Application cache has been cleared';
-  });
+
 
   //Clear route cache:
   Route::get('/route-cache', function () {
@@ -181,40 +165,6 @@ Route::group(['middleware' => ['role:admin']], function () {
   Route::get('/config-cache', function () {
     Artisan::call('config:cache');
     return 'Config cache has been cleared';
-  });
-
-  // Clear view cache:
-  Route::get('/view-clear', function () {
-    Artisan::call('view:clear');
-    return 'View cache has been cleared';
-  });
-
-  // pruebas cURL MP:
-  Route::get('/curl', function () {
-    $ACCESS_TOKEN = config('services.mercadopago.token'); //aqui cargamos el token
-    $curl = curl_init(); //iniciamos la funcion curl
-
-    curl_setopt_array($curl, array(
-      //ahora vamos a definir las opciones de conexion de curl
-      CURLOPT_URL => "https://api.mercadopago.com/v1/payments/77035052505", //aqui iria el id de tu pago
-      CURLOPT_CUSTOMREQUEST => "GET", // el metodo a usar, si mercadopago dice que es post, se cambia GET por POST.
-      CURLOPT_RETURNTRANSFER => true, //esto es importante para que no imprima en pantalla y guarde el resultado en una variable
-      CURLOPT_ENCODING => "",
-      CURLOPT_TIMEOUT => 0,
-      CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-      CURLOPT_HTTPHEADER => array(
-        'Authorization: Bearer ' . $ACCESS_TOKEN
-      ),
-    ));
-
-
-
-    $response = curl_exec($curl); //ejecutar CURL
-    $response = json_decode($response, true); //a la respuesta obtenida de CURL la guardamos en una variable con formato json.
-
-
-    return $response;
   });
 });
 
