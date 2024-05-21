@@ -35,6 +35,7 @@
 
 
 
+
         <div class="col-md-12 ml-auto mr-auto">
             <div class="page-categories ">
                 <div class="tab-content tab-space tab-subcategories pt-0">
@@ -42,60 +43,70 @@
                         <div class="card my-0 ">
                             <div class="card-body py-0">
                                 <div class="row justify-content-center">
-                                  
+
 
                                     <div class="col-12 col-md-6 ">
 
 
                                         <div class="accordion accordion-flush text-lg" id="accordionAlumnos">
 
-                                            @foreach($group->estudiantes as $estudiante)
+                                            @foreach($estudiantes as $estudiante)
                                             <div class="accordion-item">
 
                                                 <h2 class="accordion-header d-flex " id="flush-headingOne">
+                                                    <div class="d-flex  align-items-center">
+                                                        <div class="border   rounded 
 
-                                                    <div class="form-check form-check-inline w-75 ">
-                                                        <label class="form-check-label text-base  lg:text-lg" style="padding-left: 35px">
-                                                            <input class="form-check-input" type="checkbox" value="" 
-                                                            
-                                                            @if ($estudiante->asistencias->count() > 0)
-                                                            @foreach($estudiante->asistencias as $asistencia)
-                                                            @if($asistencia->dia == $select_date)
-                                                            checked
+                                                        @foreach($estudiante->asistencias as $asistencia)
+                                                            @if($asistencia->dia == $select_date && $asistencia->asistencia)
+                                                            border-success bg-success
 
 
                                                             @endif
                                                             @endforeach
-                                                           
 
-                                                            @endif
-                                                            
-                                                            wire:click="saveAssistance({{ $estudiante->id }})"
-                                                            > {{$estudiante->apellidos}} {{$estudiante->nombre}}
-                                                            <span class="form-check-sign">
-                                                                <span class="check" style="width: 30px; height:30px"></span>
-                                                            </span>
-                                                        </label>
+
+                                                        
+                                                        " style="width: 30px; height:30px; cursor: pointer" wire:click="saveAssistance({{ $estudiante->id }})">
+
+                                                        </div>
+
+
                                                     </div>
 
-                                                    <button class="accordion-button collapsed w-25" type="button" data-mdb-toggle="collapse" data-mdb-target="#flush-{{$loop->index}}" aria-expanded="false" aria-controls="flush-{{$loop->index}}">
 
+
+                                                    <button class="accordion-button collapsed  text-base  lg:text-lg text-muted" type="button" data-mdb-toggle="collapse" data-mdb-target="#flush-{{$loop->index}}" aria-expanded="false" aria-controls="flush-{{$loop->index}}">
+                                                        {{$estudiante->apellidos}} {{$estudiante->nombre}}
                                                     </button>
                                                 </h2>
                                                 <div id="flush-{{$loop->index}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-mdb-parent="#accordionAlumnos">
                                                     <div class="accordion-body">
-                                                        <span class="material-symbols-outlined mx-2 text-muted" style="cursor: pointer;">
-                                                            sports_soccer
+
+                                                        @foreach($tags as $tag)
+                                                        @php
+                                                        $exist= false;
+                                                        @endphp
+                                                        @foreach($estudiante->tags as $tag_es)
+                                                        @if($tag_es->tag_id == $tag->id )
+                                                        @php
+                                                        $exist= true;
+                                                        @endphp
+                                                        @endif
+                                                        @endforeach
+
+                                                        @if($exist)
+                                                        <span class="material-symbols-outlined mx-2 text-primary" style="cursor: pointer;" wire:click="saveTag('{{ $estudiante->id }}','{{$tag->id}}')">
+                                                            {{$tag->icon}}
                                                         </span>
-                                                        <span class="material-symbols-outlined mx-2 text-muted" style="cursor: pointer;">
-                                                            air
+                                                        @else
+                                                        <span class="material-symbols-outlined mx-2 text-muted" style="cursor: pointer;" wire:click="saveTag('{{ $estudiante->id }}','{{$tag->id}}')">
+                                                            {{$tag->icon}}
                                                         </span>
-                                                        <span class="material-symbols-outlined mx-2 text-muted" style="cursor: pointer;">
-                                                            biotech
-                                                        </span>
-                                                        <span class="material-symbols-outlined mx-2 text-muted" style="cursor: pointer;">
-                                                            water
-                                                        </span>
+                                                        @endif
+                                                        @endforeach
+
+
                                                     </div>
 
                                                 </div>
@@ -132,6 +143,7 @@
                 </div>
             </div>
         </div>
+        
     </div>
 
 

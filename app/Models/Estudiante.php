@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -27,5 +28,11 @@ class Estudiante extends Model
     public function asistencias()
     {
         return $this->hasMany(Asistencia::class);
+    }
+
+    //Relacion con tags, retorna los tags
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Estudiante_Tag::class);
     }
 }

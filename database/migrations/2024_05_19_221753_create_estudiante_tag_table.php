@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asistencias', function (Blueprint $table) {
+        Schema::create('estudiante_tag', function (Blueprint $table) {
             $table->id();
             $table->date('dia');
-            $table->boolean('asistencia');
+            $table->foreignId('tag_id')->references('id')->on('tags')->constrained()->cascadeOnDelete();
             $table->foreignId('estudiante_id')->references('id')->on('estudiantes')->constrained()->cascadeOnDelete();
-            $table->unique(array('dia', 'estudiante_id'));
+            $table->unique(array('tag_id', 'estudiante_id', 'dia'));
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asistencias');
+        Schema::dropIfExists('estudiante_tag');
     }
 };

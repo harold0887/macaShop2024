@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Customer;
 
-use App\Models\Asistencia;
-use App\Models\Estudiante;
+use App\Models\Tag;
 use App\Models\Grupo;
 use Livewire\Component;
+use App\Models\Asistencia;
+use App\Models\Estudiante;
+use App\Models\Estudiante_Tag;
 use Illuminate\Support\Facades\Request;
 
 class ShowGrupos extends Component
@@ -31,7 +33,7 @@ class ShowGrupos extends Component
     public function render()
     {
 
-        $estudiantes1 = Estudiante::
+        $estudiantes = Estudiante::
             // whereHas('asistencias', function ($query) {
             //     $query->where('dia',  $this->select_date);
             // })
@@ -41,8 +43,10 @@ class ShowGrupos extends Component
 
         //dd($estudiantes);
 
+        $tags = Tag::all();
 
-        return view('livewire.customer.show-grupos', compact('estudiantes1'));
+
+        return view('livewire.customer.show-grupos', compact('estudiantes', 'tags'));
     }
     public function saveAssistance($id)
     {
@@ -50,11 +54,26 @@ class ShowGrupos extends Component
             Asistencia::create([
                 'dia' => $this->select_date,
                 'estudiante_id' => $id,
+                'asistencia' => true,
             ]);
 
             $this->dispatch('success-auto-close', message: "El cambio se realizo con éxito");
         } catch (\Throwable $th) {
             $this->dispatch('error', message: "Error a guardar la asistencia" . $th->getMessage());
+        }
+    }
+    public function saveTag($estudiante, $tag)
+    {
+        try {
+            Estudiante_Tag::create([
+                'dia' => $this->select_date,
+                'estudiante_id' => $estudiante,
+                'tag_id' => $tag,
+            ]);
+
+            $this->dispatch('success-auto-close', message: "El tag  se realizo con éxito");
+        } catch (\Throwable $th) {
+            $this->dispatch('error', message: "Error a guardar el tag" . $th->getMessage());
         }
     }
 }

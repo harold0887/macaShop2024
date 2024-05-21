@@ -35,7 +35,7 @@
 
     <link href="{{ asset('css/text.min.css') }}" rel="stylesheet">
 
-    <!-- @vite(['resources/css/app.scss', 'resources/js/app.js']) -->
+    @vite(['resources/css/app.scss', 'resources/js/app.js'])
 
 
     <!-- CSS slick -->
@@ -198,7 +198,7 @@
 
 
       <!-- se agrega app con time -->
-      <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>
+      <!-- <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script> -->
 
     @stack('js')
     @livewireScripts

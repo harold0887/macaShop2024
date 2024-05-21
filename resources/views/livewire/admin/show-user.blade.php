@@ -66,6 +66,16 @@
                             <p class="card-description text-center my-4 text-sm  lg:text-base">
                                 El correo electrónico del usuario no ha sido verificado.
                             </p>
+                            <p class="card-description text-center my-4 text-sm  lg:text-base  d-inline">
+                                <span class="fw-bold fst-italic mr-1 d-inline">Verified_at:</span>
+                            <div class="togglebutton  d-inline " onclick="confirmActive('{{ $user->id }}', '{{ $user->email }}')">
+                                <label>
+                                    <input type="checkbox" {{ $user->email_verified_at != null ? 'checked ' : '' }}>
+                                    <span class="toggle mb-2 mx-0 "></span>
+                                </label>
+                            </div>
+                            </p>
+
                             @endif
 
 
@@ -289,3 +299,25 @@
     </div>
 
 </div>
+
+<script>
+    //Confirmar eliminar la membresía
+    function confirmActive($id, $email) {
+        swal({
+            title: "¿Realmente quiere verificar el email: " + $email + "  ? ",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, verificar!",
+        }).then((result) => {
+            if (result.value) {
+                Livewire.dispatch('verificar-email', {
+                    id: $id
+                });
+            } else {
+                Swal('Cancelado', 'Tu archivo está seguro :)');
+            }
+        });
+    }
+</script>

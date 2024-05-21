@@ -6,6 +6,7 @@ use App\Models\Ban;
 use App\Models\User;
 use Livewire\Component;
 use Mchev\Banhammer\IP;
+use Livewire\Attributes\On;
 
 class ShowUser extends Component
 {
@@ -64,7 +65,22 @@ class ShowUser extends Component
             }
         } catch (\Throwable $e) {
             $this->dispatch('error', message: $e->getMessage());
+        }
+    }
 
+    #[On('verificar-email')]
+    public function verificarEmail($id)
+    {
+        $user = User::findOrFail($id);
+        try {
+            $user->update([
+                'email_verified_at' => now(),
+                'comment'=>'Email verificado por un administrador.'
+            ]);
+            $this->dispatch('success-auto-close', message: 'El correo ha sido verificado con éxito');
+            $this->dispatch('reload');
+        } catch (\Throwable $e) {
+            $this->dispatch('error', message: $e->getMessage());
         }
     }
 }
