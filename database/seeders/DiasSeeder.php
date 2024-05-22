@@ -18,13 +18,7 @@ class DiasSeeder extends Seeder
 
 
 
-        for ($i=1; $i < 365; $i++) { 
-            Dia::create([
-                'dia' => Carbon::create(2023, 1, 1, 0)->addDays($i),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
+       
 
        
         

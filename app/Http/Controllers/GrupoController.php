@@ -40,7 +40,7 @@ class GrupoController extends Controller
             Grupo::create([
                 'escuela' => request('escuela'),
                 'grado_grupo' => request('grado_grupo'),
-                'cliclo_escolar' => request('ciclo_escolar'),
+                'ciclo_escolar' => request('ciclo_escolar'),
                 'materia' => $request->materia ? $request->materia : null,
                 'maestro' => $request->maestro ? $request->maestro : null,
                 'color' => request('color'),
@@ -62,10 +62,6 @@ class GrupoController extends Controller
     public function show(string $id)
     {
         $group = Grupo::findOrFail($id);
-
-    
-
-
         return view('customer.grupos.show', compact('group'));
     }
 
@@ -74,7 +70,13 @@ class GrupoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $group = Grupo::findOrFail($id);
+
+        if ($group->user_id == Auth::user()->id) {
+            return view('customer.grupos.edit', compact('group'));
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -82,7 +84,32 @@ class GrupoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $group = Grupo::findOrFail($id);
+
+        $request->validate([
+            'escuela' => ['required'],
+            'grado_grupo' => 'required',
+            'ciclo_escolar' => 'required',
+            'color' => 'required',
+        ]);
+        try {
+
+            if ($group->user_id == Auth::user()->id) {
+                $group->update([
+                    'escuela' => request('escuela'),
+                    'grado_grupo' => request('grado_grupo'),
+                    'ciclo_escolar' => request('ciclo_escolar'),
+                    'materia' => $request->materia ? $request->materia : null,
+                    'maestro' => $request->maestro ? $request->maestro : null,
+                    'color' => request('color')
+                ]);
+                return back()->with('success', 'El grupo se actualizó de manera correcta');
+            } else {
+                abort(404);
+            }
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error al actualizar el grupo - ' . $th->getMessage());
+        }
     }
 
     /**

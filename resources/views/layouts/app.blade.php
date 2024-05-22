@@ -52,11 +52,11 @@
 
 
 
-   
+
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
 
 
-   
+
 
 
 
@@ -193,12 +193,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <!-- End Data picker select range    -->
 
-     <!--  Ckeditor. -->
-     <script src="{{ asset('assets/ckeditor-full/ckeditor.js') }}"></script>
+    <!--  Ckeditor. -->
+    <script src="{{ asset('assets/ckeditor-full/ckeditor.js') }}"></script>
 
 
-      <!-- se agrega app con time -->
-      <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>
+    <!-- se agrega app con time -->
+    <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>
 
     @stack('js')
     @livewireScripts

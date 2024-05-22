@@ -51,16 +51,17 @@
                                                         </span>
                                                     </a>
                                                     <div class="dropdown-menu px-0" aria-labelledby="navbarDropdownMenuLink">
+                                                        <button type="button" class="dropdown-item">Agregar Alumnos</button>
                                                         <button type="button" class="dropdown-item">Reportes</button>
                                                         <button type="button" class="dropdown-item">Duplicar</button>
                                                         <button type="button" class="dropdown-item" wire:click="ocultar('{{$group->id}}')">Ocultar</button>
-                                                        <button type="button" class="dropdown-item">Editar</button>
-                                                        <button type="button" class="dropdown-item">Eliminar</button>
+                                                        <a class="dropdown-item" href="{{ route('grupos.edit', $group->id) }}">Editar</a>
+                                                        <button type="button" class="dropdown-item" onclick="confirmDelete('{{ $group->id }}', '{{ $group->escuela }} {{ $group->grado_grupo }} {{ $group->ciclo_escolar}}')">Eliminar</button>
                                                     </div>
                                                 </div>
 
                                                 <h6 class="card-category">{{$group->escuela}}</h6>
-                                                <span class="card-category">{{$group->grado_grupo}} - Ciclo escolar {{$group->cliclo_escolar}}</span>
+                                                <span class="card-category">{{$group->grado_grupo}} - Ciclo escolar {{$group->ciclo_escolar}}</span>
                                                 <div class="card-icon icon-{{$group->color}} ">
                                                     <i class="material-icons ">
                                                         @php
@@ -110,7 +111,7 @@
                                                         <a class="dropdown-item" href="">Ocultar</a>
                                                         <a class="dropdown-item" href="">Editar</a>
                                                         <a class="dropdown-item" href="">Eliminar</a> -->
-                                                        <button type="button" class="dropdown-item">Eliminar</button>
+                                                        <button type="button" class="dropdown-item" onclick="confirmDelete('{{ $groupTest->id }}', '{{ $groupTest->escuela }} {{ $groupTest->grado_grupo }} {{ $groupTest->ciclo_escolar}}')">Eliminar</button>
                                                     </div>
                                                 </div>
 
@@ -144,7 +145,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     @endif
                                     <div class="col-lg-4 cards">
                                         <div class="card card-pricing card-plain">
@@ -161,12 +161,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
-
-
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-lg-6">
@@ -226,3 +220,24 @@
 
 
 </div>
+<script>
+    //Confirmar eliminar producto
+    function confirmDelete($id, $name) {
+        swal({
+            title: "¿Realmente quiere eliminar el grupo: " + $name + "  ?. Se van a eliminar todos los alumnos y sus registros, esto no se puede recuperar.",
+            type: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar!",
+        }).then((result) => {
+            if (result.value) {
+                Livewire.dispatch('delete-group', {
+                    id: $id
+                });
+            } else {
+                Swal('Cancelado', 'Tu grupo está seguro :)');
+            }
+        });
+    }
+</script>

@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="form-group col-md-5">
                                     <label class="bmd-label-floating" for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" required value="{{ $user->email }}" disabled>
+                                    <input type="email" class="form-control" name="email" required value="{{ $user->email }}">
                                 </div>
                             </div>
 

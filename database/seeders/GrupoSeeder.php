@@ -16,11 +16,11 @@ class GrupoSeeder extends Seeder
         Grupo::create([
             'escuela' => 'Colegio Boston',
             'grado_grupo' => 'Cuarto grado',
-            'cliclo_escolar' => '2022-2023',
-            'materia' => 'Lenguna Materna',
+            'ciclo_escolar' => '2023-2024',
+            'materia' => 'Educación Financiera',
             'maestro' => 'Jorge Alberto Ramos',
-            'color' => 'primary',
-            'user_id' => 1,
+            'color' => 'rose',
+            'user_id' => 2,
             'created_at' => now(),
             'updated_at' => now()
         ]);

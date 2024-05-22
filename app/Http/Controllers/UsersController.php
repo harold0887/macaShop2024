@@ -68,6 +68,7 @@ class UsersController extends Controller
             $user->syncRoles(request('roles'));
 
             $user->update([
+                'email' => request('email'),
                 'facebook' => request('facebook'),
                 'whatsapp' => request('whatsapp'),
                 'comment' => request('comment'),

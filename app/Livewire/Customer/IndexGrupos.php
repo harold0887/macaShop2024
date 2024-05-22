@@ -4,6 +4,7 @@ namespace App\Livewire\Customer;
 
 use App\Models\Grupo;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
 
 class IndexGrupos extends Component
@@ -20,7 +21,7 @@ class IndexGrupos extends Component
             ->where('oculto', true)
             ->get();
 
-        return view('livewire.customer.index-grupos', compact('groupTest', 'myGroups','myGroupsHide'));
+        return view('livewire.customer.index-grupos', compact('groupTest', 'myGroups', 'myGroupsHide'));
     }
 
     public function ocultar($id)
@@ -44,20 +45,38 @@ class IndexGrupos extends Component
             ]);
             $this->dispatch('success-auto-close', message: "El grupo se mostro con éxito");
         } catch (\Throwable $e) {
-            $this->dispatch('error', message: "Erro al mostro el grupo " . $e->getMessage());
+            $this->dispatch('error', message: "Error al mostro el grupo " . $e->getMessage());
         }
     }
 
-     //sort
-     public function setSort($field)
-     {
- 
-         $this->sortField = $field;
- 
-         if ($this->sortDirection == 'desc') {
-             $this->sortDirection = 'asc';
-         } else {
-             $this->sortDirection = 'desc';
-         }
-     }
+    //sort
+    public function setSort($field)
+    {
+
+        $this->sortField = $field;
+
+        if ($this->sortDirection == 'desc') {
+            $this->sortDirection = 'asc';
+        } else {
+            $this->sortDirection = 'desc';
+        }
+    }
+
+    #[On('delete-group')]
+    public function delete($id)
+    {
+
+        try {
+            $group = Grupo::findOrFail($id);
+
+            if ($group->user_id == Auth::user()->id) {
+                Grupo::destroy($group->id);
+                $this->dispatch('success-auto-close', message: 'El grupo se ha eliminado con éxito');
+            } else {
+                $this->dispatch('error', message: "No cuenta con permisos para eliminar este grupo.");
+            }
+        } catch (\Throwable $e) {
+            $this->dispatch('error', message: "Error al eliminar el grupo " . $e->getMessage());
+        }
+    }
 }

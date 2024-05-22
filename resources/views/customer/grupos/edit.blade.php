@@ -13,11 +13,12 @@
                     <li class="breadcrumb-item"><a href="{{route('home')}}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{route('profile.edit')}}">Cuenta</a></li>
                     <li class="breadcrumb-item"><a href="{{route('grupos.index')}}">Mis grupos</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Nuevo grupo</li>
+                    <li class="breadcrumb-item active" aria-current="page">Editar {{ $group->escuela }} {{ $group->grado_grupo }}</li>
                 </ol>
             </nav>
         </div>
     </div>
+
     <div class="row justify-content-center">
         <div class="col-12  mt-4">
             <a class="text-sm" href="{{ route('grupos.index') }}">Regresar a mis grupos.</a>
@@ -28,28 +29,28 @@
                     <div class="card-icon">
                         <i class="material-icons">school</i>
                     </div>
-                    <h4 class="card-title">Crear nuevo grupo</h4>
+                    <h4 class="card-title">Editar {{ $group->escuela }} {{ $group->grado_grupo }} {{ $group->ciclo_escolar }}</h4>
                 </div>
                 <div class="card-body ">
-                    <form id="create-product-admin" action="{{ route('grupos.store') }}" method="POST">
-                        @csrf
+                    <form id="create-product-admin" action="{{ route('grupos.update', $group->id) }}" method="POST">
+                        @csrf @method('PATCH')
                         <div class="form-group">
                             <label class="bmd-label-floating">Escuela</label>
-                            <input type="text" class="form-control" name="escuela" value="{{ old('escuela') }}">
+                            <input type="text" class="form-control" name="escuela" value="{{ old('escuela') ?: $group->escuela }}">
                             @error('escuela')
                             <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label class="bmd-label-floating">Grado y grupo</label>
-                            <input type="text" class="form-control" name="grado_grupo" value="{{ old('grado_grupo') }}">
+                            <input type="text" class="form-control" name="grado_grupo" value="{{ old('grado_grupo') ?: $group->grado_grupo }}">
                             @error('grado_grupo')
                             <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label class="bmd-label-floating">Ciclo escolar</label>
-                            <input type="text" class="form-control" name="ciclo_escolar" value="{{ old('ciclo_escolar') }}">
+                            <input type="text" class="form-control" name="ciclo_escolar" value="{{ old('ciclo_escolar') ?: $group->ciclo_escolar }}">
                             @error('ciclo_escolar')
                             <small class="text-danger"> {{ $message }} </small>
                             @enderror
@@ -67,7 +68,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="color" value="rose" {{ old('color') == 'secondary' ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="radio" name="color" value="rose" {{ old('color', $group->color) == 'rose' ? 'checked' : '' }}>
                                     <div class="bg-secondary rounded" style="width: 25px !important; height:25px !important"></div>
                                     <span class="circle">
                                         <span class="check"></span>
@@ -76,7 +77,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="color" value="info" {{ old('color') == 'info' ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="radio" name="color" value="info" {{ old('color', $group->color) == 'info' ? 'checked' : '' }}>
                                     <div class="bg-info rounded" style="width: 25px !important; height:25px !important"></div>
                                     <span class="circle">
                                         <span class="check"></span>
@@ -85,7 +86,7 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="color" value="success" {{ old('color') == 'success' ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="radio" name="color" value="success" {{ old('color', $group->color) == 'success' ? 'checked' : '' }}>
                                     <div class="bg-success rounded" style="width: 25px !important; height:25px !important"></div>
                                     <span class="circle">
                                         <span class="check"></span>
@@ -94,16 +95,16 @@
                             </div>
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="color" value="danger" {{ old('color') == 'danger' ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="radio" name="color" value="danger" {{ old('color', $group->color) == 'danger' ? 'checked' : '' }}>
                                     <div class="bg-danger rounded" style="width: 25px !important; height:25px !important"></div>
                                     <span class="circle">
                                         <span class="check"></span>
                                     </span>
                                 </label>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="color" value="warning" {{ old('color') == 'warning' ? 'checked' : '' }}>
+                            <div class="form-check form-check-inline ">
+                                <label class="form-check-label ">
+                                    <input class="form-check-input" type="radio" name="color" value="warning" {{ old('color', $group->color) == 'warning' ? 'checked' : '' }}>
                                     <div class="bg-warning rounded" style="width: 25px !important; height:25px !important"></div>
                                     <span class="circle">
                                         <span class="check"></span>
@@ -116,21 +117,21 @@
                         </div>
                         <div class="form-group">
                             <label class="bmd-label-floating">Materia (opcional)</label>
-                            <input type="text" class="form-control" name="materia" value="{{ old('materia') }}">
+                            <input type="text" class="form-control" name="materia" value="{{ old('materia') ?: $group->materia }}">
                             @error('materia')
                             <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label class="bmd-label-floating">Maestro(a) (opcional)</label>
-                            <input type="text" class="form-control" name="maestro" value="{{ old('maestro') }}">
+                            <input type="text" class="form-control" name="maestro" value="{{ old('maestro') ?: $group->maestro }}">
                             @error('maestro')
                             <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
 
                         <div class="card-footer ">
-                            <button type="submit" class="btn btn-fill btn-primary">Guardar</button>
+                            <button type="submit" class="btn btn-fill btn-primary">Actualizar</button>
                         </div>
 
                     </form>
@@ -138,7 +139,9 @@
 
             </div>
         </div>
+
     </div>
+
 
 
 

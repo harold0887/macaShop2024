@@ -83,6 +83,7 @@
                                                 <div id="flush-{{$loop->index}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-mdb-parent="#accordionAlumnos">
                                                     <div class="accordion-body">
 
+
                                                         @foreach($tags as $tag)
                                                         @php
                                                         $exist= false;
@@ -90,13 +91,14 @@
                                                         @foreach($estudiante->tags as $tag_es)
                                                         @if($tag_es->tag_id == $tag->id )
                                                         @php
+                                                        $tag_select=$tag_es->id;
                                                         $exist= true;
                                                         @endphp
                                                         @endif
                                                         @endforeach
 
                                                         @if($exist)
-                                                        <span class="material-symbols-outlined mx-2 text-primary" style="cursor: pointer;" wire:click="saveTag('{{ $estudiante->id }}','{{$tag->id}}')">
+                                                        <span class="material-symbols-outlined mx-2 text-primary" style="cursor: pointer;" wire:click="deleteTag('{{ $tag_select }}')">
                                                             {{$tag->icon}}
                                                         </span>
                                                         @else
@@ -105,8 +107,6 @@
                                                         </span>
                                                         @endif
                                                         @endforeach
-
-
                                                     </div>
 
                                                 </div>
@@ -143,7 +143,26 @@
                 </div>
             </div>
         </div>
-        
+        <div class="col-12">
+            <p>
+                {{$select_date}}
+            </p>
+        </div>
+        <div class="col-12">
+            @foreach($group->estudiantes as $estudiante)
+            <div class="border border-info my-2">
+                @foreach($estudiante->tags as $tag)
+                <p class="text-primary">
+                    {{$tag}}
+                </p>
+                @endforeach
+
+                <p class="text-success"> {{$estudiante->asistencias}}</p>
+            </div>
+
+
+            @endforeach
+        </div>
     </div>
 
 

@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Asistencia;
 use App\Models\Estudiante;
 use App\Models\Estudiante_Tag;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
 class ShowGrupos extends Component
@@ -45,8 +46,14 @@ class ShowGrupos extends Component
 
         $tags = Tag::all();
 
+        if ($this->group->user_id == Auth::user()->id) {
+            return view('livewire.customer.show-grupos', compact('estudiantes', 'tags'));
+        } else {
+            abort(404);
+        }
 
-        return view('livewire.customer.show-grupos', compact('estudiantes', 'tags'));
+
+      
     }
     public function saveAssistance($id)
     {
@@ -72,6 +79,22 @@ class ShowGrupos extends Component
             ]);
 
             $this->dispatch('success-auto-close', message: "El tag  se realizo con éxito");
+        } catch (\Throwable $th) {
+            $this->dispatch('error', message: "Error a guardar el tag" . $th->getMessage());
+        }
+    }
+
+    public function deleteTag($id)
+    {
+        try {
+
+            $tag = Estudiante_Tag::findOrFail($id);
+
+            Estudiante_Tag::destroy($tag->id);
+
+
+
+            $this->dispatch('success-auto-close', message: "El tag  se actualzo con éxito");
         } catch (\Throwable $th) {
             $this->dispatch('error', message: "Error a guardar el tag" . $th->getMessage());
         }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('escuela');
             $table->string('grado_grupo');
-            $table->string('cliclo_escolar');
+            $table->string('ciclo_escolar');
             $table->string('materia')->nullable();
             $table->string('maestro')->nullable();
             $table->string('color');
