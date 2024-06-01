@@ -34,6 +34,7 @@
     <link href="{{ asset('material') }}/css/material-dashboard.css" rel="stylesheet" />
 
     <link href="{{ asset('css/text.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/add.css') }}" rel="stylesheet">
 
     <!-- @vite(['resources/css/app.scss', 'resources/js/app.js']) -->
 
@@ -54,6 +55,7 @@
 
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+
 
 
 
@@ -88,7 +90,7 @@
     @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support.*'))
     @include('layouts.page_templates.admin')
 
-    @elseif(Route::is('profile.*','customer.*','order.*','grupos.*'))
+    @elseif(Route::is('profile.*','customer.*','order.*','grupos.*','add-student'))
     @include('layouts.page_templates.user')
 
     @elseif(Route::is('login','register','password.email','password.request','password.reset'))

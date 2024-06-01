@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ips;
 use App\Models\User;
+use App\Models\Grupo;
 use App\Models\Order;
 use App\Models\Product;
 use Mchev\Banhammer\IP;
@@ -13,6 +14,7 @@ use App\Mail\PaymentApprovedEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaymentApprovedMembership;
+use App\Models\Condicion;
 
 class MainController extends Controller
 {
@@ -234,6 +236,19 @@ class MainController extends Controller
     public function contact()
     {
         return view('contact');
+    }
+
+    public function addStudent($id)
+    {
+
+        $group = Grupo::findOrFail($id);
+        $condiciones = Condicion::all();
+        if ($group->user_id == Auth::user()->id || $group->id == 1) {
+
+            return view('customer.estudiantes.add-student', compact('group', 'condiciones'));
+        } else {
+            abort(403);
+        }
     }
 
 

@@ -16,7 +16,7 @@ class TagsSeeder extends Seeder
     {
 
         Tag::create([
-            'name' => 'star_rate',
+            'name' => 'participacion valiosa',
             'icon' => 'star_rate',
             'created_at' => now(),
             'updated_at' => now()

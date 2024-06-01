@@ -21,8 +21,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([GrupoSeeder::class]);
         $this->call([EstudianteSeeder::class]);
-        $this->call([DiasSeeder::class]);
         $this->call([TagsSeeder::class]);
+        $this->call([CondicionSeeder::class]);
+        $this->call([StatusSeeder::class]);
+        $this->call([AsistenciaSeeder::class]);
         
     }
 }

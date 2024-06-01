@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
             $table->date('dia');
-            $table->boolean('asistencia');
+            $table->foreignId('status_id')->references('id')->on('status')->constrained()->restrictOnDelete();
             $table->foreignId('estudiante_id')->references('id')->on('estudiantes')->constrained()->cascadeOnDelete();
             $table->unique(array('dia', 'estudiante_id'));
             $table->timestamps();

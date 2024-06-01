@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('imagen')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
+            $table->string('phone2')->nullable();
             $table->mediumText('comentarios')->nullable();
             $table->BigInteger('user_id');
             $table->foreignId('grupo_id')->references('id')->on('grupos')->constrained()->cascadeOnDelete();
@@ -37,6 +38,5 @@ return new class extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         Schema::dropIfExists('estudiantes');
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
-        
     }
 };

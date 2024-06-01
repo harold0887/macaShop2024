@@ -35,7 +35,7 @@
                                 <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail img-circle">
                                         @if (auth()->user()->picture)
-                                        <img src="{{ auth()->user()->profilePicture() }}" alt="...">
+                                        <img src="{{ Storage::url(Auth::user()->picture) }}" alt="...">
                                         @else
                                         <img src="{{ asset('material') }}/img/placeholder.jpg" alt="...">
                                         @endif

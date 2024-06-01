@@ -20,7 +20,6 @@ class IndexGrupos extends Component
         $myGroupsHide = Grupo::where('user_id', Auth::user()->id)
             ->where('oculto', true)
             ->get();
-
         return view('livewire.customer.index-grupos', compact('groupTest', 'myGroups', 'myGroupsHide'));
     }
 
@@ -72,8 +71,9 @@ class IndexGrupos extends Component
             if ($group->user_id == Auth::user()->id) {
                 Grupo::destroy($group->id);
                 $this->dispatch('success-auto-close', message: 'El grupo se ha eliminado con éxito');
+            } elseif ($group->user_id == 1) {
             } else {
-                $this->dispatch('error', message: "No cuenta con permisos para eliminar este grupo.");
+                $this->dispatch('error', message: "Este es un grupo de ejemplo, no cuenta con permisos para eliminarlo.");
             }
         } catch (\Throwable $e) {
             $this->dispatch('error', message: "Error al eliminar el grupo " . $e->getMessage());

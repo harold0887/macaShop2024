@@ -89,7 +89,13 @@
             <li class="nav-item{{ $activePage == 'paselista' ? ' active' : '' }}">
                 <a class="nav-link" href="{{ route('grupos.index') }}">
                     <i class="material-icons">checklist</i>
-                    <p>Pase de lista</p>
+                    <p>Registro de asistencia</p>
+                </a>
+            </li>
+            <li class="nav-item{{ $activePage == 'eveluaciones' ? ' active' : '' }}">
+                <a class="nav-link" href="{{ route('grupos.index') }}">
+                    <i class="material-icons">donut_large</i>
+                    <p>Evaluaciones</p>
                 </a>
             </li>
             @endrole

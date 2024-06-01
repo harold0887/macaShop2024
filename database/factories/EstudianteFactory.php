@@ -16,11 +16,13 @@ class EstudianteFactory extends Factory
      */
     public function definition(): array
     {
+        
+        $gender = $this->faker->randomElement($array = array('male', 'female'));
         return [
-            'apellidos' => $this->faker->lastName()." ". $this->faker->lastName() ,
-            'nombres' => $this->faker->firstName('male'|'female'),
+            'apellidos' => fake('es_ES')->lastName() . " " . fake('es_ES')->lastName(),
+            'nombres' => fake('es_ES')->firstName($gender),
             'fecha_nacimiento' => $this->faker->date(),
-            'genero' => "M",
+            'genero' => $gender== "male"? 'M': 'F' ,
             'email' => fake()->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
             'user_id' => 1,

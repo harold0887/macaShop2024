@@ -72,10 +72,10 @@ class GrupoController extends Controller
     {
         $group = Grupo::findOrFail($id);
 
-        if ($group->user_id == Auth::user()->id) {
+        if ($group->user_id == Auth::user()->id || $group->id == 1) {
             return view('customer.grupos.edit', compact('group'));
         } else {
-            abort(404);
+            abort(403);
         }
     }
 
@@ -94,7 +94,9 @@ class GrupoController extends Controller
         ]);
         try {
 
-            if ($group->user_id == Auth::user()->id) {
+            if ($group->id == 1) {
+                return back()->with('error', 'Este es un grupo de ejemplo, no cuenta con permisos para editar este grupo.');
+            } elseif (request('grupo') == Auth::user()->id) {
                 $group->update([
                     'escuela' => request('escuela'),
                     'grado_grupo' => request('grado_grupo'),
@@ -105,8 +107,9 @@ class GrupoController extends Controller
                 ]);
                 return back()->with('success', 'El grupo se actualizó de manera correcta');
             } else {
-                abort(404);
+                return back()->with('error', 'No cuenta con permisos para agregar mas estudiantes al grupo - ' . $group->grado_grupo);
             }
+
         } catch (\Throwable $th) {
             return back()->with('error', 'Error al actualizar el grupo - ' . $th->getMessage());
         }

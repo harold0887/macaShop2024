@@ -34,6 +34,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\WebhooksController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\WebhooksControllerArnold;
 
 /*
@@ -88,6 +89,9 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
       Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
       Route::resource('customer/grupos', GrupoController::class);
+      Route::resource('customer/estudiantes', StudentController::class);
+      Route::get('customer/grupos/add-student/{id}', [MainController::class, 'addStudent'])->name('add-student'); //listo
+
     });
   });
 });

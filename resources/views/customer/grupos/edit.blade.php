@@ -1,5 +1,5 @@
 @extends('layouts.app',[
-'title'=>'Pase de lista',
+'title'=>'Registro de asistencia',
 'navbarClass'=>'navbar-transparent',
 'activePage'=>'paselista',
 'menuParent'=>'orders',

@@ -18,7 +18,7 @@ class GrupoSeeder extends Seeder
             'grado_grupo' => 'Cuarto grado',
             'ciclo_escolar' => '2023-2024',
             'materia' => 'Educación Financiera',
-            'maestro' => 'Jorge Alberto Ramos',
+            'maestro' => 'Sandra Cano',
             'color' => 'rose',
             'user_id' => 2,
             'created_at' => now(),
