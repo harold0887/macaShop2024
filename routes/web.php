@@ -91,7 +91,9 @@ Route::group(['middleware' => ['auth']], function () {
       Route::resource('customer/grupos', GrupoController::class);
       Route::resource('customer/estudiantes', StudentController::class);
       Route::get('customer/grupos/add-student/{id}', [MainController::class, 'addStudent'])->name('add-student'); //listo
-
+      Route::get('customer/group-report/{id}', [MainController::class, 'groupReport'])->name('group-report'); //listo
+      Route::get('customer/report/pdf/{id}', [MainController::class, 'groupReportPDF'])->name('group-report-pdf'); //listo
+      Route::post('customer/reports/pdf/{id}', [MainController::class, 'groupReportsPDF'])->name('group-reports-pdf'); //listo
     });
   });
 });

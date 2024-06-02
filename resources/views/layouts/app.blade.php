@@ -90,7 +90,7 @@
     @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support.*'))
     @include('layouts.page_templates.admin')
 
-    @elseif(Route::is('profile.*','customer.*','order.*','grupos.*','add-student'))
+    @elseif(Route::is('profile.*','customer.*','order.*','grupos.*','add-student','group-report'))
     @include('layouts.page_templates.user')
 
     @elseif(Route::is('login','register','password.email','password.request','password.reset'))

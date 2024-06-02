@@ -5,6 +5,7 @@
                 <ol class="breadcrumb my-0 text-xs lg:text-base">
                     <li class="breadcrumb-item"><a href="{{route('home')}}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{route('profile.edit')}}">Cuenta</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('grupos.index') }}">Registro de asistencia</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Mis grupos</li>
                 </ol>
             </nav>
@@ -82,7 +83,7 @@
                         <div class="dropdown-menu px-0" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('add-student', $groupTest->id) }}">Agregar Alumnos</a>
                             <a class="dropdown-item" href="">Editar Alumnos</a>
-                            <button type="button" class="dropdown-item">Reportes</button>
+                            <a class="dropdown-item" href="{{ route('group-report', $groupTest->id) }}">Reportes</a>
                             <button type="button" class="dropdown-item" wire:click="ocultar('{{$groupTest->id}}')">Ocultar grupo</button>
                             <a class="dropdown-item" href="{{ route('grupos.edit', $groupTest->id) }}">Editar grupo</a>
                             <button type="button" class="dropdown-item" onclick="confirmDelete('{{ $groupTest->id }}', '{{ $groupTest->grado_grupo }}', '{{ $groupTest->escuela }}', '{{ $groupTest->ciclo_escolar}}')">Eliminar grupo</button>
@@ -124,12 +125,13 @@
             <div class="card card-pricing card-plain">
                 <div class="card-body">
                     <h6 class="card-category">Crear nuevo Grupo</h6>
+                    <span class="card-category text-white">-</span>
                     <div class="card-icon">
                         <i class="material-icons">domain_add</i>
                     </div>
                     <h3 class="card-title">FREE</h3>
                     <p class="card-description">
-                        This is good if your company size is between 2 and 10 Persons.
+                        Crea un nuevo grupo para poder administrar la asistencia de tus alumnos.
                     </p>
                     <a href="{{ route('grupos.create') }}" class="btn btn-white btn-round">Choose Plan</a>
                 </div>

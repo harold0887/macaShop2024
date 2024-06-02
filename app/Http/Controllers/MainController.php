@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Ips;
 use App\Models\User;
 use App\Models\Grupo;
 use App\Models\Order;
 use App\Models\Product;
 use Mchev\Banhammer\IP;
+use App\Models\Condicion;
+use App\Models\Asistencia;
+use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use App\Models\Order_Details;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\PaymentApprovedEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaymentApprovedMembership;
-use App\Models\Condicion;
 
 class MainController extends Controller
 {
@@ -250,6 +254,147 @@ class MainController extends Controller
             abort(403);
         }
     }
+
+    public function groupReport($id)
+    {
+
+        $group = Grupo::findOrFail($id);
+        $condiciones = Condicion::all();
+        if ($group->user_id == Auth::user()->id || $group->id == 1) {
+
+            return view('customer.reportes.group-report', compact('group'));
+        } else {
+            abort(403);
+        }
+    }
+
+    public function groupReportPDF($id){
+        //return view('customer.reportes.pdf');
+
+        $group= Grupo::findOrFail($id);
+
+        if ($group->id == 1) {
+            $estudiantes = Estudiante::where('grupo_id', $group->id)
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        } else {
+            $estudiantes = Estudiante::where('grupo_id', $group->id)
+                ->whereHas('grupo', function ($query) {
+                    $query
+                        ->where('user_id', Auth::user()->id);
+                })
+               
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        }
+        $asistencias = Asistencia::whereHas('estudiante', function  ($query)  {
+            $query
+                ->where('grupo_id',1);
+        })
+            ->whereMonth('dia', 6)
+            ->whereYear('dia', 2024)
+            //       ->where('status_id', 1)
+            ->get();
+
+
+        $dt2 = Carbon::createFromDate('2024-06-01');
+
+
+
+        $firstDay = $dt2->firstOfMonth()->format('d');
+        $lastDay = $dt2->LastOfMonth()->format('d');
+
+
+        $diasMes = [];
+
+        for ($i = 0; $i < $lastDay; $i++) {
+
+            $day = Carbon::create(2024, 06, 01)->addDays($i);
+
+            if ($day->format('l') == 'Saturday' || $day->format('l') == 'Sunday') {
+            } else {
+
+
+                array_push($diasMes, $day);
+            }
+        }
+
+
+
+        //return view('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+
+
+         $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+        //return $pdf->download('reporte.pdf');
+        return $pdf->stream();
+    }
+
+    public function groupReportsPDF($id){
+        //return view('customer.reportes.pdf');
+
+        $group= Grupo::findOrFail($id);
+
+        if ($group->id == 1) {
+            $estudiantes = Estudiante::where('grupo_id', $group->id)
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        } else {
+            $estudiantes = Estudiante::where('grupo_id', $group->id)
+                ->whereHas('grupo', function ($query) {
+                    $query
+                        ->where('user_id', Auth::user()->id);
+                })
+               
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        }
+        $asistencias = Asistencia::whereHas('estudiante', function  ($query)  {
+            $query
+                ->where('grupo_id',1);
+        })
+            ->whereMonth('dia', 6)
+            ->whereYear('dia', 2024)
+            //       ->where('status_id', 1)
+            ->get();
+
+
+        $dt2 = Carbon::createFromDate('2024-06-01');
+
+
+
+        $firstDay = $dt2->firstOfMonth()->format('d');
+        $lastDay = $dt2->LastOfMonth()->format('d');
+
+
+        $diasMes = [];
+
+        for ($i = 0; $i < $lastDay; $i++) {
+
+            $day = Carbon::create(2024, 06, 01)->addDays($i);
+
+            if ($day->format('l') == 'Saturday' || $day->format('l') == 'Sunday') {
+            } else {
+
+
+                array_push($diasMes, $day);
+            }
+        }
+
+
+
+        //return view('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+
+
+         $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+        //return $pdf->download('reporte.pdf');
+        return $pdf->stream();
+    }
+
+
+
+
+
+
 
 
 

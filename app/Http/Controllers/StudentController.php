@@ -32,26 +32,25 @@ class StudentController extends Controller
     public function store(Request $request)
     {
 
-
+        $group = Grupo::findOrFail(request('grupo'));
         $request->validate([
             'firstname' => ['required'],
             'lastname' => 'required',
             'genero' => 'required',
-            'date' => 'date',
-           
+            'nacimiento' => 'required|date',
         ]);
 
         try {
 
-            $group = Grupo::findOrFail(request('grupo'));
+
 
             if ($group->id == 1) {
                 return back()->with('info', 'Este es un grupo de ejemplo, no cuenta con permisos para agregar mas estudiantes.');
-            } elseif (request('grupo') == Auth::user()->id) {
+            } elseif ($group->user_id == Auth::user()->id) {
                 $nuevoEstudiante = Estudiante::create([
                     'nombres' => request('firstname'),
                     'apellidos' => request('lastname'),
-                    'fecha_nacimiento' => $request->nacimiento ? $request->nacimiento : null,
+                    'fecha_nacimiento' => request('nacimiento'),
                     'genero' => request('genero'),
                     'imagen' => $request->image ? $request->image->store('estudiantes', 'public') : null,
                     'email' => $request->email1 ? $request->email1 : null,
@@ -72,7 +71,7 @@ class StudentController extends Controller
                 }
                 return back()->with('success', 'Registro exitoso');
             } else {
-                return back()->with('error', 'No cuenta con permisos para agregar mas estudiantes al grupo - ' . $group->grado_grupo);
+                return back()->with('error', 'No cuenta con permisos para agregar estudiantes al grupo - id:' .$group->id." ". $group->grado_grupo);
             }
         } catch (\Throwable $th) {
             return back()->with('error', 'Error al guardar el registro - ' . $th->getMessage());

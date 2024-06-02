@@ -27,7 +27,7 @@ class ShowGrupos extends Component
         $this->select_date = date_format(now(), "Y-m-d");
         //$this->select_date =  "2025-04-03";
 
-        //dd($this->group->estudiantes);
+   
 
     }
 
@@ -35,15 +35,34 @@ class ShowGrupos extends Component
     public function render()
     {
 
-        $estudiantes = Estudiante::where('grupo_id', $this->group->id)
-            ->where('user_id', Auth::user()->id)
-            ->where(function ($query) {
-                $query->where('nombres', 'like', '%' . $this->search . '%')
-                    ->orWhere('apellidos', 'like', '%' . $this->search . '%');
-            })
 
-            ->orderBy('apellidos', 'asc')
-            ->get();
+
+        if ($this->group->id == 1) {
+            $estudiantes = Estudiante::where('grupo_id', $this->group->id)
+
+                ->where(function ($query) {
+                    $query->where('nombres', 'like', '%' . $this->search . '%')
+                        ->orWhere('apellidos', 'like', '%' . $this->search . '%');
+                })
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        } else {
+            $estudiantes = Estudiante::where('grupo_id', $this->group->id)
+                ->whereHas('grupo', function ($query) {
+                    $query
+                        ->where('user_id', Auth::user()->id);
+                })
+                ->where(function ($query) {
+                    $query->where('nombres', 'like', '%' . $this->search . '%')
+                        ->orWhere('apellidos', 'like', '%' . $this->search . '%');
+                })
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        }
+
+
+
+
 
 
         $asistencias = Asistencia::where('dia', $this->select_date)
@@ -89,6 +108,8 @@ class ShowGrupos extends Component
 
 
         $tags = Tag::all();
+
+
 
 
 

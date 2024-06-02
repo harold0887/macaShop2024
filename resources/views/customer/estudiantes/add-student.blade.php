@@ -108,7 +108,7 @@
                                                         </div>
                                                         <div class="form-check">
                                                             <label class="form-check-label">
-                                                                <input class="form-check-input" type="radio" name="genero" value="F" {{ (old('genero') == "F") ? "checked" : ""}} required>Remenino
+                                                                <input class="form-check-input" type="radio" name="genero" value="F" {{ (old('genero') == "F") ? "checked" : ""}} required>Femenino
                                                                 <span class="circle">
                                                                     <span class="check"></span>
                                                                 </span>
@@ -127,8 +127,8 @@
                                                     </span>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="">Fecha de nacimiento (opcional)</label>
-                                                    <input type="date" class="form-control" name="nacimiento" value="{{ old('nacimiento') }}">
+                                                    <label class="">Fecha de nacimiento *</label>
+                                                    <input type="date" class="form-control" name="nacimiento" value="{{ old('nacimiento') }}" required>
                                                 </div>
                                                 @error('nacimiento')
                                                 <small class="text-danger"> {{ $message }} </small>

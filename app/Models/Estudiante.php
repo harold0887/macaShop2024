@@ -18,11 +18,11 @@ class Estudiante extends Model
         return $this->belongsToMany(Dia::class, 'dia_estudiante');
     }
 
-    //Relacion con grupo, retorna el grupo al que pertenece
-    public function grupo()
-    {
-        return $this->belongsToMany(Grupo::class);
-    }
+    // //Relacion con grupo, retorna el grupo al que pertenece
+    // public function grupo()
+    // {
+    //     return $this->belongsToMany(Grupo::class);
+    // }
 
     //relacion con asistencias, retorna las asitencias  de un estudiante
     public function asistencias()
@@ -35,4 +35,10 @@ class Estudiante extends Model
     {
         return $this->hasMany(Estudiante_Tag::class);
     }
+     //Relacion con grupos, retorna el grupo al que pertenece
+ 
+     public function grupo()
+     {
+         return $this->belongsTo(Grupo::class);
+     }
 }

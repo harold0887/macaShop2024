@@ -5,11 +5,17 @@
     border-color: #4caf50 !important;
     opacity: .65 !important;
 }
+.text-asistencia {
+    color: hsl(122, 39%, 49%) !important;
+}
 
 .bg-falta {
     background-color: rgb(235, 104, 100) !important;
     border-color: rgb(235, 104, 100)!important;
     opacity: .65 !important;
+}
+.text-falta {
+    color: rgb(235, 104, 100) !important;
 }
 
 .bg-retardo {
@@ -17,11 +23,17 @@
     border-color: rgb(245, 230, 37)!important;
     opacity: .65 !important;
 }
+.text-retardo {
+    color: rgb(245, 230, 37) !important;
+}
 
 .bg-falta-justificada {
     background-color: rgb(245, 122, 0) !important;
     border-color: rgb(245, 122, 0)!important;
     opacity: .65 !important;
+}
+.text-falta-justificada {
+    color: rgb(245, 122, 0) !important;
 }
 
 

@@ -35,7 +35,7 @@
     @else
     <div class="navbar-wrapper  px-0">
       <a class="navbar-brand  mx-0 p-0" href="{{ route('home') }}">
-      <img class="logo-main"  src=" {{ asset('./img/logo3.png') }} " alt="" >
+        <img class="logo-main" src=" {{ asset('./img/logo3.png') }} " alt="">
       </a>
     </div>
     @endif
@@ -122,6 +122,12 @@
             <a class="dropdown-item" href="{{route('profile.edit')}}">{{ __('My Profile') }}</a>
             <a class="dropdown-item" href="{{route('customer.orders')}}">Mis compras</a>
             <a class="dropdown-item" href="{{ route('customer.memberships') }}">Mis Membresías</a>
+            @role('admin')
+            <a class="dropdown-item" href="{{ route('grupos.index') }}">Registro de asistencia</a>
+            <a class="dropdown-item" href="{{ route('grupos.index') }}">Evaluaciones</a>
+           
+
+            @endrole
             <form method="POST" action="{{ route('logout') }}">
               @csrf
               <a class="dropdown-item" href="route('logout')" onclick="event.preventDefault();
