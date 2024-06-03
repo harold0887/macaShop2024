@@ -173,10 +173,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     return 'Config cache has been cleared';
   });
 
-  Route::get('/dump-autoload', function () {
-    Artisan::call('dump-autoload');
-    return 'dump-autoload complete';
-  });
+
 });
 
 

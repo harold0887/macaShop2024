@@ -268,10 +268,11 @@ class MainController extends Controller
         }
     }
 
-    public function groupReportPDF($id){
+    public function groupReportPDF($id)
+    {
         //return view('customer.reportes.pdf');
 
-        $group= Grupo::findOrFail($id);
+        $group = Grupo::findOrFail($id);
 
         if ($group->id == 1) {
             $estudiantes = Estudiante::where('grupo_id', $group->id)
@@ -283,13 +284,13 @@ class MainController extends Controller
                     $query
                         ->where('user_id', Auth::user()->id);
                 })
-               
+
                 ->orderBy('apellidos', 'asc')
                 ->get();
         }
-        $asistencias = Asistencia::whereHas('estudiante', function  ($query)  {
+        $asistencias = Asistencia::whereHas('estudiante', function ($query) {
             $query
-                ->where('grupo_id',1);
+                ->where('grupo_id', 1);
         })
             ->whereMonth('dia', 6)
             ->whereYear('dia', 2024)
@@ -324,15 +325,16 @@ class MainController extends Controller
         //return view('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
 
 
-         $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+        $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
         //return $pdf->download('reporte.pdf');
         return $pdf->stream();
     }
 
-    public function groupReportsPDF($id){
+    public function groupReportsPDF($id)
+    {
         //return view('customer.reportes.pdf');
 
-        $group= Grupo::findOrFail($id);
+        $group = Grupo::findOrFail($id);
 
         if ($group->id == 1) {
             $estudiantes = Estudiante::where('grupo_id', $group->id)
@@ -344,13 +346,13 @@ class MainController extends Controller
                     $query
                         ->where('user_id', Auth::user()->id);
                 })
-               
+
                 ->orderBy('apellidos', 'asc')
                 ->get();
         }
-        $asistencias = Asistencia::whereHas('estudiante', function  ($query)  {
+        $asistencias = Asistencia::whereHas('estudiante', function ($query) {
             $query
-                ->where('grupo_id',1);
+                ->where('grupo_id', 1);
         })
             ->whereMonth('dia', 6)
             ->whereYear('dia', 2024)
@@ -384,10 +386,13 @@ class MainController extends Controller
 
         //return view('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
 
-
-         $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
-        //return $pdf->download('reporte.pdf');
-        return $pdf->stream();
+        try {
+            $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+            //return $pdf->download('reporte.pdf');
+            return $pdf->stream();
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Error al exportar el reporte - ' . $th->getMessage());
+        }
     }
 
 
