@@ -27,7 +27,7 @@
                         <div class="dropdown-menu px-0" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('add-student', $group->id) }}">Agregar Alumnos</a>
                             <a class="dropdown-item" href="">Editar Alumnos</a>
-                            <button type="button" class="dropdown-item">Reportes</button>
+                            <a class="dropdown-item" href="{{ route('group-report', $group->id) }}">Reportes</a>
                             <button type="button" class="dropdown-item">Duplicar</button>
                             <button type="button" class="dropdown-item" wire:click="ocultar('{{$group->id}}')">Ocultar</button>
                             <a class="dropdown-item" href="{{ route('grupos.edit', $group->id) }}">Editar</a>

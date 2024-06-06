@@ -36,7 +36,7 @@
     <link href="{{ asset('css/text.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/add.css') }}" rel="stylesheet">
 
-    <!-- @vite(['resources/css/app.scss', 'resources/js/app.js']) -->
+    @vite(['resources/css/app.scss', 'resources/js/app.js'])
 
 
     <!-- CSS slick -->
@@ -55,6 +55,7 @@
 
 
     <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/add.css') }}" rel="stylesheet">
 
 
 

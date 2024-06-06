@@ -320,91 +320,26 @@ class MainController extends Controller
             }
         }
 
-
-
-        //return view('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
-
-
-        $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
-        //return $pdf->download('reporte.pdf');
-        return $pdf->stream();
-    }
-
-    public function groupReportsPDF($id)
-    {
-        //return view('customer.reportes.pdf');
-
-        $group = Grupo::findOrFail($id);
-
-        if ($group->id == 1) {
-            $estudiantes = Estudiante::where('grupo_id', $group->id)
-                ->orderBy('apellidos', 'asc')
-                ->get();
-        } else {
-            $estudiantes = Estudiante::where('grupo_id', $group->id)
-                ->whereHas('grupo', function ($query) {
-                    $query
-                        ->where('user_id', Auth::user()->id);
-                })
-
-                ->orderBy('apellidos', 'asc')
-                ->get();
-        }
-        $asistencias = Asistencia::whereHas('estudiante', function ($query) {
-            $query
-                ->where('grupo_id', 1);
-        })
-            ->whereMonth('dia', 6)
-            ->whereYear('dia', 2024)
-            //       ->where('status_id', 1)
-            ->get();
-
-
-        $dt2 = Carbon::createFromDate('2024-06-01');
-
-
-
-        $firstDay = $dt2->firstOfMonth()->format('d');
-        $lastDay = $dt2->LastOfMonth()->format('d');
-
-
-        $diasMes = [];
-
-        for ($i = 0; $i < $lastDay; $i++) {
-
-            $day = Carbon::create(2024, 06, 01)->addDays($i);
-
-            if ($day->format('l') == 'Saturday' || $day->format('l') == 'Sunday') {
-            } else {
-
-
-                array_push($diasMes, $day);
-            }
-        }
-
-
+        $monthSelectName ="Npmbre de prueba vista";
+        $yearSelect ="2024";
 
         //return view('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+
 
         try {
-            $pdf = Pdf::loadView('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+            $pdf = Pdf::loadView('customer.reportes.report-pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes','monthSelectName','yearSelect'));
             //return $pdf->download('reporte.pdf');
-            return $pdf->stream();
+
+            return view('customer.reportes.report-pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes','monthSelectName','yearSelect'));
+            //return $pdf->stream();
         } catch (\Throwable $th) {
             return back()->with('error', 'Error al exportar el reporte - ' . $th->getMessage());
-        }
+        };
     }
 
 
 
-
-
-
-
-
-
-
-
+    
 
 
     public function saveIP(Request $request, $setType)

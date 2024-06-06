@@ -8,6 +8,7 @@ use App\Models\Grupo;
 use Livewire\Component;
 use App\Models\Asistencia;
 use App\Models\Estudiante;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -98,10 +99,88 @@ class GroupReportRender extends Component
 
         $this->setNames();
 
+     
+
+
+        return view('livewire.customer.group-report-render', compact( 'estudiantes','asistencias', 'firstDay', 'lastDay', 'diasMes'));
+    }
+
+    public function export()
+    {
+
+        if ($this->group->id == 1) {
+            $estudiantes = Estudiante::where('grupo_id', $this->group->id)
+
+                ->where(function ($query) {
+                    $query->where('nombres', 'like', '%' . $this->search . '%')
+                        ->orWhere('apellidos', 'like', '%' . $this->search . '%');
+                })
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        } else {
+            $estudiantes = Estudiante::where('grupo_id', $this->group->id)
+                ->whereHas('grupo', function ($query) {
+                    $query
+                        ->where('user_id', Auth::user()->id);
+                })
+                ->where(function ($query) {
+                    $query->where('nombres', 'like', '%' . $this->search . '%')
+                        ->orWhere('apellidos', 'like', '%' . $this->search . '%');
+                })
+                ->orderBy('apellidos', 'asc')
+                ->get();
+        }
+        $asistencias = Asistencia::whereHas('estudiante', function ($query) {
+            $query
+                ->where('grupo_id', $this->group->id);
+        })
+            ->whereMonth('dia', $this->monthSelect)
+            ->whereYear('dia', $this->yearSelect)
+            //       ->where('status_id', 1)
+            ->get();
+
+
+        $dt2 = Carbon::createFromDate($this->yearSelect . "-" . $this->monthSelect . '-01');
 
 
 
-        return view('livewire.customer.group-report-render', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
+        $firstDay = $dt2->firstOfMonth()->format('d');
+        $lastDay = $dt2->LastOfMonth()->format('d');
+
+
+        $diasMes = [];
+
+        for ($i = 0; $i < $lastDay; $i++) {
+
+            $day = Carbon::create($this->yearSelect, $this->monthSelect, 01)->addDays($i);
+
+            if ($day->format('l') == 'Saturday' || $day->format('l') == 'Sunday') {
+            } else {
+
+
+                array_push($diasMes, $day);
+            }
+        }
+
+
+        $this->setNames();
+
+        $monthSelectName =$this->monthSelectName;
+        $yearSelect =$this->yearSelect;
+
+
+
+
+
+        try {
+            $pdf = Pdf::loadView('customer.reportes.report-pdf',compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes','monthSelectName','yearSelect'))
+            ->setWarnings(false)->save('myfile.pdf');
+
+            $file = "myfile.pdf";
+            return response()->download($file, "report.pdf");
+        } catch (\Throwable $th) {
+            $this->dispatch('error', message: 'Error al exportar- ' . $th->getMessage());
+        }
     }
 
     public function setNames()
@@ -147,5 +226,12 @@ class GroupReportRender extends Component
 
                 break;
         }
+    }
+
+    public function clearMonth()
+    {
+        $this->monthSelect = now()->format('m');
+      
+        $this->setNames();
     }
 }
