@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('customer/grupos/add-student/{id}', [MainController::class, 'addStudent'])->name('add-student'); //listo
       Route::get('customer/group-report/{id}', [MainController::class, 'groupReport'])->name('group-report'); //listo
       Route::get('customer/report/pdf/{id}', [MainController::class, 'groupReportPDF'])->name('group-report-pdf'); //listo
-      Route::post('customer/reports/pdf/{id}', [MainController::class, 'groupReportsPDF'])->name('group-reports-pdf'); //listo
+     
     });
   });
 });
@@ -130,6 +130,11 @@ Route::get('tienda/paquetes/{id}', PackageShow::class, '__invoke')->name('paquet
 Route::get('tienda/gratuitos', FreeRender::class)->name('free'); //Listo
 Route::get('cart', CartRender::class)->name('cart.index');
 Route::get('search/products', [MainController::class, 'search'])->name('search.products'); //listo
+Route::get('/asistencia', [HomeController::class, 'asistenciaDemo'])->name('asistencia.demo');
+
+
+
+
 
 
 

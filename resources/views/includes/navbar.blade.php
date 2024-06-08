@@ -49,7 +49,7 @@
       <span class="navbar-toggler-icon icon-bar"></span>
       <span class="navbar-toggler-icon icon-bar"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end">
+    <div class="collapse navbar-collapse justify-content-center">
 
       <ul class="navbar-nav">
         <li class="nav-item{{ $activePage == 'home' ? ' active' : '' }}">
@@ -67,7 +67,7 @@
         </li>
         <li class="nav-item{{ $activePage == 'package' ? ' active' : '' }} position-relative">
           <a href="{{ route('paquete') }}" class="nav-link {{ $navbarClass }}">
-            <i class="material-icons">library_add</i><span class="fw-bold">Paquetes Ahorra</span>
+            <i class="material-icons">library_add</i><span class="fw-bold">Paquetes</span>
           </a>
 
         </li>
@@ -77,13 +77,24 @@
 
           </a>
         </li>
-        <li class="nav-item{{ $activePage == 'free' ? ' active' : '' }}">
+        <!-- <li class="nav-item{{ $activePage == 'free' ? ' active' : '' }}">
           <a href="{{ route('free') }}" class="nav-link {{ $navbarClass }}">
-            <i class="material-icons">crop_free</i><span class="fw-bold">Material gratuito</span>
+            <i class="material-icons">crop_free</i><span class="fw-bold">Gratuito</span>
 
           </a>
+        </li> -->
+        @role('admin')
+        <li class="nav-item{{ $activePage == 'asistencia' ? ' active' : '' }}">
+          <a href="{{ route('asistencia.demo') }}" class="nav-link {{ $navbarClass }}">
+            <i class="material-icons">checklist</i> <span class="fw-bold">asistencia y evaluaciones</span>
+          </a>
         </li>
-
+        <!-- <li class="nav-item{{ $activePage == 'asitencia' ? ' active' : '' }}">
+          <a href="{{ route('login') }}" class="nav-link {{ $navbarClass }}">
+            <i class="material-icons">donut_large</i> <span class="fw-bold">Evaluaciones</span>
+          </a>
+        </li> -->
+        @endrole
         @guest
         <li class="nav-item{{ $activePage == 'register' ? ' active' : '' }}">
           <a href="{{ route('register') }}" class="nav-link {{ $navbarClass }}">
@@ -101,6 +112,9 @@
 
 
         @role('admin')
+
+
+
         <li class="nav-item {{ $activePage == 'dashboard' ? ' active' : '' }}">
           <a href="{{ route('dashboard') }}" class="nav-link text-primary">
             <i class="material-icons">dashboard</i> <span class="fw-bold">dashboard</span>
@@ -125,7 +139,7 @@
             @role('admin')
             <a class="dropdown-item" href="{{ route('grupos.index') }}">Registro de asistencia</a>
             <a class="dropdown-item" href="{{ route('grupos.index') }}">Evaluaciones</a>
-           
+
 
             @endrole
             <form method="POST" action="{{ route('logout') }}">

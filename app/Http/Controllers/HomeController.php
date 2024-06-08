@@ -112,5 +112,8 @@ class HomeController extends Controller
         }
     }
 
-    
+    public function asistenciaDemo()
+    {
+        return view('demo.asistencia-demo');
+    }
 }

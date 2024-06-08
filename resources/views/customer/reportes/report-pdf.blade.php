@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
     <style>
         .text-asistencia {
             color: rgb(174, 76, 170) !important;
@@ -200,14 +201,13 @@
                 @endif
                 @endforeach
                 @if($exist)
-                <td class="text-center border">
+                <td class="text-center border ">
 
                     @if($asistencia_select->status_id == 1)
                     @php
                     $a=$a+1;
                     @endphp
-
-                    <input id="c4" class="accent-white" type="checkbox" name="remember" checked>
+                    <input class="accent-white" type="checkbox" name="remember" checked >
                     @elseif($asistencia_select->status_id == 2 )
                     @php
                     $f=$f+1;

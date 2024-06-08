@@ -122,7 +122,7 @@
                                                     </tr>
                                                     <tr class="text-center">
                                                         @foreach ($diasMes as $dia)
-                                                        <th >
+                                                        <th>
 
 
                                                             @if(date_format(new DateTime($dia),'l')=='Monday')
@@ -219,7 +219,9 @@
                                                             $a=$a+1;
                                                             @endphp
 
-                                                            <input id="c4" class="accent-white" type="checkbox" name="remember" checked>
+                                                            <span class="material-symbols-outlined text-lg text-muted">
+                                                                check_box
+                                                            </span>
                                                             @elseif($asistencia_select->status_id == 2 )
                                                             @php
                                                             $f=$f+1;

@@ -7,12 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
     <link rel="icon" type="image/png" href="/img/favicon.png">
-
     <title>{{ $title.' | Material Didáctico MaCa' ?? 'Material Didáctico Maca' }}</title>
-
-
-
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <meta name="description" content="La mejor opción para personas que enseñan desde el corazón.">
+    <meta name="twitter:title" content="Inicio" >
+    <link rel="canonical" href="https://materialdidacticomaca.com/" >
+    <meta name="twitter:image" content="{{ asset('./img/logo3.png') }}" >
+
+
+
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -74,6 +77,8 @@
     @include('includes.modal.cart-modal')
     @include('includes.modal.product-show-modal')
     @include('includes.modal.login-modal')
+    @include('includes.modal.info-asistencia')
+    @include('includes.modal.video-asistencia')
 
     <a href="https://wa.me/message/GUNXZZ666PN3I1" class="floatWhats" target="_blank">
         <i class="fa fa-whatsapp my-float"></i>
