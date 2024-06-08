@@ -10,9 +10,12 @@
     <title>{{ $title.' | Material Didáctico MaCa' ?? 'Material Didáctico Maca' }}</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <meta name="description" content="La mejor opción para personas que enseñan desde el corazón.">
-    <meta name="twitter:title" content="Inicio" >
-    <link rel="canonical" href="https://materialdidacticomaca.com/" >
-    <meta name="twitter:image" content="https://materialdidacticomaca.com/img/logo3.png" >
+    <meta name="twitter:title" content="Inicio">
+    <link rel="canonical" href="https://materialdidacticomaca.com/">
+    <meta name="twitter:image" content="https://materialdidacticomaca.com/img/logo3.png">
+    <meta property="og:description" content="La mejor opción para personas que enseñan desde el corazón.">
+    <meta property="og:image" content="https://materialdidacticomaca.com/img/logo3.png">
+    <meta property="og:url" content="https://materialdidacticomaca.com">
 
 
 
