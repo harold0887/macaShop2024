@@ -12,7 +12,7 @@
     <meta name="description" content="La mejor opción para personas que enseñan desde el corazón.">
     <meta name="twitter:title" content="Inicio" >
     <link rel="canonical" href="https://materialdidacticomaca.com/" >
-    <meta name="twitter:image" content="{{ asset('./img/logo3.png') }}" >
+    <meta name="twitter:image" content="https://materialdidacticomaca.com/img/logo3.png" >
 
 
 
