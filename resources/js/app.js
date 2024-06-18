@@ -420,32 +420,6 @@ Livewire.on('infoPro', ({ message }) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function alertFloat(align, message, icon) {
   const type = ["info", "danger", "success", "warning", "rose", "primary"];
 

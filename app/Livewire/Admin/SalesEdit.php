@@ -17,9 +17,11 @@ class SalesEdit extends Component
     protected $listeners = ['some-event2' => '$refresh'];
     public $order, $ids, $patch, $search = '', $contacto, $status, $mercadoPago, $facebook, $comentario, $link;
     public $suma;
+    public $priceOrder;
     protected $rules = [
         'contacto' => ['required', 'string'],
         'facebook' => 'required|string',
+        'priceOrder' => 'required|numeric',
     ];
     public function mount()
     {
@@ -35,6 +37,7 @@ class SalesEdit extends Component
         $this->mercadoPago = $this->order->payment_id;
         $this->comentario = $this->order->contacto;
         $this->link = $this->order->link;
+        $this->priceOrder = $this->order->amount;
     }
     public function render()
     {
@@ -106,11 +109,11 @@ class SalesEdit extends Component
 
         $this->suma = $sumaProductos + $sumaMembresias + $sumaPackages;
 
-        $registroAsistenciaPro=Membership::findOrFail(2013);
+        $registroAsistenciaPro = Membership::findOrFail(2013);
 
 
 
-        return view('livewire.admin.sales-edit', compact('products', 'packages', 'memberships', 'productsIncluded', 'MembershipsIcluded', 'PackagesIcluded','registroAsistenciaPro'))
+        return view('livewire.admin.sales-edit', compact('products', 'packages', 'memberships', 'productsIncluded', 'MembershipsIcluded', 'PackagesIcluded', 'registroAsistenciaPro'))
             ->extends('layouts.app', [
                 'title' => 'Ventas',
                 'navbarClass' => 'navbar-transparent',
@@ -235,13 +238,14 @@ class SalesEdit extends Component
                 'payment_id' => $this->mercadoPago,
                 'contacto' => $this->comentario,
                 'link' => $this->link,
+                'amount' => $this->priceOrder,
             ]);
             User::findOrFail($this->order->customer_id)->update([
                 'whatsapp' => $this->contacto,
                 'facebook' => $this->facebook,
-
             ]);
             $this->dispatch('success-auto-close', message: 'La orden fue actualizada de manera correcta');
+            $this->dispatch('some-event2');
         } catch (QueryException $th) {
             $this->dispatch('error', message: 'Error al actualizar la orden' . $th->getMessage());
         }
