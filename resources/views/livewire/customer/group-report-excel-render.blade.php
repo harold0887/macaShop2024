@@ -35,77 +35,44 @@
             </div>
         </div>
         <div class="col-md-12 ml-auto mr-auto">
+            @dump($filters)
+            <div class="col-12">
+                @dump($asistencias)
+            </div>
+            <div class="col-12">
+                @dump($estudiantes)
+            </div>
+            <div class="col-12">
+                @dump($estudiante1)
+
+            </div>
             <div class="page-categories ">
                 <div class="tab-content tab-space tab-subcategories pt-0">
                     <div class="tab-pane active " id="link7">
                         <div class="card my-0 ">
                             <div class="card-body py-0 ">
                                 @if(isset($estudiantes) && $estudiantes->count()> 0)
+
+
+
                                 <div class="row">
-
-
-
                                     <div class="col-12">
-                                        <div class="row justify-content-between">
-
-
-                                            <div class="col-12 col-md-auto d-flex">
-                                                <div class="card-footer p-0">
-                                                    <div class="stats ">
-                                                        <select class="form-control text-muted" wire:model.live="monthSelect" wire:change="setNames()">
-                                                            <option selected value="">Selecciona el mes...</option>
-                                                            <option value="01">Enero</option>
-                                                            <option value="02">Febrero</option>
-                                                            <option value="03">Marzo</option>
-                                                            <option value="04">April</option>
-                                                            <option value="05">Mayo</option>
-                                                            <option value="06">Junio</option>
-                                                            <option value="07">Julio</option>
-                                                            <option value="08">Agosto</option>
-                                                            <option value="09">Septiembre</option>
-                                                            <option value="10">Octubre</option>
-                                                            <option value="11">Noviembre</option>
-                                                            <option value="12">Diciembre</option>
-                                                        </select>
-                                                        @if( $monthSelect != now()->format('m') )
-                                                        <i class="material-icons my-auto ml-2 text-base text-danger" style="cursor:pointer" wire:click="clearMonth()">close</i>
-                                                        @endif
-
+                                        <h4 class="text-lg fw-bold text-muted">Generar reportes Excel</h4>
+                                        <div>
+                                            <div class="row">
+                                                <label class="col-auto col-form-label">Desde el:</label>
+                                                <div class="col-auto">
+                                                    <div class="form-group">
+                                                        <input type="date" class="form-control" wire:model.live="filters.fromDate">
                                                     </div>
                                                 </div>
-
-
-                                                <div class="card-footer p-0">
-                                                    <div class="stats">
-                                                        <select class="form-control" name="fop" wire:model.live="yearSelect">
-                                                            <option selected value="">Selecciona el año...</option>
-                                                            @for ($i = 2023; $i < 2030; $i++) <option value="{{$i}}"> {{$i}} </option>
-                                                                @endfor
-                                                        </select>
-
-                                                        @if( $yearSelect != now()->format('Y') )
-                                                        <i class="material-icons my-auto ml-2 text-base text-danger" style="cursor:pointer" wire:click="$set('yearSelect', '{{now()->format('Y')}}')">close</i>
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-
-
-
                                             </div>
-                                            <div class="col-12 col-lg-auto">
-                                                <div class="row ">
-                                                    <div class="col-12 col-lg-auto   text-center">
-                                                        <button class="btn w-100 mt-1  btn-outline-primary m-0 px-2 py-0 mx-1" wire:click="exportExcel()">
-                                                            <img src="{{ asset('img') }}/docs/pdf.png" alt="..." width="40">
-                                                            Exportar a excel
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-12 col-lg-auto   text-center">
-                                                        <button class="btn w-100 mt-1  btn-outline-primary m-0 px-2 py-0 mx-1" wire:click="export()">
-                                                            <img src="{{ asset('img') }}/docs/pdf.png" alt="..." width="40">
-                                                            Exportar a PDF
-                                                        </button>
+
+                                            <div class="row">
+                                                <label class="col-auto col-form-label">Hasta el:</label>
+                                                <div class="col-auto">
+                                                    <div class="form-group">
+                                                        <input type="date" class="form-control" wire:model.live="filters.toDate">
                                                     </div>
                                                 </div>
                                             </div>
@@ -114,7 +81,8 @@
                                         </div>
                                     </div>
 
-
+                                </div>
+                                <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive ">
                                             <table class=" table  table-striped">
@@ -128,7 +96,7 @@
 
                                                         </th>
 
-                                                        <th colspan="{{$lastDay}}" scope="col">{{$monthSelectName}} {{$yearSelect}}</th>
+                                                        <th colspan="{{$lastDay}}" scope="col">Nombre del rango</th>
                                                     </tr>
                                                     <tr class="text-center">
                                                         @foreach ($diasMes as $dia)

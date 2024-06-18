@@ -269,20 +269,26 @@
 <script>
     //Confirmar eliminar producto
     function confirmDelete(id, status) {
-        swal({
+        event.preventDefault();
+        Swal.fire({
             title: "¿Realmente quiere eliminar la venta: " + id + " con status " + status + " ? ",
+            text: "No podrás revertir esto.!",
             icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, eliminar!",
+            confirmButtonText: "Si, eliminar",
         }).then((result) => {
-            if (result.value) {
+            if (result.isConfirmed) {
                 Livewire.dispatch('delete-sales', {
                     id: id
                 });
             } else {
-                swal('Cancelado', 'La compra está segura :)');
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "El registro de venta está seguro :)",
+                    icon: "error"
+                });
             }
         });
     }
@@ -290,25 +296,29 @@
     //Confirmar eliminar producto
     function confirmSendEmail(id, status) {
 
-
-        swal({
+        event.preventDefault();
+        Swal.fire({
             title: "¿Realmente quiere enviar un recordatorio de pago para la orden: " + id + " ? ",
-            type: "question",
+            text: "No podrás revertir esto.!",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Enviar a cliente!",
-            cancelButtonText: "Cancelar"
-
+            confirmButtonText: "Si, eliminar",
         }).then((result) => {
-            if (result.value) {
+            if (result.isConfirmed) {
                 Livewire.dispatch('send-reminder-cliete', {
                     id: id
                 });
             } else {
-                swal('Cancelado', 'El envio se ha cancelado :)');
-
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "El envio se ha cancelado :)",
+                    icon: "error"
+                });
             }
         });
+
+     
     }
 </script>

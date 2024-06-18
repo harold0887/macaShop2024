@@ -7,7 +7,7 @@
                     <li class="breadcrumb-item"><a href="{{route('home')}}">Inicio</a></li>
                     <li class="breadcrumb-item"><a href="{{route('profile.edit')}}">Cuenta</a></li>
                     <li class="breadcrumb-item"><a href="{{route('grupos.index')}}">Mis grupos</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{$group->escuela}} - {{$group->grado_grupo}} </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{$group->grado_grupo}} - {{$group->escuela}} </li>
                 </ol>
             </nav>
         </div>
@@ -15,16 +15,17 @@
     <div class="row ">
         <div class="col-12 mt-0 mt-lg-0">
             <h2 class=" text-center text-primary text-base sm:text-2x1 md:text-2xl  lg:text-2xl">
-                {{$group->escuela}} - {{$group->grado_grupo}}
+                {{$group->grado_grupo}} - {{$group->escuela}}
             </h2>
         </div>
         <div class="col-12">
+
             <div class="row justify-content-between d-flex align-items-center">
                 <div class="col-auto py-0">
                     <span class="text-sm text-muted"><a href="{{ route('grupos.index') }}">Regresar a mis grupos.</a></span>
                 </div>
+                @if(isset($estudiantes) && $estudiantes->count()> 0)
                 <div class="col-auto text-muted text-xxs">
-
                     <span>
                         @if($as->count() > 0)
                         {{$as->count() > 1 ?  $as->count(). ' asistencias'  :  $as->count(). ' asistencia' }},
@@ -51,8 +52,9 @@
                         {{$estudiantes->count() - $as->count() - $faltas->count() -$retardos->count()- $faltasJustificadas->count()}} sin registro.
                     </span>
                 </div>
-
+                @endif
             </div>
+
         </div>
         <div class="col-md-12 ml-auto mr-auto">
             <div class="page-categories ">
@@ -61,13 +63,10 @@
                         <div class="card my-0 ">
                             <div class="card-body py-0">
                                 @if(isset($estudiantes) && $estudiantes->count()> 0)
+
                                 <div class="row justify-content-around">
-
-
-
-
                                     <div class="col-12 col-md-8 ">
-                                        <div class="row">
+                                        <div class="row justify-content-center">
                                             <div class="col-12 col-lg-6">
 
                                                 <input type="date" class="form-control fw-bold text-base sm:text-2x1 md:text-2xl  lg:text-2xl text-primary" name="start" wire:model.live="select_date">
@@ -75,6 +74,8 @@
                                                 <small class="text-danger"> {{ $message }} </small>
                                                 @enderror
                                             </div>
+                                            @if( date_format(new DateTime($select_date),'l') == 'Saturday' || date_format(new DateTime($select_date),'l') == 'Sunday')
+                                            @else
                                             <div class="col-12 col-lg-6">
                                                 <div class="search-panels mt-1">
                                                     <div class="search-group">
@@ -93,10 +94,21 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @endif
 
                                         </div>
 
+                                        @if( date_format(new DateTime($select_date),'l') == 'Saturday' || date_format(new DateTime($select_date),'l') == 'Sunday')
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="col-12 my-5 text-center">
+                                                    <span class="h4 text-muted">No puede registrar asistencias en sabado y domingo. <span>
+                                                </div>
+                                            </div>
+                                        </div>
 
+
+                                        @else
                                         <div class="accordion accordion-flush text-lg" id="accordionAlumnos">
 
 
@@ -118,20 +130,20 @@
                                                         @if($exist)
 
                                                         <button class=" rounded btn btn-asistencia
-                                                        @if($asistencia_select->status_id == 1) 
+                                                                @if($asistencia_select->status_id == 1) 
 
-                                                        bg-asistencia 
-                                                        @elseif($asistencia_select->status_id == 2 ) 
-                                                        bg-falta  
-                                                        @elseif($asistencia_select->status_id == 3) 
-                                                        bg-retardo 
-                                                        @elseif($asistencia_select->status_id == 4) 
-                                                        bg-falta-justificada 
-                                                        @elseif($asistencia_select->status_id == 5) 
-                                                        bg-white
-                                                        @else
-                                                        bg-white
-                                                        @endif " {{ isset($asistencia_select) && $asistencia_select->status_id == 1 ?'disabled':''}} wire:click="asistencia({{ $estudiante->id }})" data-toggle="tooltip" data-placement="top" title="Registrar asistencia">
+                                                                bg-asistencia 
+                                                                @elseif($asistencia_select->status_id == 2 ) 
+                                                                bg-falta  
+                                                                @elseif($asistencia_select->status_id == 3) 
+                                                                bg-retardo 
+                                                                @elseif($asistencia_select->status_id == 4) 
+                                                                bg-falta-justificada 
+                                                                @elseif($asistencia_select->status_id == 5) 
+                                                                bg-white
+                                                                @else
+                                                                bg-white
+                                                                @endif " {{ isset($asistencia_select) && $asistencia_select->status_id == 1 ?'disabled':''}} wire:click="asistencia({{ $estudiante->id }})" data-toggle="tooltip" data-placement="top" title="Registrar asistencia">
                                                         </button>
 
                                                         @else
@@ -165,16 +177,16 @@
                                                             </button>
 
                                                             @else
-                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="falta({{ $estudiante->id }})"  data-toggle="tooltip" data-placement="top" title="Registrar falta">
+                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="falta({{ $estudiante->id }})" data-toggle="tooltip" data-placement="top" title="Registrar falta">
                                                                 <span class="fw-bold text-muted">F</span>
                                                             </button>
-                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="retardo({{ $estudiante->id }})"  data-toggle="tooltip" data-placement="top" title="Registrar retardo">
+                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="retardo({{ $estudiante->id }})" data-toggle="tooltip" data-placement="top" title="Registrar retardo">
                                                                 <span class="fw-bold text-muted">R</span>
                                                             </button>
-                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="faltaJustificada({{ $estudiante->id }})"  data-toggle="tooltip" data-placement="top" title="Registrar falta justificada">
+                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="faltaJustificada({{ $estudiante->id }})" data-toggle="tooltip" data-placement="top" title="Registrar falta justificada">
                                                                 <span class="fw-bold text-muted">FJ</span>
                                                             </button>
-                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="sinRegistro({{ $estudiante->id }})" @if(!$exist) disabled @endif  data-toggle="tooltip" data-placement="top" title="Eliminar registro">
+                                                            <button class="btn d-flex align-items-center border text-muted btn-falta " wire:click="sinRegistro({{ $estudiante->id }})" @if(!$exist) disabled @endif data-toggle="tooltip" data-placement="top" title="Eliminar registro">
                                                                 <span class="fw-bold text-muted">SR</span>
                                                             </button>
 
@@ -225,12 +237,32 @@
                                             </div>
                                             @endforeach
                                         </div>
+
+                                        @endif
+
+
+
+
+
+
                                     </div>
                                 </div>
+
+
+
+
                                 @else
-                                <div class="row">
-                                    <div class="col">
-                                        <p>No hay alumbos</p>
+                                <div class="row mb-5">
+                                    <div class="col-12 mt-5 text-center">
+                                        <span class="h4 text-muted">Este grupo aún no tiene alumnos registrados, empecemos con agregar un alumno. <span>
+                                    </div>
+                                    <div class="col-12 text-center mt-5">
+                                        <a href="{{ route('add-student', $group->id) }}" class="text-white btn btn-primary btn-lg btn-round">
+                                            <div class="d-flex align-items-center">
+                                                <i class="material-icons  mr-2 ">add</i>
+                                                <span class="fw-bold">Agregar Alumnos</span>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                                 @endif

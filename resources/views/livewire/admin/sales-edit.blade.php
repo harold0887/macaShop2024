@@ -119,6 +119,35 @@
                                     </div>
                                 </div>
                                 @endforeach
+                                <div class="row pt-2">
+                                    <div class="col-6 col-lg-8 align-self-center">
+                                        {{ $registroAsistenciaPro->title }}
+                                    </div>
+                                    <div class="col-6 col-lg-4">
+
+                                        @php
+                                        $exist= false;
+                                        @endphp
+                                        @foreach($MembershipsIcluded as $item)
+                                        @if($item->id == $registroAsistenciaPro->id )
+                                        @php
+                                        $exist= true;
+                                        @endphp
+                                        @endif
+                                        @endforeach
+                                        @if($exist)
+                                        <button type="submit" class="btn p-1  btn-danger p-0" wire:click="removeMembership('{{ $registroAsistenciaPro->id }}')">
+                                            <i class="material-icons">close</i>
+                                            Eliminar
+                                        </button>
+                                        @else
+                                        <button class="btn p-1  btn-success p-0" wire:click="addMembership('{{ $registroAsistenciaPro->id }}')">
+                                            <i class="material-icons">add</i>
+                                            Agergar
+                                        </button>
+                                        @endif
+                                    </div>
+                                </div>
 
                                 <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top">
                                     Agregar paquetes a la orden

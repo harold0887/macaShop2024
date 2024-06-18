@@ -44,6 +44,10 @@
                         <span class="d-block text-muted">Formato digital: {{ $item->associatedModel->format }}</span>
 
                         @elseif($item->associatedModel->model == 'Membership')
+
+                        @if( $item->id==2013)
+                        <span class="d-block fw-bold text-muted">{{ $item->name }}</span>
+                        @else
                         <span class="d-block fw-bold text-muted">Membresia {{ $item->name }}</span>
                         <span class="d-block text-muted">Vigencia:
                             @php
@@ -77,6 +81,9 @@
                             @endif
                             {{$year}}
                         </span>
+                        @endif
+
+                        
 
                         @elseif($item->associatedModel->model == 'Package')
                         <span class="d-block fw-bold text-muted">{{ $item->name }}</span>

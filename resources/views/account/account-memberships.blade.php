@@ -39,12 +39,20 @@
                             </thead>
                             <tbody>
                                 @foreach ($memberships as $item)
+
                                 <tr>
+                                    @if( $item->membership_id==2013)
+                                    <td>
+
+                                    </td>
+                                    @else
                                     <td>
                                         <a href="{{ route('customer.membership-show', ['id'=>$item->membership_id]) }}" class=" text-white btn  btn-primary rounded">
                                             <span>Ver detalle</span>
                                         </a>
                                     </td>
+                                    @endif
+
                                     <td>
                                         <div class="row">
                                             <div class="col-12 col-lg-auto">
@@ -73,7 +81,12 @@
                                         {{$item->order->id}}
                                     </td>
                                     <td>
+                                        @if( $item->membership_id==2013)
+                                        -
+                                        @else
                                         {{date_format(new DateTime($item->membership->expiration),'d-M-Y')}}
+                                        @endif
+
                                     </td>
                                 </tr>
                                 @endforeach

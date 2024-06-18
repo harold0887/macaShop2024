@@ -79,18 +79,25 @@
     function confirmDeleteCategory($id, $name) {
         var form = $("#form-delete-category");
         event.preventDefault();
-        swal({
+
+
+        Swal.fire({
             title: "¿Realmente quiere eliminar la categoria: " + $name + "  ? ",
-            type: "question",
+            text: "No podrás revertir esto.!",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, eliminar!",
+            confirmButtonText: "Si, eliminar",
         }).then((result) => {
-            if (result.value) {
+            if (result.isConfirmed) {
                 form.submit();
             } else {
-                Swal('Cancelado', 'El registro está seguro :)');
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "El registro está seguro :)",
+                    icon: "error"
+                });
             }
         });
     }

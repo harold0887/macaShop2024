@@ -184,7 +184,7 @@
             @foreach ($estudiantes as $estudiante)
 
             <tr>
-                <td>{{ $estudiante->apellidos }} {{ $estudiante->nombres }}</td>
+                <td>{{$loop->iteration}}.- {{ $estudiante->apellidos }} {{ $estudiante->nombres }}</td>
                 <td>
 
                 </td>
@@ -207,7 +207,7 @@
                     @php
                     $a=$a+1;
                     @endphp
-                    <input class="accent-white" type="checkbox" name="remember" checked >
+                    <input class="accent-white" type="checkbox" name="remember" checked>
                     @elseif($asistencia_select->status_id == 2 )
                     @php
                     $f=$f+1;
@@ -243,7 +243,10 @@
                 </td>
 
                 @endif
-
+                <!-- clear exist -->
+                @php
+                $exist= false;
+                @endphp
 
                 @else
                 <td class="text-center">

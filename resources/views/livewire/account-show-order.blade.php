@@ -244,7 +244,7 @@ $preference->save();
                                                 @else
                                                 <button class="btn btn-outline-primary btn-round" disabled>
                                                     <i class=" material-icons">file_download</i>
-                                                    No disponible
+                                                    Descargar
                                                 </button>
                                                 @endif
                                             </div>
@@ -309,7 +309,13 @@ $preference->save();
                                             </div>
                                             <div class="col-12 col-lg-auto">
                                                 <span class="d-block fw-bold  text-muted mt-2 text-sm md:text-base  lg:text-base">{{ $item->membership->title }}</span>
+
+                                                @if( $item->membership->id==2013)
+
+                                                @else
                                                 <span class="d-block  text-muted my-1">Membresía</span>
+
+                                                @endif
                                                 <span class="d-block  text-muted fst-italic">{{ $item->price }} MXN</span>
                                             </div>
                                         </div>
@@ -318,12 +324,14 @@ $preference->save();
                                     </td>
                                     <td>
                                         <div class="row mx-0">
+
+                                            @if($item->membership->id==2013)
+                                            <div class="col-12">
+
+                                            </div>
+
+                                            @else
                                             <div class="col-12 ">
-
-
-
-
-
                                                 @if ($order->status == 'approved')
                                                 @if ($item->membership->expiration > now())
                                                 @if($order->active == 0)
@@ -349,10 +357,14 @@ $preference->save();
                                                     <div class="d-flex align-items-center">
                                                         <i class="material-icons">visibility_off</i> Ver materiales
                                                     </div>
-
                                                 </button>
                                                 @endif
                                             </div>
+                                            @endif
+
+
+
+                                            
                                         </div>
 
                                     </td>

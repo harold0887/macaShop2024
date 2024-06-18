@@ -18,6 +18,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Mail\PaymentApprovedEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentApprovedAsistencia;
 use App\Mail\PaymentApprovedMembership;
 
 class MainController extends Controller
@@ -101,7 +102,9 @@ class MainController extends Controller
                     'membership_id' => $item->id,
                     'price' => $item->price,
                 ]);
-                $orderActive = false;
+                if ($item->membership_id = !2013) {
+                    $orderActive = false;
+                }
             } elseif ($item->associatedModel->model == 'Package') {
                 Order_Details::create([
                     'order_id' => $newOrder->id,
@@ -171,9 +174,21 @@ class MainController extends Controller
 
                 // //enviar correo de membresias
                 // foreach ($membreships as $membresia) {
-                //     $correoCopia = new PaymentApprovedMembership($membresia->membership_id, $order);
-                //     Mail::to($order->user->email)
-                //         ->send($correoCopia);
+                //     if ($membresia->membership_id == 2013) {
+                //         //actualizar perfil de usuario
+                //         $user = User::findOrFail($order->user->id);
+                //         $user->update([
+                //             'pro' => true,
+                //         ]);
+                //         //enviar correo de lista de aistencia
+                //         $correoConfirmAsistencia = new PaymentApprovedAsistencia($membresia->membership_id, $order);
+                //         Mail::to($order->user->email)
+                //             ->send($correoConfirmAsistencia);
+                //     } else {
+                //         $correoCopia = new PaymentApprovedMembership($membresia->membership_id, $order);
+                //         Mail::to($order->user->email)
+                //             ->send($correoCopia);
+                //     }
                 // }
 
 
@@ -245,11 +260,19 @@ class MainController extends Controller
     public function addStudent($id)
     {
 
-        $group = Grupo::findOrFail($id);
-        $condiciones = Condicion::all();
-        if ($group->user_id == Auth::user()->id || $group->id == 1) {
 
-            return view('customer.estudiantes.add-student', compact('group', 'condiciones'));
+        $group = Grupo::findOrFail($id);
+        $alumnos = Estudiante::where('grupo_id', $group->id)->get();
+        $condiciones = Condicion::all();
+
+
+        if ($group->user_id == Auth::user()->id) {
+            if (Auth::user()->pro || $alumnos->count() < 25) {
+                return view('customer.estudiantes.add-student', compact('group', 'condiciones'));
+            } else {
+                return redirect()->route('grupos.index')->with('infoPro', 'La versión gratuita permite registrar máximo 25 alumnos, si necesita registrar más alumnos. Adquiera la versión PRO');
+                //return back()->with('info', 'La versión gratuita permite registrar máximo 25 alumnos, si necesita registrar más alumnos.');
+            }
         } else {
             abort(403);
         }
@@ -257,12 +280,18 @@ class MainController extends Controller
 
     public function groupReport($id)
     {
-
         $group = Grupo::findOrFail($id);
-        $condiciones = Condicion::all();
-        if ($group->user_id == Auth::user()->id || $group->id == 1) {
-
+        if ($group->user_id == Auth::id()) {
             return view('customer.reportes.group-report', compact('group'));
+        } else {
+            abort(403);
+        }
+    }
+    public function groupReportExcel($id)
+    {
+        $group = Grupo::findOrFail($id);
+        if ($group->user_id == Auth::id()) {
+            return view('customer.reportes.group-report-excel', compact('group'));
         } else {
             abort(403);
         }
@@ -320,17 +349,17 @@ class MainController extends Controller
             }
         }
 
-        $monthSelectName ="Npmbre de prueba vista";
-        $yearSelect ="2024";
+        $monthSelectName = "Npmbre de prueba vista";
+        $yearSelect = "2024";
 
         //return view('customer.reportes.pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes'));
 
 
         try {
-            $pdf = Pdf::loadView('customer.reportes.report-pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes','monthSelectName','yearSelect'));
+            $pdf = Pdf::loadView('customer.reportes.report-pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes', 'monthSelectName', 'yearSelect'));
             //return $pdf->download('reporte.pdf');
 
-            return view('customer.reportes.report-pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes','monthSelectName','yearSelect'));
+            return view('customer.reportes.report-pdf', compact('estudiantes', 'asistencias', 'firstDay', 'lastDay', 'diasMes', 'monthSelectName', 'yearSelect'));
             //return $pdf->stream();
         } catch (\Throwable $th) {
             return back()->with('error', 'Error al exportar el reporte - ' . $th->getMessage());
@@ -339,7 +368,7 @@ class MainController extends Controller
 
 
 
-    
+
 
 
     public function saveIP(Request $request, $setType)

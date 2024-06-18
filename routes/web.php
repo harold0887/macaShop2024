@@ -19,22 +19,23 @@ use App\Livewire\AccountShowPackages;
 use App\Livewire\Admin\IndexComments;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IpController;
+use App\Livewire\AsistenciaDemoRender;
 use App\Livewire\AccountShowMembership;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\SalesControler;
-use App\Http\Controllers\GradeController;
 
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\WebhooksController;
 use App\Http\Controllers\MembershipController;
-use App\Http\Controllers\StudentController;
 use App\Http\Controllers\WebhooksControllerArnold;
 
 /*
@@ -89,11 +90,12 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('customer/memberships', [MainController::class, 'customerMemberships'])->name('customer.memberships');
       Route::get('customer/memberships/{id}', AccountShowMembership::class)->name('customer.membership-show');
       Route::resource('customer/grupos', GrupoController::class);
-      Route::resource('customer/estudiantes', StudentController::class);
+      Route::resource('customer/estudiantes', StudentController::class)->except('index', 'delete');
       Route::get('customer/grupos/add-student/{id}', [MainController::class, 'addStudent'])->name('add-student'); //listo
       Route::get('customer/group-report/{id}', [MainController::class, 'groupReport'])->name('group-report'); //listo
+      Route::get('customer/group-report-excel/{id}', [MainController::class, 'groupReportExcel'])->name('group-report-excel'); //listo
       Route::get('customer/report/pdf/{id}', [MainController::class, 'groupReportPDF'])->name('group-report-pdf'); //listo
-     
+
     });
   });
 });
@@ -130,7 +132,7 @@ Route::get('tienda/paquetes/{id}', PackageShow::class, '__invoke')->name('paquet
 Route::get('tienda/gratuitos', FreeRender::class)->name('free'); //Listo
 Route::get('cart', CartRender::class)->name('cart.index');
 Route::get('search/products', [MainController::class, 'search'])->name('search.products'); //listo
-Route::get('/asistencia', [HomeController::class, 'asistenciaDemo'])->name('asistencia.demo');
+Route::get('/asistencia',AsistenciaDemoRender::class)->name('asistencia.demo'); 
 
 
 
@@ -177,8 +179,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     Artisan::call('config:cache');
     return 'Config cache has been cleared';
   });
-
-
 });
 
 

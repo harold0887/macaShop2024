@@ -1,4 +1,5 @@
 <div class="content py-0 bg-white">
+
     <div class="row">
         <div class="col-12">
             <nav aria-label="breadcrumb ">
@@ -11,12 +12,32 @@
             </nav>
         </div>
     </div>
+
+    <div class="row justify-content-between">
+
+
+        <div class="col-12 col-md-auto  align-self-md-center ">
+            @if(isset($myGroups) && $myGroups->count() > 0)
+            <a class="btn btn-primary btn-block " href="{{ route('grupos.create') }}">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="material-icons mr-2">add_circle</i>
+                    <span>Nuevo grupo</span>
+                </div>
+            </a>
+            @endif
+        </div>
+        @if (!auth()->user()->pro)
+        <div class="col-12 col-md-auto  align-self-md-center">
+            <a class="btn btn-rose w-100" href="{{ route('asistencia.demo') }}" type="button">Upgrade to pro</a>
+        </div>
+        @endif
+    </div>
     <div class="row justify-content-center">
         @if(isset($myGroups) && $myGroups->count() > 0)
 
         @foreach($myGroups as $group)
         <div class="col-lg-4 cards">
-            <div class="card card-pricing card-raised">
+            <div class="card card-pricing card-raised ">
                 <div class="card-body">
                     <div style="position: absolute; right:10px">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,18 +48,20 @@
                         <div class="dropdown-menu px-0" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="{{ route('add-student', $group->id) }}">Agregar Alumnos</a>
                             <a class="dropdown-item" href="">Editar Alumnos</a>
-                            <a class="dropdown-item" href="{{ route('group-report', $group->id) }}">Reportes</a>
+                            <a class="dropdown-item" href="{{ route('group-report', $group->id) }}">Reporte PDF</a>
+                            <a class="dropdown-item" href="{{ route('group-report-excel', $group->id) }}">Reporte Excel</a>
                             <button type="button" class="dropdown-item">Duplicar</button>
                             <button type="button" class="dropdown-item" wire:click="ocultar('{{$group->id}}')">Ocultar</button>
                             <a class="dropdown-item" href="{{ route('grupos.edit', $group->id) }}">Editar</a>
-                            <button type="button" class="dropdown-item" onclick="confirmDelete('{{ $group->id }}', '{{ $groupTest->grado_grupo }}', '{{ $groupTest->escuela }}', '{{ $groupTest->ciclo_escolar}}')">Eliminar</button>
+                            <button type="button" class="dropdown-item" onclick="confirmDelete('{{ $group->id }}', '{{ $group->grado_grupo }}', '{{ $group->escuela }}', '{{ $group->ciclo_escolar}}')">Eliminar</button>
                         </div>
                     </div>
 
-                    <h6 class="card-category">{{$group->escuela}}</h6>
-                    <span class="card-category">{{$group->grado_grupo}} - Ciclo escolar {{$group->ciclo_escolar}}</span>
+                    <h6 class="card-category">{{$group->grado_grupo}}</h6>
+                    <span class="card-category">{{$group->escuela}}</span>
+                    <span class="card-category d-block">Ciclo escolar {{$group->ciclo_escolar}}</span>
                     <div class="card-icon icon-{{$group->color}} ">
-                        <i class="material-icons ">
+                        <i class="material-icons " style="position: relative !important;">
                             @php
                             $nombre = $group->escuela;
                             $separadas = explode(" ", $nombre);
@@ -47,7 +70,18 @@
                             $corto .= substr($primera, 0, 1);
                             }
                             @endphp
-                            <span class="text-uppercase">{{$corto}}</span>
+
+                            @if ($group->itemMain)
+                            <img class="img-grupo" src="{{ Storage::url($group->itemMain)  }}" alt="..." width="100">
+                            @else
+
+                            <span class="text-uppercase" style="font-family: Arial, Helvetica, sans-serif !important;">{{$corto}}</span>
+                            @endif
+
+
+
+
+
                         </i>
                     </div>
                     <h3 class="card-title">{{$group->estudiantes->count()}} Alumnos
@@ -69,74 +103,33 @@
 
 
         @endforeach
-
         @else
-        <div class="col-lg-4 cards">
-            <div class="card card-pricing card-raised">
-                <div class="card-body">
-                    <div style="position: absolute; right:10px">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="material-symbols-outlined">
-                                more_vert
-                            </span>
-                        </a>
-                        <div class="dropdown-menu px-0" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="{{ route('add-student', $groupTest->id) }}">Agregar Alumnos</a>
-                            <a class="dropdown-item" href="">Editar Alumnos</a>
-                            <a class="dropdown-item" href="{{ route('group-report', $groupTest->id) }}">Reportes</a>
-                            <button type="button" class="dropdown-item" wire:click="ocultar('{{$groupTest->id}}')">Ocultar grupo</button>
-                            <a class="dropdown-item" href="{{ route('grupos.edit', $groupTest->id) }}">Editar grupo</a>
-                            <button type="button" class="dropdown-item" onclick="confirmDelete('{{ $groupTest->id }}', '{{ $groupTest->grado_grupo }}', '{{ $groupTest->escuela }}', '{{ $groupTest->ciclo_escolar}}')">Eliminar grupo</button>
-                        </div>
-                    </div>
-
-                    <h6 class="card-category">{{$groupTest->escuela}} (grupo de ejemplo) </h6>
-                    <span class="card-category">{{$groupTest->grado_grupo}} - Ciclo escolar {{$groupTest->ciclo_escolar}}</span>
-                    <div class="card-icon icon-{{$groupTest->color}} ">
-                        <i class="material-icons ">
-                            @php
-                            $nombre = $groupTest->escuela;
-                            $separadas = explode(" ", $nombre);
-                            $corto = "";
-                            foreach ($separadas as $primera) {
-                            $corto .= substr($primera, 0, 1);
-                            }
-                            @endphp
-                            {{$corto}}
-                        </i>
-                    </div>
-                    <h3 class="card-title">{{$groupTest->estudiantes->count()}} Alumnos</h3>
-                    <p class="card-description d-flex justify-content-between">
-                        @if($groupTest->materia)
-                        <span>Materia: {{$groupTest->materia}}</span>
-                        @else
-                        <span class="text-white">Materia:</span>
-                        @endif
-                        @if($groupTest->maestro)
-                        <span>Maestra(o): {{$groupTest->maestro}}</span>
-                        @endif
-                    </p>
-                    <a href="{{ route('grupos.show', $groupTest->id) }}" class="btn btn-{{$groupTest->color}} btn-round">Seleccionar</a>
-                </div>
-            </div>
-        </div>
-        @endif
         <div class="col-lg-4 cards">
             <div class="card card-pricing card-plain">
                 <div class="card-body">
-                    <h6 class="card-category">Crear nuevo Grupo</h6>
+                    <h6 class="card-category">Registra tu primer grupo</h6>
                     <span class="card-category text-white">-</span>
                     <div class="card-icon">
-                        <i class="material-icons">domain_add</i>
+                        <i class="material-icons">school</i>
                     </div>
-                    <h3 class="card-title">FREE</h3>
+
                     <p class="card-description">
-                        Crea un nuevo grupo para poder administrar la asistencia de tus alumnos.
+                        Crea un nuevo grupo para poder administrar la asistencia y las evaluaciones de tus alumnos.
                     </p>
-                    <a href="{{ route('grupos.create') }}" class="btn btn-white btn-round">Choose Plan</a>
+                    @if (!auth()->user()->pro)
+                    <p class="card-description">
+                        Esta es una versión gratuita que permite registrar solo un grupo con máximo 25 alumnos, si necesita registrar más grupos o más de 25 alumnos en el grupo adquiera la versión <b>PRO</b>,
+                        <a href="{{ route('asistencia.demo') }}">aquí</a>,
+                    </p>
+                    @endif
+                    <a href="{{ route('grupos.create') }}" class="btn btn-outline-primary btn-round">Nuevo grupo</a>
                 </div>
             </div>
         </div>
+
+
+        @endif
+
     </div>
     <div class="row">
         <div class="col-12 col-lg-6">
@@ -176,27 +169,25 @@
 <script>
     //Confirmar eliminar producto
     function confirmDelete($id, grado, escuela, ciclo) {
-        var text =
-            "<span class='font-weight-bold'>Realmente quiere eliminar el grupo</span>" +
-            "<span> <br><br> " +
-            grado + " - " + ciclo + " - " + escuela +
-            "</span><br><br>" +
-            "<span class='font-italic text-sm'> Se van a eliminar todos los alumnos del grupo y sus registros, esta accion no se puede revertir.</span>";
-        swal({
-            //title: "¿Realmente quiere eliminar el grupo: " + $name + "  ?. Se van a eliminar todos los alumnos y sus registros, esto no se puede recuperar.",
-            html: text,
-            type: "question",
+        Swal.fire({
+            title: "¿Realmente quiere eliminar el grupo: " + grado + " - " + escuela + "  ?",
+            text: "Se van a eliminar todos los alumnos y sus registros, esto no se puede recuperar.!",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, eliminar!",
+            confirmButtonText: "Si, eliminar",
         }).then((result) => {
-            if (result.value) {
+            if (result.isConfirmed) {
                 Livewire.dispatch('delete-group', {
                     id: $id
                 });
             } else {
-                Swal('Cancelado', 'Tu grupo está seguro :)');
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "Tu grupo está seguro :)",
+                    icon: "error"
+                });
             }
         });
     }

@@ -28,17 +28,12 @@ function extraBtn() {
     $("#adCart,#product-view").modal("hide");
 
   });
-
-
-
-
   //hide div result and clear input
   $(".btn-cleare").on("click", function () {
     $("#input-search-home, #input-search-home1").val("");
     $("#null-search1, #null-search").addClass("d-none").text("");
 
   });
-
   //hide div result
   $("#input-search-home1").on("keyup", function () {
     if ($("#input-search-home1").val() == "") {
@@ -51,9 +46,7 @@ function extraBtn() {
     }
   })
 }
-
 function rangeCalendar() {
-
   $('input[name="datefilter"]').daterangepicker({
     autoUpdateInput: false,
     locale: {
@@ -61,8 +54,6 @@ function rangeCalendar() {
       applyLabel: 'Aplicar'
     }
   });
-
-
   $('input[name="datefilter"]').on('apply.daterangepicker', function (ev, picker) {
 
     Livewire.dispatch('setRange',
@@ -70,8 +61,6 @@ function rangeCalendar() {
         start: picker.startDate.format('YYYY-MM-DD'),
         end: picker.endDate.format('YYYY-MM-DD')
       })
-
-
   });
 }
 
@@ -84,8 +73,6 @@ function destroyAutoplay() {
     $(".best-autoplay,.novedades-autoplay,.relacionados1").slick('destroy');
   }, 50)
 }
-
-
 function autoplay() {
   setTimeout(function () {
     $(".best-autoplay,.novedades-autoplay").slick({
@@ -238,8 +225,6 @@ function showModalLoad() {
   $(".active-modal").submit(() => {
     $("#modal-spinner").modal("show");
   });
-
-
 }
 
 function showloginModal() {
@@ -338,18 +323,28 @@ Livewire.on('showProductDetails', ({ title, itemMain, items }) => {
 
 
 Livewire.on('error', ({ message }) => {
-  swal("¡error!", message, "error");
+  Swal.fire({
+    title: "¡Error!",
+    text: message,
+    icon: "error"
+  });
 })
 
 
-Livewire.on("success", function ($message) {
 
-});
 Livewire.on('success', ({ title, message }) => {
   if (title) {
-    swal(title, message, "success");
+    Swal.fire({
+      title: title,
+      text: message,
+      icon: "success"
+    });
   } else {
-    swal("¡Buen trabajo!", message, "success");
+    Swal.fire({
+      title: "¡Buen trabajo!",
+      text: message,
+      icon: "success"
+    });
   }
 
 })
@@ -393,12 +388,32 @@ Livewire.on('sendSuccessHtml', ({ product, note, email }) => {
     email +
     "</span>";
 
-  swal({
+  Swal.fire({
     title: "Enviado!",
+    icon: "success",
     html: text,
-    type: "success",
-    buttonsStyling: false,
-    confirmButtonClass: "btn btn-info",
+    showCloseButton: false,
+    showCancelButton: false,
+    focusConfirm: false,
+
+  });
+
+
+
+})
+
+
+Livewire.on('infoPro', ({ message }) => {
+  Swal.fire({
+    title: `
+    Adquiera la versión <b>PRO</b>,
+    <a href=https://materialdidacticomaca.com/asistencia>aquí</a>.
+    `,
+    icon: "info",
+    html: message,
+    showCloseButton: false,
+    showCancelButton: false,
+    focusConfirm: false,
   });
 
 })

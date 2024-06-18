@@ -106,9 +106,11 @@ class SalesEdit extends Component
 
         $this->suma = $sumaProductos + $sumaMembresias + $sumaPackages;
 
+        $registroAsistenciaPro=Membership::findOrFail(2013);
 
 
-        return view('livewire.admin.sales-edit', compact('products', 'packages', 'memberships', 'productsIncluded', 'MembershipsIcluded', 'PackagesIcluded'))
+
+        return view('livewire.admin.sales-edit', compact('products', 'packages', 'memberships', 'productsIncluded', 'MembershipsIcluded', 'PackagesIcluded','registroAsistenciaPro'))
             ->extends('layouts.app', [
                 'title' => 'Ventas',
                 'navbarClass' => 'navbar-transparent',

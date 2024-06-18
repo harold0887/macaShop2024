@@ -1,5 +1,5 @@
 @extends('layouts.app',[
-'title'=>'Registro de asistencia',
+'title'=>$group->grado_grupo." - ".$group->escuela,
 'navbarClass'=>'navbar-transparent',
 'activePage'=>'paselista',
 'menuParent'=>'orders',

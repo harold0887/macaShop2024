@@ -1,13 +1,8 @@
 @component('mail::message')
 
 ## {{$userName}}, muchas gracias por su compra!!🫶🏻
-Me alegra poder darle la bienvenida al grupo VIP de {{$membershipName}} !!🌈
+Me alegra poder darle la bienvenida al {{$membershipName}} !!🌈
 
-Favor de dar clic al siguiente enlace para enviarnos un mensaje en WhatsApp y activar tu membresía.
-
-@component('mail::button', ['url' => $url])
-Activar membresía
-@endcomponent
 
 
 RESUMEN DE COMPRA: {{$order}}

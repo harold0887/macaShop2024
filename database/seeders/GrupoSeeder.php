@@ -20,9 +20,10 @@ class GrupoSeeder extends Seeder
             'materia' => 'Educación Financiera',
             'maestro' => 'Sandra Cano',
             'color' => 'rose',
-            'user_id' => 2,
+            'user_id' => 1,
             'created_at' => now(),
             'updated_at' => now()
         ]);
     }
+  
 }

@@ -117,7 +117,7 @@ class IndexSales extends Component
                     message: 'Se ha enviado la notificación de pago al cliente'
                 );
             } else {
-                $this->dispatch('error', message: 'La orden no cuenta con link de pago');
+                $this->dispatch('error', message: 'La orden no cuenta con link de pago.');
             }
         } catch (QueryException $e) {
 
@@ -138,10 +138,10 @@ class IndexSales extends Component
                 $this->dispatch(
                     'success-auto-close',
                     title: 'Enviado!',
-                    message: 'Se ha enviado la notificación de pago como prueba'
+                    message: 'Se ha enviado la notificación de pago como prueba.'
                 );
             } else {
-                $this->dispatch('error', message: 'La orden no cuenta con link de pago');
+                $this->dispatch('error', message: 'La orden no cuenta con link de pago.');
             }
         } catch (QueryException $e) {
 

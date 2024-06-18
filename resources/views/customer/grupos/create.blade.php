@@ -31,7 +31,7 @@
                     <h4 class="card-title">Crear nuevo grupo</h4>
                 </div>
                 <div class="card-body ">
-                    <form id="create-product-admin" action="{{ route('grupos.store') }}" method="POST">
+                    <form id="create-product-admin" action="{{ route('grupos.store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <div class="form-group">
                             <label class="bmd-label-floating">Escuela</label>
@@ -128,8 +128,29 @@
                             <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
-
-                        <div class="card-footer ">
+                        <div class="col-12 col-md-6 col-lg-3 text-center">
+                            <span class="text-muted mb-2">Logo de la escuela (opcional)</span>
+                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail">
+                                    <img src="{{ asset('material') }}/img/image_placeholder.jpg" alt="...">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                <div>
+                                    <span class="btn btn-primary btn-round btn-file">
+                                        <span class="fileinput-new">Selecciona logo</span>
+                                        <span class="fileinput-exists">Cambiar</span>
+                                        <input type="file" name="itemMain" accept="image/*" />
+                                    </span>
+                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminar</a>
+                                </div>
+                            </div>
+                            <div>
+                                @error('itemMain')
+                                <small class=" text-danger"> {{ $message }} </small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="card-footer justify-content-end ">
                             <button type="submit" class="btn btn-fill btn-primary">Guardar</button>
                         </div>
 

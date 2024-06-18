@@ -79,14 +79,14 @@ class DashboardRender extends Component
         $this->productsDay = Product::whereHas('orders', function ($query) {
             $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                 ->where('status', 'approved');
-                //->where('payment_type', '!=', 'externo');
+            //->where('payment_type', '!=', 'externo');
         })
             ->withCount(['sales' => function ($query) {
                 $query->whereBetween('created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                     ->whereHas('order', function ($query) {
                         $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                             ->where('status', 'approved');
-                            //->where('payment_type', '!=', 'externo');
+                        //->where('payment_type', '!=', 'externo');
                     });
             }])
             ->withSum(['sales' => function ($query) {
@@ -94,7 +94,7 @@ class DashboardRender extends Component
                     ->whereHas('order', function ($query) {
                         $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                             ->where('status', 'approved');
-                            //->where('payment_type', '!=', 'externo');
+                        //->where('payment_type', '!=', 'externo');
                     });
             }], 'price')
             ->get();
@@ -104,14 +104,14 @@ class DashboardRender extends Component
         $this->packagesDay = Package::whereHas('orders', function ($query) {
             $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                 ->where('status', 'approved');
-                //->where('payment_type', '!=', 'externo');
+            //->where('payment_type', '!=', 'externo');
         })
             ->withCount(['sales' => function ($query) {
                 $query->whereBetween('created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                     ->whereHas('order', function ($query) {
                         $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                             ->where('status', 'approved');
-                            //->where('payment_type', '!=', 'externo');
+                        //->where('payment_type', '!=', 'externo');
                     });
             }])
             ->withSum(['sales' => function ($query) {
@@ -119,7 +119,7 @@ class DashboardRender extends Component
                     ->whereHas('order', function ($query) {
                         $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                             ->where('status', 'approved');
-                            //->where('payment_type', '!=', 'externo');
+                        //->where('payment_type', '!=', 'externo');
                     });
             }], 'price')
             ->get();
@@ -128,14 +128,14 @@ class DashboardRender extends Component
         $this->membershipsDay = Membership::whereHas('orders', function ($query) {
             $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                 ->where('status', 'approved');
-                //->where('payment_type', '!=', 'externo');
+            //->where('payment_type', '!=', 'externo');
         })
             ->withCount(['sales' => function ($query) {
                 $query->whereBetween('created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                     ->whereHas('order', function ($query) {
                         $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                             ->where('status', 'approved');
-                            //->where('payment_type', '!=', 'externo');
+                        //->where('payment_type', '!=', 'externo');
                     });
             }])
             ->withSum(['sales' => function ($query) {
@@ -143,7 +143,7 @@ class DashboardRender extends Component
                     ->whereHas('order', function ($query) {
                         $query->whereBetween('orders.created_at', [$this->day . " 00:00:00", $this->day . " 23:59:59"])
                             ->where('status', 'approved');
-                           // ->where('payment_type', '!=', 'externo');
+                        // ->where('payment_type', '!=', 'externo');
                     });
             }], 'price')
             ->get();
@@ -153,14 +153,14 @@ class DashboardRender extends Component
             $query->whereHas('order', function ($query) {
                 $query
                     ->where('status', 'approved');
-                    //->where('payment_type', '!=', 'externo');
+                //->where('payment_type', '!=', 'externo');
             });
         }])
             ->withSum(['sales' => function ($query) {
                 $query->whereHas('order', function ($query) {
                     $query
                         ->where('status', 'approved');
-                        //->where('payment_type', '!=', 'externo');
+                    //->where('payment_type', '!=', 'externo');
                 });
             }], 'price')
             ->orderBy('sales_count', 'desc')
@@ -246,5 +246,46 @@ class DashboardRender extends Component
     {
         $this->monthSelect = now()->format('m');
         $this->setNames();
+    }
+
+    public function success1()
+    {
+        $this->dispatch(
+            'success',
+            title: 'Eliminado prueba!',
+            message: 'El archivo ha sido eliminado correctamentesssssss.',
+        );
+    }
+
+    public function successauto1()
+    {
+        $this->dispatch(
+            'success-auto-close',
+            title: 'Mensaje de prueba!',
+            message: 'La orden se elimino de manera correcta pruebassssss'
+        );
+    }
+
+
+
+
+
+    public function error1()
+    {
+        $this->dispatch('error', message: 'Error al eliminar el registro - error de prueba');
+    }
+    public function info1()
+    {
+        $this->dispatch('infoPro', message: 'La versión gratuita permite registrar máximo pruebasadadsd');
+    }
+
+    public function sendSuccessHtml()
+    {
+        $this->dispatch(
+            'sendSuccessHtml',
+            product: "pridcl priabas",
+            note: 'Se han enviado correctamente a: ',
+            email: "eruebasadssad@gmail.com"
+        );
     }
 }

@@ -6,16 +6,27 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('material') }}/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="{{ asset('material') }}/img/favicon.png">
     <link rel="icon" type="image/png" href="/img/favicon.png">
     <title>{{ $title.' | Material Didáctico MaCa' ?? 'Material Didáctico Maca' }}</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <meta name="description" content="La mejor opción para personas que enseñan desde el corazón.">
-    <meta name="twitter:title" content="Inicio">
+    <meta name="keywords" content="materialdidacticomaca, material didactico maca, Material didáctico MaCa, MaCa, maca, Material didáctico, membresía VIP, lectoescritura, rezago, refuerzo, bitácora, cuaderno de trabajo, cuadernos de trabajo, lecto-esctirura, fichas de trabajo, matemáticas, preescolar, preescolar 1, preescolar 2, preescolar 3, primaria baja, apresto, silabas simples, silabas trabadas, vocales">
     <link rel="canonical" href="https://materialdidacticomaca.com/">
+
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:title" content="Material Didáctico MaCa">
+    <meta name="twitter:description" content="La mejor opción para personas que enseñan desde el corazón.">
     <meta name="twitter:image" content="https://materialdidacticomaca.com/img/logo3.png">
-    <meta property="og:description" content="La mejor opción para personas que enseñan desde el corazón.">
-    <meta property="og:image" content="https://materialdidacticomaca.com/img/logo3.png">
-    <meta property="og:url" content="https://materialdidacticomaca.com">
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="Material Didáctico MaCa" />
+    <meta property="og:url" content="https://materialdidacticomaca.com" />
+    <meta property="og:image" content="https://materialdidacticomaca.com/img/logo3.png" />
+    <meta property="og:description" content="La mejor opción para personas que enseñan desde el corazón." />
+    <meta property="og:site_name" content="Material Didáctico MaCa" />
 
 
 
@@ -40,9 +51,9 @@
     <link href="{{ asset('material') }}/css/material-dashboard.css" rel="stylesheet" />
 
     <link href="{{ asset('css/text.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/add.css') }}" rel="stylesheet">
 
-    @vite(['resources/css/app.scss', 'resources/js/app.js'])
+
+    <!-- @vite(['resources/css/app.scss', 'resources/js/app.js']) -->
 
 
     <!-- CSS slick -->
@@ -99,7 +110,7 @@
     @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support.*'))
     @include('layouts.page_templates.admin')
 
-    @elseif(Route::is('profile.*','customer.*','order.*','grupos.*','add-student','group-report'))
+    @elseif(Route::is('profile.*','customer.*','order.*','grupos.*','add-student','group-report','group-report-excel'))
     @include('layouts.page_templates.user')
 
     @elseif(Route::is('login','register','password.email','password.request','password.reset'))
@@ -124,7 +135,8 @@
     <!-- Plugin for the momentJs  -->
     <script src="{{ asset('material') }}/js/plugins/moment.min.js"></script>
     <!--  Plugin for Sweet Alert -->
-    <script src="{{ asset('material') }}/js/plugins/sweetalert2.js"></script>
+    <!-- <script src="{{ asset('material') }}/js/plugins/sweetalert2.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Forms Validations Plugin -->
     <script src="{{ asset('material') }}/js/plugins/jquery.validate.min.js"></script>
     <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
@@ -212,6 +224,7 @@
     <script src="{{ asset('js/main.js') }}?t=<?= time() ?>" type="text/javascript" defer> </script>
 
     @stack('js')
+
     @livewireScripts
 
 </body>

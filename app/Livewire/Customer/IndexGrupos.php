@@ -4,6 +4,7 @@ namespace App\Livewire\Customer;
 
 use App\Models\Grupo;
 use Livewire\Component;
+use App\Models\Membership;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,49 +12,55 @@ class IndexGrupos extends Component
 {
     public $sortDirection = 'desc';
     public $sortField = 'created_at';
+
     public function render()
     {
-        $groupTest = Grupo::findOrFail(1);
         $myGroups = Grupo::where('user_id', Auth::user()->id)
             ->where('oculto', false)
             ->get();
         $myGroupsHide = Grupo::where('user_id', Auth::user()->id)
             ->where('oculto', true)
             ->get();
-        return view('livewire.customer.index-grupos', compact('groupTest', 'myGroups', 'myGroupsHide'));
+        return view('livewire.customer.index-grupos', compact('myGroups', 'myGroupsHide'));
     }
 
     public function ocultar($id)
     {
-
+        $group = Grupo::findOrFail($id);
         try {
-            Grupo::findOrFail($id)->update([
-                'oculto' => true
-            ]);
-            $this->dispatch('success-auto-close', message: "El grupo se oculto con éxito");
+            if ($group->user_id == Auth::user()->id) {
+                $group->update([
+                    'oculto' => true
+                ]);
+                $this->dispatch('success-auto-close', message: "El grupo se oculto con éxito");
+            } else {
+                $this->dispatch('error', message: "No cuenta con permisos para modificar el grupo: " . $group->id);
+            }
         } catch (\Throwable $e) {
-            $this->dispatch('error', message: "Erro al ocultar el grupo " . $e->getMessage());
+            $this->dispatch('error', message: "Error al ocultar el grupo " . $e->getMessage());
         }
     }
     public function mostrar($id)
     {
-
+        $group = Grupo::findOrFail($id);
         try {
-            Grupo::findOrFail($id)->update([
-                'oculto' => false
-            ]);
-            $this->dispatch('success-auto-close', message: "El grupo se mostro con éxito");
+            if ($group->user_id == Auth::user()->id) {
+                $group->update([
+                    'oculto' => false
+                ]);
+                $this->dispatch('success-auto-close', message: "El grupo se mostro con éxito");
+            } else {
+                $this->dispatch('error', message: "No cuenta con permisos para modificar el grupo: " . $group->id);
+            }
         } catch (\Throwable $e) {
-            $this->dispatch('error', message: "Error al mostro el grupo " . $e->getMessage());
+            $this->dispatch('error', message: "Error al mostrar el grupo " . $e->getMessage());
         }
     }
 
     //sort
     public function setSort($field)
     {
-
         $this->sortField = $field;
-
         if ($this->sortDirection == 'desc') {
             $this->sortDirection = 'asc';
         } else {
@@ -64,16 +71,17 @@ class IndexGrupos extends Component
     #[On('delete-group')]
     public function delete($id)
     {
-
+        $group = Grupo::findOrFail($id);
         try {
-            $group = Grupo::findOrFail($id);
+
 
             if ($group->user_id == Auth::user()->id) {
-                Grupo::destroy($group->id);
+                $group->update([
+                    'user_id' => 2
+                ]);
                 $this->dispatch('success-auto-close', message: 'El grupo se ha eliminado con éxito');
-            } elseif ($group->user_id == 1) {
             } else {
-                $this->dispatch('error', message: "Este es un grupo de ejemplo, no cuenta con permisos para eliminarlo.");
+                $this->dispatch('error', message: "No cuenta con permisos para modificar el grupo: " . $group->id);
             }
         } catch (\Throwable $e) {
             $this->dispatch('error', message: "Error al eliminar el grupo " . $e->getMessage());

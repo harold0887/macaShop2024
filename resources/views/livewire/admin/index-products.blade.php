@@ -244,20 +244,26 @@
 <script>
     //Confirmar eliminar producto
     function confirmDelete($id, $name) {
-        swal({
+        event.preventDefault();
+        Swal.fire({
             title: "¿Realmente quiere eliminar el producto: " + $name + "  ? ",
-            type: "question",
+            text: "No podrás revertir esto.!",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, eliminar!",
+            confirmButtonText: "Si, eliminar",
         }).then((result) => {
-            if (result.value) {
+            if (result.isConfirmed) {
                 Livewire.dispatch('delete-product', {
                     id: $id
                 });
             } else {
-                Swal('Cancelado', 'Tu archivo está seguro :)');
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "Tu archivo está seguro :)",
+                    icon: "error"
+                });
             }
         });
     }

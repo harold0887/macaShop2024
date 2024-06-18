@@ -84,7 +84,7 @@
                                                 <span class="d-block  text-muted my-1">Archivo en formato {{ $product->format }}</span>
                                                 <span class="d-block  text-muted fst-italic">{{ $product->numero }}</span>
                                                 @role('admin')
-                                                <span class="d-block  text-muted fst-italic">{{ $product->folio == 1 ?'true' : 'false'  }}</span>
+                                                <span class="d-block  text-muted fst-italic">{{ $product->folio == 1 ?'folio: true' : 'folio: false'  }}</span>
                                                 @endrole
 
 

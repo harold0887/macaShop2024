@@ -1,32 +1,27 @@
 @push('js')
 @if(session('success'))
 <script>
-    swal("¡Buen trabajo!", "{{session('success')}}", "success");
+    Swal.fire({
+        title: "¡Buen trabajo!",
+        text: "{{session('success')}}",
+        icon: "success"
+    });
 </script>
 @endif
 
-@if(session('info'))
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('infoPro'))
+
 <script>
     Swal.fire({
-        title: "<strong>{{session('info')}}</strong>",
+        title: `
+    Adquiera la versión <b>PRO</b>,
+    <a href=https://materialdidacticomaca.com/asistencia>aquí</a>.
+    `,
         icon: "info",
-        html: `
-    You can use <b>bold text</b>,
-    <a href="#">links</a>,
-    and other HTML tags
-  `,
-        showCloseButton: true,
-        showCancelButton: true,
+        html: "{{session('infoPro')}}",
+        showCloseButton: false,
+        showCancelButton: false,
         focusConfirm: false,
-        confirmButtonText: `
-    <i class="fa fa-thumbs-up"></i> Great!
-  `,
-        confirmButtonAriaLabel: "Thumbs up, great!",
-        cancelButtonText: `
-    <i class="fa fa-thumbs-down"></i>
-  `,
-        cancelButtonAriaLabel: "Thumbs down"
     });
 </script>
 @endif
@@ -34,7 +29,11 @@
 
 @if(session('paySuccess'))
 <script>
-    swal("¡Gracias por su compra!", "{{session('paySuccess')}}", "success");
+    Swal.fire({
+        title: "¡Gracias por su compra!",
+        text: "{{session('paySuccess')}}",
+        icon: "success"
+    });
 </script>
 @endif
 
@@ -42,13 +41,21 @@
 
 @if(session('payPending'))
 <script>
-    swal("¡Gracias por su compra!", "{{session('payPending')}}", "info");
+    Swal.fire({
+        title: "¡Gracias por su compra!",
+        text: "{{session('payPending')}}",
+        icon: "info"
+    });
 </script>
 @endif
 
 @if(session('payInProccess'))
 <script>
-    swal("¡Gracias por su compra!", "{{session('payInProccess')}}", "warning");
+    Swal.fire({
+        title: "¡Gracias por su compra!",
+        text: "{{session('payInProccess')}}",
+        icon: "warning"
+    });
 </script>
 @endif
 
@@ -79,13 +86,21 @@
 
 @if (session('error'))
 <script>
-    swal("¡error!", "{{session('error')}}", "error");
+    Swal.fire({
+        title: "¡Error!",
+        text: "{{session('error')}}",
+        icon: "error"
+    });
 </script>
 @endif
 
 @if (session('status'))
 <script>
-    swal("¡Buen trabajo!", "{{session('status')}}", "success");
+    Swal.fire({
+        title: "¡Buen trabajo!",
+        text: "{{session('status')}}",
+        icon: "success"
+    });
 </script>
 @endif
 

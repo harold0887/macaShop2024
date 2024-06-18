@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Mail\PruebasEmail;
 use Illuminate\Http\Request;
 use App\Models\Order_Details;
 use App\Mail\PaymentApprovedEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentApprovedAsistencia;
 use App\Mail\PaymentApprovedMembership;
 
 class WebhooksController extends Controller
@@ -116,9 +119,21 @@ class WebhooksController extends Controller
 
                 //enviar correo de membresias
                 foreach ($membreships as $membresia) {
-                    $confirmacionMembership = new PaymentApprovedMembership($membresia->membership_id, $order);
-                    Mail::to($order->user->email)
-                        ->send($confirmacionMembership);
+                    if ($membresia->membership_id == 2013) {
+                        //actualizar perfil de usuario
+                        $user = User::findOrFail($order->user->id);
+                        $user->update([
+                            'pro' => true,
+                        ]);
+                        //enviar correo de lista de aistencia
+                        $correoConfirmAsistencia = new PaymentApprovedAsistencia($membresia->membership_id, $order);
+                        Mail::to($order->user->email)
+                            ->send($correoConfirmAsistencia);
+                    } else {
+                        $correoCopia = new PaymentApprovedMembership($membresia->membership_id, $order);
+                        Mail::to($order->user->email)
+                            ->send($correoCopia);
+                    }
                 }
                 break;
             case 'pending':

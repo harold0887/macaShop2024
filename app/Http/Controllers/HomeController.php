@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Membership;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
@@ -112,8 +113,4 @@ class HomeController extends Controller
         }
     }
 
-    public function asistenciaDemo()
-    {
-        return view('demo.asistencia-demo');
-    }
 }

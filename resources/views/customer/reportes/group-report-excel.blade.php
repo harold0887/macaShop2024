@@ -1,9 +1,17 @@
 @extends('layouts.app',[
-    'title'=>$group->grado_grupo." - ".$group->escuela,
+'title'=>$group->grado_grupo." - ".$group->escuela,
 'navbarClass'=>'navbar-transparent',
 'activePage'=>'paselista',
 'menuParent'=>'orders',
 ])
 @section('content')
-<livewire:customer.show-grupos />
+
+
+<livewire:customer.group-report-excel-render />
+
+
+
+
+
+
 @endsection

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('maestro')->nullable();
             $table->string('color');
             $table->boolean('oculto')->default('0');
+            $table->string('itemMain')->nullable();
             $table->BigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->restrictOnDelete()->restrictOnUpdate();
             $table->timestamps();

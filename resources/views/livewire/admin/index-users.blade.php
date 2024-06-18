@@ -35,7 +35,7 @@
                                         </div>
                                     </div>
                                 </div>
-                             
+
                             </div>
                         </div>
                         <div class="col-12">
@@ -288,32 +288,28 @@
             <script>
                 //Confirmar eliminar producto
                 function confirmDeleteUser(id, name) {
-
-
-
-
-                    //var respuesta = confirm("Realmente desea eliminar: " + $name)
-
-
-                    swal({
+                    event.preventDefault();
+                    Swal.fire({
                         title: "Realmente desea eliminar a: " + name,
-                        //type: "info",
+                        text: "No podrás revertir esto.!",
+                        icon: "question",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
-                        confirmButtonText: "Si, eliminar!",
+                        confirmButtonText: "Si, eliminar",
                     }).then((result) => {
-                        if (result.value) {
+                        if (result.isConfirmed) {
                             Livewire.dispatch('deleteUser', {
                                 id: id
                             });
-
                         } else {
-                            Swal.fire('El usuario está seguro :)', '', 'info')
+                            Swal.fire({
+                                title: "Cancelado!",
+                                text: "El usuario está seguro :)",
+                                icon: "error"
+                            });
                         }
                     });
-
-
                 }
             </script>
 

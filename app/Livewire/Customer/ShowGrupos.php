@@ -10,6 +10,7 @@ use App\Models\Estudiante;
 use App\Models\Estudiante_Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Distributions\StudentT;
 
 class ShowGrupos extends Component
 {
@@ -27,7 +28,7 @@ class ShowGrupos extends Component
         $this->select_date = date_format(now(), "Y-m-d");
         //$this->select_date =  "2025-04-03";
 
-   
+
 
     }
 
@@ -37,39 +38,23 @@ class ShowGrupos extends Component
 
 
 
-        if ($this->group->id == 1) {
-            $estudiantes = Estudiante::where('grupo_id', $this->group->id)
-
-                ->where(function ($query) {
-                    $query->where('nombres', 'like', '%' . $this->search . '%')
-                        ->orWhere('apellidos', 'like', '%' . $this->search . '%');
-                })
-                ->orderBy('apellidos', 'asc')
-                ->get();
-        } else {
-            $estudiantes = Estudiante::where('grupo_id', $this->group->id)
-                ->whereHas('grupo', function ($query) {
-                    $query
-                        ->where('user_id', Auth::user()->id);
-                })
-                ->where(function ($query) {
-                    $query->where('nombres', 'like', '%' . $this->search . '%')
-                        ->orWhere('apellidos', 'like', '%' . $this->search . '%');
-                })
-                ->orderBy('apellidos', 'asc')
-                ->get();
-        }
-
-
-
-
+        $estudiantes = Estudiante::where('grupo_id', $this->group->id)
+            ->whereHas('grupo', function ($query) {
+                $query
+                    ->where('user_id', Auth::user()->id);
+            })
+            ->where(function ($query) {
+                $query->where('nombres', 'like', '%' . $this->search . '%')
+                    ->orWhere('apellidos', 'like', '%' . $this->search . '%');
+            })
+            ->orderBy('apellidos', 'asc')
+            ->get();
 
 
         $asistencias = Asistencia::where('dia', $this->select_date)
             ->whereHas('estudiante', function ($query) {
                 $query
                     ->where('grupo_id', $this->group->id);
-                //->where('payment_type', '!=', 'externo');
             })
             ->get();
 
@@ -108,12 +93,7 @@ class ShowGrupos extends Component
 
 
         $tags = Tag::all();
-
-
-
-
-
-        if ($this->group->user_id == Auth::user()->id || $this->group->id == 1) {
+        if ($this->group->user_id == Auth::user()->id) {
             return view('livewire.customer.show-grupos', compact('estudiantes', 'tags', 'asistencias', 'faltas', 'retardos', 'faltasJustificadas', 'as'));
         } else {
             abort(404);
@@ -122,6 +102,7 @@ class ShowGrupos extends Component
     public function asistencia($id)
     {
         $register = Asistencia::where('estudiante_id', $id)->where('dia', $this->select_date)->first();
+        $student = Estudiante::findOrFail($id);
         try {
 
             if ($register != null && $register->count() > 0) {
@@ -130,7 +111,7 @@ class ShowGrupos extends Component
                     'estudiante_id' => $id,
                     'status_id' => 1
                 ]);
-                $this->dispatch('success-auto-close', message: "El cambio se realizo con éxito");
+                $this->dispatch('success-auto-close', message: "La asistencia de " . $student->apellidos . " " . $student->nombres  . " se registro con éxito.");
             } else {
                 Asistencia::create([
                     'dia' => $this->select_date,
@@ -138,14 +119,23 @@ class ShowGrupos extends Component
 
                     'status_id' => 1
                 ]);
-                $this->dispatch('success-auto-close', message: "La asistencia se registro  con éxito");
+                $this->dispatch('success-auto-close', message: "La asistencia de " . $student->apellidos . " " . $student->nombres  . " se registro con éxito.");
             }
         } catch (\Throwable $th) {
-            $this->dispatch('error', message: "Error a guardar la asistencia" . $th->getMessage());
+
+            if ($th->getCode() == 22007) {
+                $error = "Seleccione una fecha valida en el calendario";
+            } else {
+                $error = $th->getMessage();
+            }
+
+
+            $this->dispatch('error', message: "Error a guardar la asistencia: " . $error);
         }
     }
     public function falta($id)
     {
+        $student = Estudiante::findOrFail($id);
         $register = Asistencia::where('estudiante_id', $id)->where('dia', $this->select_date)->first();
         try {
             if ($register != null && $register->count() > 0) {
@@ -154,14 +144,14 @@ class ShowGrupos extends Component
                     'estudiante_id' => $id,
                     'status_id' => 2
                 ]);
-                $this->dispatch('success-auto-close', message: "La falta se registro con éxito");
+                $this->dispatch('success-auto-close', message: "La falta de " . $student->apellidos . " " . $student->nombres  . " se registro con éxito.");
             } else {
                 Asistencia::create([
                     'dia' => $this->select_date,
                     'estudiante_id' => $id,
                     'status_id' => 2
                 ]);
-                $this->dispatch('success-auto-close', message: "La falta se registro con éxito");
+                $this->dispatch('success-auto-close', message: "La falta de " . $student->apellidos . " " . $student->nombres  . " se registro con éxito.");
             }
         } catch (\Throwable $th) {
             $this->dispatch('error', message: "Error a guardar la asistencia" . $th->getMessage());

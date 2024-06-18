@@ -274,21 +274,28 @@
 <script>
     //Confirmar eliminar la membresía
     function confirmDelete($id, $name) {
-        swal({
+        event.preventDefault();
+        Swal.fire({
             title: "¿Realmente quiere eliminar la membresía: " + $name + "  ? ",
-            type: "question",
+            text: "No podrás revertir esto.!",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, eliminar!",
+            confirmButtonText: "Si, eliminar",
         }).then((result) => {
-            if (result.value) {
+            if (result.isConfirmed) {
                 Livewire.dispatch('delete-membership', {
                     id: $id
                 });
             } else {
-                Swal('Cancelado', 'Tu archivo está seguro :)');
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "El registro está seguro :)",
+                    icon: "error"
+                });
             }
         });
+
     }
 </script>

@@ -32,7 +32,7 @@
                     <h4 class="card-title">Editar {{ $group->escuela }} {{ $group->grado_grupo }} {{ $group->ciclo_escolar }}</h4>
                 </div>
                 <div class="card-body ">
-                    <form id="create-product-admin" action="{{ route('grupos.update', $group->id) }}" method="POST">
+                    <form id="create-product-admin" action="{{ route('grupos.update', $group->id) }}"  enctype="multipart/form-data" method="POST">
                         @csrf @method('PATCH')
                         <div class="form-group">
                             <label class="bmd-label-floating">Escuela</label>
@@ -129,8 +129,37 @@
                             <small class="text-danger"> {{ $message }} </small>
                             @enderror
                         </div>
+                        <div class="col-12 col-md-6 col-lg-3 text-center">
+                            <span class="title">Logo de la escuela (opcional)</span>
+                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="height:300px !important">
+                                    @if ($group->itemMain)
+                                    <img class="w-50" src="{{ Storage::url($group->itemMain)  }}" alt="..." >
+                                    @else
+                                    <img src="{{ asset('material') }}/img/image_placeholder.jpg" alt="...">
+                                  
+                                    @endif
 
-                        <div class="card-footer ">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                <div>
+                                    <span class="btn btn-primary btn-round btn-file">
+                                        <span class="fileinput-new">Selecciona un nuevo logo</span>
+                                        <span class="fileinput-exists">Cambiar</span>
+                                        <input type="file" name="itemMain" accept="image/*" />
+                                    </span>
+                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Eliminar</a>
+                                </div>
+                            </div>
+                            <div>
+                                @error('itemMain')
+                                <small class=" text-danger"> {{ $message }} </small>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="card-footer justify-content-end ">
                             <button type="submit" class="btn btn-fill btn-primary">Actualizar</button>
                         </div>
 

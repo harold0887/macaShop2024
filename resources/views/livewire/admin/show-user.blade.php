@@ -39,6 +39,20 @@
                                 @endif
                             </p>
                             <p class="card-description text-center my-4 text-sm  lg:text-base d-flex">
+                                <span class="fw-bold fst-italic mr-1">User PRO:</span>
+                                @if($user->pro ==1)
+                                <span class=" fst-italic">
+                                    Pro
+                                </span>
+                                <i class="material-icons text-success ml-1">check_circle</i>
+                                @else
+                                <span class=" fst-italic">
+                                    Basic
+                                </span>
+                                <i class="material-icons text-warning ml-1">pending</i>
+                                @endif
+                            </p>
+                            <p class="card-description text-center my-4 text-sm  lg:text-base d-flex">
                                 <span class="fw-bold fst-italic mr-1">Registro:</span> <span class=" fst-italic">{{date_format($user->created_at, 'd-M-y')}}</span>
                             </p>
 
@@ -303,21 +317,29 @@
 <script>
     //Confirmar eliminar la membresía
     function confirmActive($id, $email) {
-        swal({
+        event.preventDefault();
+        Swal.fire({
             title: "¿Realmente quiere verificar el email: " + $email + "  ? ",
-            type: "question",
+            text: "No podrás revertir esto.!",
+            icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Si, verificar!",
+            confirmButtonText: "Si, confirmar",
         }).then((result) => {
-            if (result.value) {
+            if (result.isConfirmed) {
                 Livewire.dispatch('verificar-email', {
                     id: $id
                 });
             } else {
-                Swal('Cancelado', 'Tu archivo está seguro :)');
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "El registro está seguro :)",
+                    icon: "error"
+                });
             }
         });
+
+
     }
 </script>

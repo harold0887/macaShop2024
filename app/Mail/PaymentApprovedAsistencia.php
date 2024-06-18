@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PaymentApprovedMembership extends Mailable
+class PaymentApprovedAsistencia extends Mailable
 {
     use Queueable, SerializesModels;
     public $userName, $membershipName;
@@ -22,17 +22,18 @@ class PaymentApprovedMembership extends Mailable
     public $title;
     public $price;
     public $date;
-    use Queueable, SerializesModels;
 
-
+    /**
+     * Create a new message instance.
+     */
     public function __construct($idMembership, Order $order)
     {
         $membership = Membership::findOrFail($idMembership);
-        $this->subject = "Confirmación de compra membresía " . $membership->title;
+        $this->subject = "Confirmación de compra " . $membership->title;
         $this->userName = $order->user->name;
         $this->membershipName = $membership->title;
         $this->order = $order->id;
-        $this->title = "Membresía " . $membership->title;
+        $this->title = $membership->title;
         $this->price = $order->amount;
         $this->email = $order->user->email;
         $this->date = $order->created_at;
@@ -55,7 +56,7 @@ class PaymentApprovedMembership extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.order-success-membership',
+            markdown: 'mail.order-success-asistencia',
         );
     }
 

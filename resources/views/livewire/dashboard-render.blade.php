@@ -1,5 +1,13 @@
 <div class="content py-0 bg-white">
     <div class="container-fluid">
+        <!-- <div class="row">
+            <div class="col-12"> <button class="btn btn-success" wire:click="success1()">success</button></div>
+            <div class="col-12"> <button class="btn btn-outline-success" wire:click="successauto1()">success auto close</button></div>
+            <div class="col-12"> <button class="btn btn-outline-info" wire:click="sendSuccessHtml()">html</button></div>
+            <div class="col-12"> <button class="btn btn-danger" wire:click="error1()">error</button></div>
+            <div class="col-12"> <button class="btn btn-info" wire:click="info1()">info</button></div>
+
+        </div> -->
         <div class="row">
             <div class="col-12">
                 <div class="row justify-content-between">
@@ -515,24 +523,4 @@
 
         </div>
     </div>
-
-    <script>
-        //Confirmar eliminar producto
-        function confirmDeleteIP(id, $name) {
-            swal({
-                title: "Realmente desea eliminar la IP: " + $name,
-                //type: "info",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Si, eliminar!",
-            }).then((result) => {
-                if (result.value) {
-                    Livewire.dispatch('deleteIPssss');
-                } else {
-                    Swal.fire('La IP está segura :)', '', 'info')
-                }
-            });
-        }
-    </script>
 </div>

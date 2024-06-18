@@ -194,20 +194,26 @@
     <script>
         //Confirmar eliminar producto
         function confirmDeleteIP(id, $name) {
-            swal({
+            event.preventDefault();
+            Swal.fire({
                 title: "Realmente desea eliminar la IP: " + $name,
-                //type: "info",
+                text: "No podrás revertir esto.!",
+                icon: "question",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Si, eliminar!",
+                confirmButtonText: "Si, eliminar",
             }).then((result) => {
-                if (result.value) {
+                if (result.isConfirmed) {
                     Livewire.dispatch('deleteIP', {
                         id: id
                     });
                 } else {
-                    Swal.fire('La IP está segura :)', '', 'info')
+                    Swal.fire({
+                        title: "Cancelado!",
+                        text: "La IP está segura :)",
+                        icon: "error"
+                    });
                 }
             });
         }

@@ -32,7 +32,7 @@
                         </div>
                         <h4 class="card-title text-base sm:text-2x1 md:text-2xl  lg:text-2xl">Agregar estudiante al grupo {{$group->grado_grupo}} - {{$group->escuela}} </h4>
                     </div>
-                    <form id="create-new-student" action="{{ route('estudiantes.store') }}" method="POST">
+                    <form id="create-new-student" action="{{ route('estudiantes.store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
                         <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                         <div class="card-header text-center mt-3">
@@ -140,7 +140,7 @@
                                             <div class="picture-container">
                                                 <div class="picture">
                                                     <img src="{{ asset('material') }}/img/placeholder.jpg" class="picture-src" id="wizardPicturePreview" title="" />
-                                                    <input type="file" id="wizard-picture" name="image">
+                                                    <input type="file" id="wizard-picture" name="image" accept="image/*">
                                                 </div>
                                                 <h6 class="description">Elegir foto (opcional)</h6>
                                             </div>
@@ -193,7 +193,6 @@
                                                 @endforeach
                                             </select>
                                         </div>
-
                                         <div class="col-sm-10">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Comentarios (opcional)</label>
@@ -201,9 +200,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-10">
-
                                             <input type="hidden" class="form-control" name="grupo" value="{{$group->id}}">
-
                                         </div>
                                     </div>
                                 </div>
