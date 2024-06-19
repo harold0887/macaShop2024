@@ -5,10 +5,8 @@
 
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('material') }}/img/apple-icon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/logo3.png">
     <link rel="icon" type="image/png" href="{{ asset('material') }}/img/favicon.png">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
     <title>{{ $title.' | Material Didáctico MaCa' ?? 'Material Didáctico Maca' }}</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <meta name="description" content="La mejor opción para personas que enseñan desde el corazón.">
@@ -19,12 +17,12 @@
     <!-- Twitter Card data -->
     <meta name="twitter:title" content="Material Didáctico MaCa">
     <meta name="twitter:description" content="La mejor opción para personas que enseñan desde el corazón.">
-    <meta name="twitter:image" content="https://materialdidacticomaca.com/img/logo3.png">
+    <meta name="twitter:image" href="/img/logo3.png" content="https://materialdidacticomaca.com/img/logo3.png">
 
     <!-- Open Graph data -->
     <meta property="og:title" content="Material Didáctico MaCa" />
     <meta property="og:url" content="https://materialdidacticomaca.com" />
-    <meta property="og:image" content="https://materialdidacticomaca.com/img/logo3.png" />
+    <meta property="og:image" href="/img/logo3.png" content="https://materialdidacticomaca.com/img/logo3.png" />
     <meta property="og:description" content="La mejor opción para personas que enseñan desde el corazón." />
     <meta property="og:site_name" content="Material Didáctico MaCa" />
 
