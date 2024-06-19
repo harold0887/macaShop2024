@@ -80,4 +80,8 @@ class AsistenciaDemoRender extends Component
             $this->dispatch('error', message: "Error al agregar el producto al carrito - " . $th->getMessage());
         }
     }
+    public function loginMessage()
+    {
+        $this->dispatch('alertlogin', message: "<span class='text-sm'><b>Importante !</b> - Inicia sesión o registrate para finalizar la compra. </span>");
+    }
 }

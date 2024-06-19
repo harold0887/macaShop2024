@@ -102,7 +102,7 @@ class MainController extends Controller
                     'membership_id' => $item->id,
                     'price' => $item->price,
                 ]);
-                if ($item->membership_id = !2013) {
+                if ($item->associatedModel->id != 2013) {
                     $orderActive = false;
                 }
             } elseif ($item->associatedModel->model == 'Package') {

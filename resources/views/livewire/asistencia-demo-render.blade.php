@@ -95,15 +95,14 @@
                                 </span>
                                 Exportar reportes en Excel
                             </li>
-
-
                         </ul>
-                        <button class=" btn  btn-primary btn-round  w-full btn-lg " wire:loading.attr="disabled">
-                            <div class="d-flex align-items-center ">
-                                <i class="material-icons mr-2 ">shopping_cart</i>
-                                <span class="text-xs fw-bold">Iniciar prueba</span>
-                            </div>
+                        @auth
+                        <a class="btn  btn-primary btn-round  w-full btn-lg" href="{{ route('grupos.index') }}">Iniciar prueba</a>
+                        @else
+                        <button class="btn  btn-primary btn-round  w-full btn-lg" wire:click="loginMessage()" style="cursor:pointer">
+                            Iniciar prueba
                         </button>
+                        @endauth
 
                     </div>
                 </div>

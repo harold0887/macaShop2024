@@ -43,8 +43,8 @@ class IndexSales extends Component
             })
             ->orWhereHas('user', function ($query) {
                 $query->where('email', 'like', '%' . trim($this->search) . '%')
-                    ->orWhere('facebook', 'like', '%' . trim($this->search) . '%')
-                    ->orWhere('whatsapp', 'like', '%' . trim($this->search) . '%')
+                    ->orWhere('facebook', 'like', '%' . $this->search . '%')
+                    ->orWhere('whatsapp', 'like', '%' . $this->search . '%')
                     ->orWhere('comment', 'like', '%' . trim($this->search) . '%');
             })
 
@@ -108,7 +108,7 @@ class IndexSales extends Component
                     ->send($confirmacionOrder);
 
                 $order->update([
-                    'payment_reminder' => $order->payment_reminder+1,
+                    'payment_reminder' => $order->payment_reminder + 1,
                 ]);
 
                 $this->dispatch(

@@ -59,7 +59,7 @@
                         <div class="card-footer justify-content-center">
                             <span class="card-description mx-3">¿No tienes cuenta? </span>
                             <a href="{{ route('register') }}" class="nav-link  text-primary">
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center fw-bold">
                                     <i class="material-icons mr-1">person_add</i>
                                     <span>Crea una cuenta gratis</span>
                                 </div>
@@ -71,9 +71,9 @@
                 <div class="row">
                     <div class="col-12">
 
-                    <a href="{{ route('password.request') }}" style="text-decoration: none !important;">
-                        <small class="text-muted fw-bold" >{{ __('Forgot password') }} ?</small>
-                    </a>
+                        <a href="{{ route('password.request') }}" style="text-decoration: none !important;">
+                            <small class="text-muted fw-bold">{{ __('Forgot password') }} ?</small>
+                        </a>
 
                     </div>
                     <div class="col-6 text-right">
