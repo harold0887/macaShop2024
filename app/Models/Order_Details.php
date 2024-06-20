@@ -45,4 +45,13 @@ class Order_Details extends Model
     {
         return $this->belongsTo(Membership::class);
     }
+
+    public function scopeFilter($query, $filters)
+    {
+        $query->when($filters['fromDate'] ?? null, function ($query, $fromDate) {
+            $query->where('created_at', '>=', $fromDate);
+        })->when($filters['toDate'] ?? null, function ($query, $toDate) {
+            $query->where('created_at', '<=', $toDate);
+        });
+    }
 }

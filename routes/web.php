@@ -115,7 +115,7 @@ Route::group(['middleware' => ['role:admin']], function () {
   Route::resource('dashboard/ips', IpController::class)->only(['index']);
   Route::post('dashboard/sales/create/{user}', [MainController::class, 'createSales'])->name('orderp.create');
   Route::get('/verifiedUsers', [HomeController::class, 'verifiedUsers'])->name('verifiedUsers');
-
+  Route::get('dashboard/memberships/sales/{id}', [HomeController::class, 'showMemembershipSales'])->name('membership.sales');
   Route::get('dashboard/users/{id}', ShowUser::class)->name('users.show');
 });
 
@@ -132,7 +132,7 @@ Route::get('tienda/paquetes/{id}', PackageShow::class, '__invoke')->name('paquet
 Route::get('tienda/gratuitos', FreeRender::class)->name('free'); //Listo
 Route::get('cart', CartRender::class)->name('cart.index');
 Route::get('search/products', [MainController::class, 'search'])->name('search.products'); //listo
-Route::get('/asistencia',AsistenciaDemoRender::class)->name('asistencia.demo'); 
+Route::get('/asistencia', AsistenciaDemoRender::class)->name('asistencia.demo');
 
 
 

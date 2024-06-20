@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaymentApprovedAsistencia;
 use App\Mail\PaymentApprovedMembership;
+use App\Models\Membership;
 
 class MainController extends Controller
 {

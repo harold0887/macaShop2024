@@ -35,12 +35,12 @@ class Membership extends Model
         return $this->belongsToMany(Order::class, 'order_details', 'membership_id', 'order_id');
     }
 
-    //Relacion muchos a muchos con Order
-    public function  ordersAprroved(): BelongsToMany
-    {
-        return $this->belongsToMany(Order::class, 'order_details', 'membership_id', 'order_id')->where('status', 'approved')->whereNotIn('customer_id', [1, 5, 8218])
-        ->orderBy('created_at', 'desc');
-    }
+    //Relacion muchos a muchos con Order, se reemplazo con filters order_details
+    // public function  ordersAprroved(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Order::class, 'order_details', 'membership_id', 'order_id')->where('status', 'approved')->whereNotIn('customer_id', [1, 5, 8218])
+    //         ->orderBy('created_at', 'desc');
+    // }
 
 
 

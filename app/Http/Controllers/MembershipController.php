@@ -87,8 +87,8 @@ class MembershipController extends Controller
             $query->whereHas('order', function ($query) {
                 $query
                     ->where('status', 'approved')
-                    ->whereNotIn('customer_id', [1,5,8218]);
-                   // ->where('payment_type', '!=', 'externo');
+                    ->whereNotIn('customer_id', [1, 5, 8218]);
+                // ->where('payment_type', '!=', 'externo');
             });
         }])->findOrFail($id);
 

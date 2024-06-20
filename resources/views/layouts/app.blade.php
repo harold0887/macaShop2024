@@ -105,7 +105,7 @@
     </form>
 
 
-    @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support.*'))
+    @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support.*','membership.sales'))
     @include('layouts.page_templates.admin')
 
     @elseif(Route::is('profile.*','customer.*','order.*','grupos.*','add-student','group-report','group-report-excel'))

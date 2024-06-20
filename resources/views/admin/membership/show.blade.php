@@ -9,8 +9,8 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-12">
-                <h2 class="title text-center text-primary text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-bottom">
+            <div class="col-12 ">
+                <h2 class="title text-center text-primary text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-bottom ">
                     {{ $membership->title }}
                     @role('admin')
                     <a class="btn btn-success btn-link p-0" href="{{ route('memberships.edit', $membership->id) }}" target="_blank">
@@ -21,18 +21,19 @@
             </div>
         </div>
 
+
         <!--row first-->
         <div class="row justify-content-around">
             <!--col left -->
-            <div class="col-12 col-lg-6 ">
+            <div class="col-12 ">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-12 mb-5">
                         <h2 class="title text-center text-primary text-sm sm:text-2x1 md:text-2xl  lg:text-2xl my-0">{{$membership->products->count()}} materiales incluidos </h2>
                     </div>
                     <div class="col-12">
                         <div class="row">
                             @foreach ($membership->products as $product)
-                            <div class="col-6 col-md-4 col-lg-3 mb-4" style="position: relative; padding:5px !important">
+                            <div class="col-6 col-md-4 col-lg-2 mb-4" style="position: relative; padding:5px !important">
                                 <div class="card card-primary card-product  ">
                                     <div class="card-header card-header-image" data-header-animation="true">
                                         <a href="{{ route('shop.show', $product->slug) }}">
@@ -57,87 +58,15 @@
                                         @foreach($product->categorias as $categoria)
                                         <span class="badge badge-sm badge-success mr-1" style="cursor:pointer" wire:click="setCategory('{{ $categoria->id }}')">{{$categoria->name}}</span>
                                         @endforeach
-
                                     </div>
-                                    
                                 </div>
                             </div>
-
                             @endforeach
                         </div>
                     </div>
                 </div>
-
             </div>
-            <!--col right -->
-            <div class="col-12 col-lg-6 mt-4 mt-lg-0">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="title text-center text-primary text-sm sm:text-2x1 md:text-2xl  lg:text-2xl my-0">Ventas web de la membresía {{$membership->sales_count}} </h2>
-                    </div>
-                    <div class="col-12">
-                        <livewire:admin.show-membership />
-
-
-
-
-
-                    </div>
-                </div>
-
-
-            </div>
-
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
-
 </div>
-
-
-
-
 @endsection

@@ -87,4 +87,10 @@ class IndexGrupos extends Component
             $this->dispatch('error', message: "Error al eliminar el grupo " . $e->getMessage());
         }
     }
+    public function upgrade()
+    {
+
+
+        $this->dispatch('infoPro', message: "La versión gratuita permite registrar solo un grupo, si necesita registrar más grupos. Adquiera la versión PRO");
+    }
 }

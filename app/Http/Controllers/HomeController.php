@@ -112,5 +112,20 @@ class HomeController extends Controller
             return back()->with('error', 'Error al crear el storage link - ' . $th->getMessage());
         }
     }
+    public function showMemembershipSales($id)
+    {
+        $membership = Membership::withCount(['sales' => function ($query) {
+            $query->whereHas('order', function ($query) {
+                $query
+                    ->where('status', 'approved')
+                    ->whereNotIn('customer_id', [1, 5, 8218]);
+                // ->where('payment_type', '!=', 'externo');
+            });
+        }])->findOrFail($id);
 
+
+
+
+        return view('admin.membership.show-sales', compact('membership'));
+    }
 }

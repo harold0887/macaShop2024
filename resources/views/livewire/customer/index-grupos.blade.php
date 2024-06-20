@@ -1,5 +1,5 @@
 <div class="content py-0 bg-white">
-
+    @include('includes.spinner-livewire')
     <div class="row">
         <div class="col-12">
             <nav aria-label="breadcrumb ">
@@ -18,12 +18,23 @@
 
         <div class="col-12 col-md-auto  align-self-md-center ">
             @if(isset($myGroups) && $myGroups->count() > 0)
+            @if (auth()->user()->pro)
             <a class="btn btn-primary btn-block " href="{{ route('grupos.create') }}">
                 <div class="d-flex align-items-center justify-content-center">
                     <i class="material-icons mr-2">add_circle</i>
                     <span>Nuevo grupo</span>
                 </div>
             </a>
+            @else
+            <button class="btn btn-primary btn-block">
+                <div class="d-flex align-items-center justify-content-center" wire:click="upgrade()">
+                    <i class="material-icons mr-2">add_circle</i>
+                    <span>Nuevo grupo</span>
+                </div>
+            </button>
+
+            @endif
+
             @endif
         </div>
         @if (!auth()->user()->pro)
