@@ -25,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'picture', 'role_id', 'status', 'whatsapp', 'facebook','email_verified_at','comment','pro'
+        'name', 'email', 'password', 'picture', 'role_id', 'status', 'whatsapp', 'facebook', 'email_verified_at', 'comment', 'pro'
     ];
 
     /**
@@ -73,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function ips()
     {
         return $this->hasMany('App\Models\Ips', 'user_id')
-        ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc');
     }
 
 

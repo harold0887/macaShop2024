@@ -16,7 +16,7 @@
                         <h4 class="card-title">Editar {{ $product->title }}</h4>
                     </div>
                     <div class="card-body ">
-                        <form  id="edit-product-admin" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                        <form id="edit-product-admin" action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf @method('PATCH')
                             <div class="form-row mt-lg-5">
                                 <div class="form-group col-md-1">

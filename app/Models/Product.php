@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
-    use HasFactory;
-    protected $guarded = [];
+  use HasFactory;
+  protected $guarded = [];
 
 
 
@@ -26,7 +26,7 @@ class Product extends Model
     return $this->belongsToMany(Order::class, 'order_details', 'product_id', 'order_id');
   }
 
-   
+
 
 
 

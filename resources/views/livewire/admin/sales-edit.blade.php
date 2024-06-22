@@ -9,8 +9,11 @@
                             <i class="material-icons">receipt</i>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-md-6 px-0">
+                            <div class="col-12 col-md-6 px-0 d-flex align-items-center">
                                 <h4 class="card-title font-weight-bold">Editar orden {{ $order->id }} - {{ number_format($order->amount,2) }} MXN.</h4>
+                                <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->id) }}">
+                                    <i class=" material-icons">visibility</i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -41,7 +44,7 @@
                                         <label class="bmd-label-floating">Status</label>
                                         <select class="form-control" name="fop" wire:model.defer="status">
                                             <option value="">Selecciona un estatus...</option>
-                                            <option value="create">new</option>
+                                            <option value="create">pendiente de pago</option>
                                             <option value="approved">approved</option>
                                             <option value="pending">pending</option>
                                             <option value="in_process">in_process</option>
@@ -95,7 +98,13 @@
                                 @foreach($memberships as $membership)
                                 <div class="row pt-2">
                                     <div class="col-6 col-lg-8 align-self-center">
-                                        {{ $membership->title }}
+                                        @role('admin')
+                                        <a class="btn btn-success btn-link p-0 m-0" href="{{ route('memberships.edit', $membership->id) }}" target="_blank">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        @endrole
+                                        {{ $membership->title }} - ${{ $membership->price_with_discount }}
+
                                     </div>
                                     <div class="col-6 col-lg-4">
 
@@ -254,11 +263,11 @@
                                 </h2>
                                 @foreach($MembershipsIcluded as $item)
                                 <div class="row pt-2">
-                                    <div class="col-md-3 my-1">
+                                    <div class="col-md-2 my-1">
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
                                     <div class="col-12 col-md-9 align-self-center">
-                                        {{ $item->title }}
+                                        {{ $item->title }} - ${{ $item->price }}
                                     </div>
 
                                 </div>
@@ -269,7 +278,7 @@
 
                                 @foreach($PackagesIcluded as $item)
                                 <div class="row pt-2">
-                                    <div class="col-md-3 my-1">
+                                    <div class="col-md-2 my-1">
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
                                     <div class="col-12 col-md-9 align-self-center">
@@ -285,7 +294,7 @@
 
                                 @foreach($productsIncluded as $item)
                                 <div class="row pt-2">
-                                    <div class="col-md-3 my-1">
+                                    <div class="col-md-2 my-1">
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
                                     <div class="col-12 col-md-9 align-self-center">

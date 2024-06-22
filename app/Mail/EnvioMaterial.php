@@ -17,6 +17,7 @@ class EnvioMaterial extends Mailable
 
     public $message;
     public $name;
+    public $title;
     public $subject;
     public $format;
     public $articles;
@@ -25,8 +26,10 @@ class EnvioMaterial extends Mailable
     public $userName;
     public function __construct($product)
     {
+
         $name = explode(" ", Auth::user()->name);
         $this->subject = $product->title;
+        $this->title = $product->title;
         $this->name = $product->name;
         $this->format = $product->format;
         $this->document = $product->document;
@@ -61,18 +64,21 @@ class EnvioMaterial extends Mailable
      */
     public function attachments(): array
     {
-
         if ($this->format == 'pdf' && $this->folio == true) { //enviar PDF con folio
-
             return [
                 Attachment::fromPath('./pdf/newpdf.pdf')
-                    ->as($this->name)
+                    ->as($this->title . " © Material didáctico MaCa.pdf")
                     ->withMime('application/pdf'),
             ];
         } else { //enviar Power point o pdf sin folio
 
+            if (env('APP_ENV') == 'local') {
+                $patch = "storage/" . $this->document;
+            } else {
+                $patch = "public/storage/" . $this->document;
+            }
             return [
-                Attachment::fromPath('public/storage/' . $this->document)
+                Attachment::fromPath($patch)
                     ->as($this->name)
             ];
         }

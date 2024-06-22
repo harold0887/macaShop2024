@@ -110,9 +110,19 @@
                             <div class="card-icon">
                                 <i class="material-icons">receiptv</i>
                             </div>
-                            <h4 class="card-title">
-                                {{$user->orders->count()}} {{$user->orders->count() ==1 ? 'compra':'compras'}}
-                            </h4>
+                            <div class="d-flex justify-content-between">
+                                <h4 class="card-title">
+                                    {{$user->orders->count()}} {{$user->orders->count() ==1 ? 'compra':'compras'}}
+                                </h4>
+                                <form id="create-sales-admin" method="POST" action="{{ route('orderp.create',$user->id) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="material-icons">add</i>
+                                        Agregar nueva venta
+                                    </button>
+                                </form>
+                            </div>
+
                         </div>
                         <div class="card-body">
                             @if($user->orders->count() > 0)
@@ -315,6 +325,31 @@
 </div>
 
 <script>
+    //Confirmar eliminar venta
+    function confirmDelete(id, status) {
+        event.preventDefault();
+        Swal.fire({
+            title: "¿Realmente quiere eliminar la venta: " + id + " con status " + status + " ? ",
+            text: "No podrás revertir esto.!",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.dispatch('delete-sales', {
+                    id: id
+                });
+            } else {
+                Swal.fire({
+                    title: "Cancelado!",
+                    text: "El registro de venta está seguro :)",
+                    icon: "error"
+                });
+            }
+        });
+    }
     //Confirmar eliminar la membresía
     function confirmActive($id, $email) {
         event.preventDefault();

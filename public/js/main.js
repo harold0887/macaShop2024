@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 $(function () {
 
     extraBtn()
@@ -16,9 +9,6 @@ $(function () {
     loginModal();
     clearlogin();
     rangeCalendar()
-
-
-
 });
 
 function extraBtn() {
@@ -399,6 +389,29 @@ Livewire.on('sendSuccessHtml', ({ product, note, email }) => {
 
 
 })
+
+//escuchar evento mostrar correos enviados
+Livewire.on("sendSuccessHtmlMany", function ({ note, enviados, email }) {
+    var text =
+        "<span class='font-weight-bold'>" +
+        enviados +
+        "</span>" +
+        "<span> <br><br> " +
+        note +
+        "</span>" +
+        "<span class='font-italic font-weight-bold'> " +
+        email +
+        "</span>";
+
+    Swal.fire({
+        title: "Enviado!",
+        html: text,
+        icon: "success",
+        showCloseButton: false,
+        showCancelButton: false,
+        focusConfirm: false,
+    });
+});
 
 
 Livewire.on('infoPro', ({ message }) => {

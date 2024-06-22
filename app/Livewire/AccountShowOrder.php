@@ -15,8 +15,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Query\JoinClause;
+
+
 use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+
 
 class AccountShowOrder extends Component
 {
@@ -93,7 +96,12 @@ class AccountShowOrder extends Component
                         return response()->download($file, $this->product->title . ".pdf");
                     }
                 } else {
-                    $file = "public/storage/" . $this->product->document;
+
+                    if (env('APP_ENV') == 'local') {
+                        $file = "storage/" . $this->product->document;
+                    } else {
+                        $file = "public/storage/" . $this->product->document;
+                    }
                     return response()->download($file, $this->product->title . "." . $this->product->format);
                 }
             } else {

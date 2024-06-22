@@ -37,8 +37,8 @@ class ShowMembership extends Component
                 $query->where('status', 'approved')
                     ->whereNotIn('customer_id', [1, 5, 8218]);
             })
+            ->orderBy('created_at', 'desc')
             ->get();
-
         $ingresos = Order_Details::filter($this->filters)
             ->where('membership_id', $this->membership->id)
             ->whereHas('order', function ($query) {
@@ -46,8 +46,36 @@ class ShowMembership extends Component
                     ->whereNotIn('customer_id', [1, 5, 8218]);
             })->sum('price');
 
+        $ingresosExternal = Order_Details::filter($this->filters)
+            ->where('membership_id', $this->membership->id)
+            ->whereHas('order', function ($query) {
+                $query->where('status', 'approved')
+                    ->where('payment_type', 'Externo')
+                    ->whereNotIn('customer_id', [1, 5, 8218]);
+            })->sum('price');
 
-        return view('livewire.admin.show-membership', compact('orders', 'ingresos'));
+        $ingresosWeb = Order_Details::filter($this->filters)
+            ->where('membership_id', $this->membership->id)
+            ->whereHas('order', function ($query) {
+                $query->where('status', 'approved')
+                    ->where('payment_type', '!=', 'Externo')
+                    ->whereNotIn('customer_id', [1, 5, 8218]);
+            })->sum('price');
+
+        $salesExterno = 0;
+        $salesWeb = 0;
+
+        foreach ($orders as $order) {
+            if ($order->order->payment_type == 'Externo') {
+                $salesExterno++;
+            } else {
+                $salesWeb++;
+            }
+        }
+
+
+
+        return view('livewire.admin.show-membership', compact('orders', 'ingresos', 'salesExterno', 'salesWeb', 'ingresosExternal', 'ingresosWeb'));
     }
     //sort
     public function setSort($field)

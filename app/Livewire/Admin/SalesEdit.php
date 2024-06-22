@@ -23,6 +23,7 @@ class SalesEdit extends Component
         'facebook' => 'required|string',
         'priceOrder' => 'required|numeric',
     ];
+
     public function mount()
     {
         $patch = Request::fullUrl();
@@ -37,10 +38,10 @@ class SalesEdit extends Component
         $this->mercadoPago = $this->order->payment_id;
         $this->comentario = $this->order->contacto;
         $this->link = $this->order->link;
-        $this->priceOrder = $this->order->amount;
     }
     public function render()
     {
+        $this->priceOrder = $this->order->amount;
         $products = Product::where('price', '>', 0)
             ->where(function ($query) {
                 $query->where('title', 'like', '%' . $this->search . '%');

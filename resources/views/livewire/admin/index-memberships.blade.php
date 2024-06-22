@@ -237,10 +237,10 @@
                                             </div>
                                         </td>
                                         <td class="td-actions">
-                                            <a class="btn  btn-link" href="{{ route('memberships.show', $membership->id) }}" target="_blank">
+                                            <a class="btn  btn-link" href="{{ route('memberships.show', $membership->id) }}">
                                                 <i class="material-icons text-info">visibility</i>
                                             </a>
-                                            <a class="btn  btn-link" href="{{ route('membership.sales', $membership->id) }}" target="_blank">
+                                            <a class="btn  btn-link" href="{{ route('membership.sales', $membership->id) }}">
                                                 <i class="material-icons text-primary">attach_money</i>
                                             </a>
                                             <a class="btn btn-success btn-link" href="{{ route('memberships.edit', $membership->id) }}">

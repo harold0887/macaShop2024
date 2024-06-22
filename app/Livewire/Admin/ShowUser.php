@@ -4,9 +4,11 @@ namespace App\Livewire\Admin;
 
 use App\Models\Ban;
 use App\Models\User;
+use App\Models\Order;
 use Livewire\Component;
 use Mchev\Banhammer\IP;
 use Livewire\Attributes\On;
+use Illuminate\Database\QueryException;
 
 class ShowUser extends Component
 {
@@ -75,12 +77,32 @@ class ShowUser extends Component
         try {
             $user->update([
                 'email_verified_at' => now(),
-                'comment'=>'Email verificado por un administrador.'
+                'comment' => 'Email verificado por un administrador.'
             ]);
             $this->dispatch('success-auto-close', message: 'El correo ha sido verificado con éxito');
             $this->dispatch('reload');
         } catch (\Throwable $e) {
             $this->dispatch('error', message: $e->getMessage());
+        }
+    }
+    #[On('delete-sales')]
+    public function delete($id)
+    {
+        try {
+            Order::destroy($id);
+
+            $this->dispatch(
+                'success-auto-close',
+                title: 'Eliminado!',
+                message: 'La orden se elimino de manera correcta'
+            );
+        } catch (QueryException $e) {
+            if ($e->getCode() == 23000) {
+                $messageError = 'La orden tiene uno o más productos';
+            } else {
+                $messageError = $e->getMessage();
+            }
+            $this->dispatch('error', message: 'Error al eliminar el registro - ' . $messageError);
         }
     }
 }
