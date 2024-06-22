@@ -128,19 +128,30 @@ class ShowSales extends Component
 
     public function download(Product $product)
     {
-
-
         try {
             if ($product->format == 'pdf') {
-
                 $addLicense = new AddLicense($product->id, $this->order->id);
-
-
                 if ($addLicense->download()) {
 
                     $file = "pdf/newpdf.pdf";
+                    return response()->download($file, "w" . $this->order->user->id . ' - ' . $product->title . " © Material didáctico MaCa.pdf");
+                }
+            } else {
+                $this->dispatch('error', message: 'Error al descargar el documento -  No es un PDF');
+            }
+        } catch (\Throwable $th) {
+            $this->dispatch('error', message: 'error al descargar el documento - ' . $th->getMessage());
+        }
+    }
+    public function downloadExternal(Product $product)
+    {
+        try {
+            if ($product->format == 'pdf') {
+                $addLicense = new AddLicense($product->id, $this->order->id);
+                if ($addLicense->setLicenseExternal()) {
 
-                    return response()->download($file, "w" . $this->order->user->id . ' - ' . $product->title . ".pdf");
+                    $file = "pdf/newpdf.pdf";
+                    return response()->download($file, "w" . $this->order->user->id . ' - ' . $product->title . " © Material didáctico MaCa.pdf");
                 }
             } else {
                 $this->dispatch('error', message: 'Error al descargar el documento -  No es un PDF');
@@ -279,6 +290,26 @@ class ShowSales extends Component
             }
         } catch (\Throwable $th) {
             $this->dispatch('error', message: 'Error al reenviar el email - ' . $th->getMessage());
+        }
+    }
+
+    //solo cargar comprobante de pago
+    public function uploadPayment()
+    {
+        $this->validate();
+
+        try {
+            //actualizar el comprobante de pago
+            $this->order->update([
+                'receiptPayment' => isset($this->payment) ? $this->payment->store('payments', 'public') : null,
+            ]);
+            $this->dispatch(
+                'success-auto-close',
+                message: 'Se ha guardado el pago de manera correcta.'
+            );
+            $this->dispatch('some-event3');
+        } catch (\Throwable $th) {
+            $this->dispatch('error', message: 'Error al guardar el comprobante de pago - ' . $th->getMessage());
         }
     }
 }

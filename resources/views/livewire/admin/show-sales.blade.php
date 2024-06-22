@@ -159,10 +159,15 @@
                                                                                 <button class="btn btn-sm btn-outline-primary btn-round w-100" onclick="confirmResend('{{ $item->product->id }}', '{{ $item->product->title }}')">
                                                                                     Reenviar
                                                                                 </button>
-                                                                                @endif
+                                                                                <button class="btn btn-sm btn-outline-info btn-round w-100" wire:click.prevent="downloadExternal({{ $item->product->id }})">
+                                                                                    <i class="material-icons">download</i> Descargar
+                                                                                </button>
+                                                                                @else
                                                                                 <button class="btn btn-sm btn-outline-info btn-round w-100" wire:click.prevent="download({{ $item->product->id }})">
                                                                                     <i class="material-icons">download</i> Descargar
                                                                                 </button>
+                                                                                @endif
+
                                                                             </div>
                                                                             <div>
                                                                                 <div>
@@ -557,7 +562,7 @@
                                             <div class="col-12 text-center pt-5">
                                                 <div wire:loading.remove>
                                                     <button class="btn btn-primary " wire:click="uploadPayment">
-                                                        <span>Cargar</span>
+                                                        <span>Guardar</span>
                                                     </button>
                                                 </div>
                                                 <button class="btn btn-outline-primary btn-round " disabled wire:loading wire:target="uploadPayment">

@@ -93,7 +93,7 @@ class AccountShowOrder extends Component
                     $addLicense = new AddLicense($id, $this->order->id);
                     if ($addLicense->setLicense()) {
                         $file = "pdf/newpdf.pdf";
-                        return response()->download($file, $this->product->title . ".pdf");
+                        return response()->download($file, $this->product->title . "© Material didáctico MaCa.pdf");
                     }
                 } else {
 
@@ -102,7 +102,7 @@ class AccountShowOrder extends Component
                     } else {
                         $file = "public/storage/" . $this->product->document;
                     }
-                    return response()->download($file, $this->product->title . "." . $this->product->format);
+                    return response()->download($file, $this->product->title . "© Material didáctico MaCa." . $this->product->format);
                 }
             } else {
                 $this->dispatch('error', message: 'No tiene permiso para descargar: ' . $this->product->title);
