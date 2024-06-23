@@ -25,11 +25,11 @@ class IndexSales extends Component
     public $sortDirection = 'desc';
     public $sortField = 'id';
     public $link = '';
-    public $idSelect = 'ssss';
     public $filters = [
         'search' => '',
         'fromDate' => '',
         'toDate' => '',
+        'status' => ''
     ];
     public function updatingSearch()
     {

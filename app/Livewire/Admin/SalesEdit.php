@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use DateTime;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Package;
@@ -18,6 +19,7 @@ class SalesEdit extends Component
     public $order, $ids, $patch, $search = '', $contacto, $status, $mercadoPago, $facebook, $comentario, $link;
     public $suma;
     public $priceOrder;
+    public $dateOrder;
     protected $rules = [
         'contacto' => ['required', 'string'],
         'facebook' => 'required|string',
@@ -42,6 +44,7 @@ class SalesEdit extends Component
     public function render()
     {
         $this->priceOrder = $this->order->amount;
+        $this->dateOrder = (new DateTime($this->order->created_at))->format('Y-m-d');
         $products = Product::where('price', '>', 0)
             ->where(function ($query) {
                 $query->where('title', 'like', '%' . $this->search . '%');
@@ -240,6 +243,7 @@ class SalesEdit extends Component
                 'contacto' => $this->comentario,
                 'link' => $this->link,
                 'amount' => $this->priceOrder,
+                'created_at' => $this->dateOrder . now()->format('G:i:s'),
             ]);
             User::findOrFail($this->order->customer_id)->update([
                 'whatsapp' => $this->contacto,

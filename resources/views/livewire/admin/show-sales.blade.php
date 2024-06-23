@@ -3,15 +3,15 @@
     <div class="container-fluid">
         <div class="row ">
 
-            <div class="col-12">
+            <div class="col-12  px-0">
                 <div class="card ">
                     <div class="card-header card-header-primary card-header-icon ">
                         <div class="card-icon">
                             <i class="material-icons">receipt</i>
                         </div>
                         <div class="row ">
-                            <div class="col-12 d-flex align-items-center">
-                                <h6 class="card-title font-weight-bold">Resumen de compra - {{$order->id}}</h6>
+                            <div class="col-12 d-flex align-items-center  px-0">
+                                <span class="card-title font-weight-bold my-0 fw-bold">Resumen de compra {{$order->id}}</span>
                                 <a class="btn  btn-link  p-0" href="{{ route('sales.edit', $order->id) }}">
                                     <i class="material-icons text-success">edit</i>
                                 </a>

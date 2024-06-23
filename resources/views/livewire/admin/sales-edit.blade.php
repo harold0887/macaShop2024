@@ -54,15 +54,23 @@
                                             <option value="charged_back">charged_back</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-12 col-md-4">
+                                </div>
+                                <div class="row">
+
+                                    <div class="form-group col-12 col-md-3">
                                         <label class="bmd-label-floating">Total de la compra</label>
                                         <input type="number" class="form-control" wire:model.defer="priceOrder">
                                     </div>
-                                    <div class="form-group col-12 col-md-4">
+                                    <div class="form-group col-12 col-md-3">
+                                        <label class="bmd-label-floating">Fecha de compra</label>
+                                        <input type="date" class="form-control" wire:model.defer="dateOrder">
+                                    </div>
+                                    <div class="form-group col-12 col-md-3">
                                         <label class="bmd-label-floating">Link de Pago</label>
                                         <input type="text" class="form-control" wire:model.defer="link">
                                     </div>
-                                    <div class="form-group col-12 col-md-4">
+
+                                    <div class="form-group col-12 col-md-3">
                                         <label class="bmd-label-floating">Comentarios</label>
                                         <input type="text" class="form-control" wire:model.defer="comentario">
                                     </div>

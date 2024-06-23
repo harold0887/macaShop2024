@@ -45,7 +45,6 @@ class Order extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('payment_id', 'like', '%' . $search . '%')
-                ->orWhere('status', 'like', '%' . $search . '%')
                 ->orWhere('order_id', 'like', '%' . $search . '%')
                 ->orWhere('contacto', 'like', '%' . $search . '%')
                 ->orWhere('id', 'like', '%' . $search . '%')
@@ -59,6 +58,9 @@ class Order extends Model
             $query->where('created_at', '>=', $fromDate . " 00:00:00");
         })->when($filters['toDate'] ?? null, function ($query, $toDate) {
             $query->where('created_at', '<=', $toDate . " 23:59:59");
-        });
+        })
+            ->when($filters['status'] ?? null, function ($query, $status) {
+                $query->where('status', $status);
+            });
     }
 }
