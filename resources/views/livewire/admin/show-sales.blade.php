@@ -11,7 +11,7 @@
                         </div>
                         <div class="row ">
                             <div class="col-12 d-flex align-items-center  px-0">
-                                <span class="card-title font-weight-bold my-0 fw-bold">Resumen de compra {{$order->id}}</span>
+                                <span class="my-0 fw-bold text-muted">Resumen de compra {{$order->id}}</span>
                                 <a class="btn  btn-link  p-0" href="{{ route('sales.edit', $order->id) }}">
                                     <i class="material-icons text-success">edit</i>
                                 </a>
@@ -33,7 +33,7 @@
 
                                                     <!-- Card header -->
                                                     <div class="card-header  z-depth-1 shadow" role="tab" id="heading30">
-                                                        <a data-toggle="collapse" data-parent="#accordionEx5" href="#collapse30" aria-expanded="true" aria-controls="collapse30">
+                                                        <a data-toggle="collapse" data-parent="#accordionEx5" href="#collapse29" aria-expanded="true" aria-controls="collapse29">
                                                             <div class="d-flex align-items-center">
                                                                 <i class="fa-solid fa-list mr-2  float-left "></i>
 
@@ -42,7 +42,7 @@
                                                         </a>
                                                     </div>
                                                     <!-- Card body -->
-                                                    <div id="collapse30" class="collapse {{$products->count() > 0 ?'show':''}}  " role="tabpanel" aria-labelledby="heading30" data-parent="#accordionEx5">
+                                                    <div id="collapse29" class="collapse show  " role="tabpanel" aria-labelledby="heading30" data-parent="#accordionEx5">
                                                         <div class="card-body rgba-black-light white-text z-depth-1">
                                                             <div class="row">
                                                                 <div class="col-12">
@@ -609,7 +609,7 @@
             confirmButtonText: "Si, enviar",
         }).then((result) => {
             if (result.isConfirmed) {
-                Livewire.dispatch('resendProduct', {
+                Livewire.dispatch('resend-product', {
                     id: id
                 });
             } else {

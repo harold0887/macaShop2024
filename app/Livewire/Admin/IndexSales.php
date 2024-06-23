@@ -23,7 +23,7 @@ class IndexSales extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $sortDirection = 'desc';
-    public $sortField = 'id';
+    public $sortField = 'created_at';
     public $link = '';
     public $filters = [
         'search' => '',

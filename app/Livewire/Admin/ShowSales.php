@@ -10,6 +10,7 @@ use App\Models\Product;
 use Livewire\Component;
 
 use App\Mail\EnvioMaterial;
+use Livewire\Attributes\On;
 use App\Models\Order_Details;
 use Livewire\WithFileUploads;
 use App\Http\Helpers\AddLicense;
@@ -240,52 +241,53 @@ class ShowSales extends Component
 
         $this->web == false ? $this->web = true : $this->web = false;
     }
-
-    public function resendProduct(Product $product)
+    #[On('resend-product')]
+    public function resendProduct($id)
     {
+        $productSend = Product::find($id);
         try {
             //validar si es un PDF y tiene folio activado
-            if ($product->format == 'pdf' && $product->folio == 1) {
+            if ($productSend->format == 'pdf' && $productSend->folio == 1) {
                 //agregar licencia
-                $addLicense = new AddLicense($product->id, $this->order->id);
+                $addLicense = new AddLicense($productSend->id, $this->order->id);
                 if ($addLicense->setLicenseExternal()) {
 
                     set_time_limit(0);
                     //enviar correo con folio
-                    $correo = new EnvioMaterial($product);
+                    $correo = new EnvioMaterial($productSend);
                     Mail::to($this->order->user->email)->send($correo);
 
                     //guardar envio en base de datos de enviados
                     Enviado::create([
                         'email' => $this->order->user->email,
                         'order_id' => $this->order->id,
-                        'product_id' => $product->id,
+                        'product_id' => $productSend->id,
                     ]);
                     $this->dispatch(
                         'sendSuccessHtml',
-                        product: $product->title,
+                        product: $productSend->title,
                         note: 'Se ha reenviado correctamente a: ',
-                        email: Auth::user()->email
+                        email: $this->order->user->email
                     );
                 }
             } else {
                 set_time_limit(0);
                 //enviar correo sin  folio
 
-                $correo = new EnvioMaterial($product);
+                $correo = new EnvioMaterial($productSend);
                 Mail::to($this->order->user->email)->send($correo);
 
                 //guardar envio en base de datos de enviados
                 Enviado::create([
                     'email' => $this->order->user->email,
                     'order_id' => $this->order->id,
-                    'product_id' => $product->id,
+                    'product_id' => $productSend->id,
                 ]);
                 $this->dispatch(
                     'sendSuccessHtml',
-                    product: $product->title,
+                    product: $productSend->title,
                     note: 'Se ha reenviado correctamente a: ',
-                    email: Auth::user()->email
+                    email: $this->order->user->email
                 );
             }
         } catch (\Throwable $th) {

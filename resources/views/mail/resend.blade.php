@@ -1,7 +1,7 @@
 @component('mail::message')
-# {{$userName}}, gracias por tu confianza y preferencia!!
+# Gracias por su confianza y preferencia!!
 
-## Adjunto se encuentra el documento: {{$subject}}.{{$format}} ##
+## Adjunto encontrará el documento: {{$subject}}.{{$format}} ##
 
 <br>
 Queda estrictamente prohibido:

@@ -32,16 +32,16 @@ class UsersController extends Controller
             'whatsapp' => ['required', 'unique:users'],
         ]);
 
-        $password = Str::random(10);
-
+        $password = Str::random(8);
+        $encryptedPassword = bcrypt($password);
 
         try {
             $newuser = User::create([
                 'name' => request('name'),
                 'email' => request('email'),
-                'password' => $password,
+                'password' => $encryptedPassword,
                 'whatsapp' => request('whatsapp'),
-                'comment' => 'User created by admin ' . Auth::user()->id,
+                'comment' => 'User created by admin ' . Auth::user()->name,
             ]);
             $newOrder = Order::create([
                 'customer_id' => $newuser->id,

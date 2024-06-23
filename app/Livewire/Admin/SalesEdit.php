@@ -236,15 +236,23 @@ class SalesEdit extends Component
     public function save()
     {
 
+
         try {
-            Order::findOrFail($this->order->id)->update([
+            $this->order->update([
                 'status' => $this->status,
                 'payment_id' => $this->mercadoPago,
                 'contacto' => $this->comentario,
                 'link' => $this->link,
                 'amount' => $this->priceOrder,
-                'created_at' => $this->dateOrder . now()->format('G:i:s'),
             ]);
+            //actualizar la fecha solo si se cambia
+            if ((new DateTime($this->order->created_at))->format('Y-m-d') != $this->dateOrder) {
+                $this->order->update([
+                    'created_at' => $this->dateOrder . now()->format('G:i:s'),
+                ]);
+            }
+
+
             User::findOrFail($this->order->customer_id)->update([
                 'whatsapp' => $this->contacto,
                 'facebook' => $this->facebook,
