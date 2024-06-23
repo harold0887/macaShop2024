@@ -505,17 +505,12 @@
                                             <small class=" text-danger"> {{ $message }} </small>
                                             @enderror
                                         </div>
-                                        <div class="col-12 text-center">
-                                            @if ($payment)
-                                            <img class="w-75 rounded shadow" src="{{ $payment->temporaryUrl() }}">
-                                            @endif
-                                        </div>
                                         @endif
 
 
 
 
-                                        <div class="col-12 text-center pt-5">
+                                        <div class="col-12 text-center py-3">
                                             <div wire:loading.remove>
                                                 <button class="btn btn-primary " wire:click="submit">
                                                     <span>Enviar cuadernillos</span>
@@ -528,6 +523,13 @@
 
 
                                         </div>
+                                        @if ( $web == 0)
+                                        <div class="col-12 text-center">
+                                            @if ($payment)
+                                            <img class="w-75 rounded shadow" src="{{ $payment->temporaryUrl() }}">
+                                            @endif
+                                        </div>
+                                        @endif
 
                                     </div>
                                 </div>
@@ -554,12 +556,8 @@
                                                 <small class=" text-danger"> {{ $message }} </small>
                                                 @enderror
                                             </div>
-                                            <div class="col-12 text-center">
-                                                @if ($payment)
-                                                <img class="w-100 rounded shadow" src="{{ $payment->temporaryUrl() }}">
-                                                @endif
-                                            </div>
-                                            <div class="col-12 text-center pt-5">
+
+                                            <div class="col-12 text-center py-3">
                                                 <div wire:loading.remove>
                                                     <button class="btn btn-primary " wire:click="uploadPayment">
                                                         <span>Guardar</span>
@@ -569,6 +567,11 @@
                                                     <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                                                     Cargando...
                                                 </button>
+                                            </div>
+                                            <div class="col-12 text-center">
+                                                @if ($payment)
+                                                <img class="w-100 rounded shadow" src="{{ $payment->temporaryUrl() }}">
+                                                @endif
                                             </div>
                                         </div>
                                         @endif

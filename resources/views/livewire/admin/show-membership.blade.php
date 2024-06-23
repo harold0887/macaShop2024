@@ -43,10 +43,28 @@
             <thead>
                 <tr>
                     <th>Index</th>
-                    <th style="cursor:pointer">
+                    <th style="cursor:pointer" wire:click="setSort('id')">
+                        @if($sortField=='id')
+                        @if($sortDirection=='asc')
+                        <i class="fa-solid fa-arrow-down-a-z"></i>
+                        @else
+                        <i class="fa-solid fa-arrow-up-z-a"></i>
+                        @endif
+                        @else
+                        <i class="fa-solid fa-sort mr-1"></i>
+                        @endif
                         Order
                     </th>
-                    <th style="cursor:pointer">
+                    <th style="cursor:pointer" wire:click="setSort('created_at')">
+                        @if($sortField=='created_at')
+                        @if($sortDirection=='asc')
+                        <i class="fa-solid fa-arrow-down-a-z"></i>
+                        @else
+                        <i class="fa-solid fa-arrow-up-z-a"></i>
+                        @endif
+                        @else
+                        <i class="fa-solid fa-sort mr-1"></i>
+                        @endif
                         Fecha
                     </th>
                     <th style="cursor:pointer">
@@ -64,6 +82,18 @@
                     <th>email</th>
                     <th>WhatsApp</th>
                     <th>Facebook</th>
+                    <th style="cursor:pointer" wire:click="setSort('agenda')">
+                        @if($sortField=='agenda')
+                        @if($sortDirection=='asc')
+                        <i class="fa-solid fa-arrow-down-a-z"></i>
+                        @else
+                        <i class="fa-solid fa-arrow-up-z-a"></i>
+                        @endif
+                        @else
+                        <i class="fa-solid fa-sort mr-1"></i>
+                        @endif
+                        Agenda
+                    </th>
 
                 </tr>
             </thead>
@@ -129,7 +159,31 @@
                     <td>
                         {{ $order->order->user->facebook }}
                     </td>
+                    <td>
+                        <div class="togglebutton">
+                            <label>
+                                <input wire:click="updateAgenda({{ $order->id }})" type="checkbox" {{ $order->agenda == 1 ? 'checked ' : '' }}>
+                                <span class="toggle"></span>
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input id="nota{{ $order->id }}" style="padding-top:0; padding-bottom:0; border:none;" class="border text-muted rounded" type="text" value="{{ $order->order->contacto }}">
+                    </td>
 
+                    <td>
+
+                    </td>
+                    <td class="td-actions">
+                        <div class="btn-group m-0 d-flex" style="box-shadow: none !important">
+                            <button class="btn btn-info btn-link text-success " onclick="udateData('{{ $order->id }}','nota{{ $order->id }}')">
+                                <i class=" material-icons ">save</i>
+                            </button>
+                            <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->order->id) }}" target="_blank">
+                                <i class=" material-icons">visibility</i>
+                            </a>
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -138,3 +192,15 @@
     @endif
 
 </div>
+<script>
+    function udateData(id, newNote) {
+        //Lanzar evento para actualizar membresia
+
+        var nota = $('#' + newNote).val();
+
+        Livewire.dispatch('update-data', {
+            id: id,
+            nota: nota
+        });
+    }
+</script>

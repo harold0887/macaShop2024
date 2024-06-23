@@ -10,7 +10,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 px-0 d-flex align-items-center">
-                                <h4 class="card-title font-weight-bold">Editar orden {{ $order->id }} - {{ number_format($order->amount,2) }} MXN.</h4>
+                                <h4 class="card-title font-weight-bold">Editar orden {{ $order->id }}</h4>
                                 <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->id) }}">
                                     <i class=" material-icons">visibility</i>
                                 </a>
