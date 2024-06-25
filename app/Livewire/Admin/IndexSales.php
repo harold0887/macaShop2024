@@ -29,7 +29,8 @@ class IndexSales extends Component
         'search' => '',
         'fromDate' => '',
         'toDate' => '',
-        'status' => ''
+        'status' => '',
+        'origen' => ''
     ];
     public function updatingSearch()
     {

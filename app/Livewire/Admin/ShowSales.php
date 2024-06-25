@@ -27,8 +27,8 @@ class ShowSales extends Component
     public $socialNetwork;
     public $payment;
     public $web = false;
-    public  $packages, $memberships, $productsPackagesOrder, $packagesSum, $membershipsSum;
-    public $products, $productsSum;
+    public  $products, $productsSum, $packages, $memberships, $packagesSelect, $packagesSum, $membershipsSum;
+
     public $enviados;
     use WithFileUploads;
     protected $rules = [
@@ -56,67 +56,21 @@ class ShowSales extends Component
     }
     public function render()
     {
-
-
         $this->products = Order_Details::ShowOrderProducts($this->order->id)->get();
         $this->productsSum = Order_Details::ShowOrderProducts($this->order->id)->sum('price');
 
         $this->packages = Order_Details::ShowOrderPackages($this->order->id)->get();
         $this->packagesSum = Order_Details::ShowOrderPackages($this->order->id)->sum('price');
 
+        $this->memberships = Order_Details::ShowOrderMemberships($this->order->id)->get();
+        $this->membershipsSum = Order_Details::ShowOrderMemberships($this->order->id)->sum('price');
+
+        $this->packagesSelect = Package::where('id', $this->idPackage)->first();
+
+
         $this->enviados = Enviado::where('order_id', $this->order->id)
             ->orderBy('created_at', 'desc')
             ->get();
-
-
-
-
-
-        // $this->packages = Package::join('order_details', 'order_details.package_id', '=', 'packages.id')
-        //     ->join('orders', 'order_details.order_id', '=', 'orders.id')
-        //     ->where('order_details.order_id', $this->ids)
-        //     ->orderBy('packages.title')
-        //     ->select('packages.id', 'packages.model', 'packages.itemMain', 'packages.price', 'packages.title', 'orders.active', 'orders.id as order_id')
-        //     ->get();
-
-        // $this->packagesSum = Package::join('order_details', 'order_details.package_id', '=', 'packages.id')
-        //     ->join('orders', 'order_details.order_id', '=', 'orders.id')
-        //     ->where('order_details.order_id', $this->ids)
-        //     ->orderBy('packages.title')
-        //     ->select('packages.id')
-        //     ->sum('order_details.price');
-
-
-
-        $this->memberships = Order_Details::join('orders', 'order_details.order_id', '=', 'orders.id')
-            ->join('memberships', 'order_details.membership_id', '=', 'memberships.id')
-            ->where('order_details.order_id', $this->ids)
-            ->orderBy('memberships.title')
-            ->select(
-                'memberships.id',
-                'memberships.itemMain',
-                'order_details.price',
-                'memberships.title',
-                'orders.active',
-                'orders.id as order_id',
-                'order_details.id as idOrder'
-            )->get();
-        $this->membershipsSum = Order_Details::join('orders', 'order_details.order_id', '=', 'orders.id')
-            ->join('memberships', 'order_details.membership_id', '=', 'memberships.id')
-            ->where('order_details.order_id', $this->ids)
-            ->orderBy('memberships.title')
-            ->select(
-                'memberships.id'
-            )
-            ->sum('order_details.price');
-
-        $this->productsPackagesOrder = PackageAsProduct::join('products', 'package_product.product_id', 'products.id')
-            ->where('package_product.package_id', $this->idPackage)
-            ->select('products.title', 'products.id', 'products.itemMain', 'products.price', 'products.status', 'products.folio')
-            ->orderBy('title')
-            ->get();
-
-
 
 
         return view('livewire.admin.show-sales');
@@ -144,6 +98,7 @@ class ShowSales extends Component
             $this->dispatch('error', message: 'error al descargar el documento - ' . $th->getMessage());
         }
     }
+
     public function downloadExternal(Product $product)
     {
         try {
@@ -176,7 +131,7 @@ class ShowSales extends Component
         try {
             //recorrer y enviar productos de la orden
             foreach ($this->products as $item) {
-                $productSend = Product::find($item->product->id);
+                $productSend = Product::findOrFail($item->product->id);
 
                 //validar si es un PDF y tiene folio activado
                 if ($productSend->format == 'pdf' && $productSend->folio == 1) {
@@ -212,6 +167,49 @@ class ShowSales extends Component
                 }
 
                 array_push($enviados, '<br>' . $productSend->title); //agregar solo informacion
+            }
+
+
+            //recorrer los paquetes comprados y luego recorrer cada paquete para obtener los productos y enviarlos
+            foreach ($this->packages as $package) {
+                $packageSend = Package::findOrFail($package->package_id);
+                foreach ($packageSend->products as $item) {
+                    $productSend = Product::findOrFail($item->id);
+                    //validar si es un PDF y tiene folio activado
+                    if ($productSend->format == 'pdf' && $productSend->folio == 1) {
+                        //agregar licencia
+                        $addLicense = new AddLicense($productSend->id, $this->order->id);
+                        if ($addLicense->setLicenseExternal()) {
+
+                            set_time_limit(0);
+                            //enviar correo con folio
+                            $correo = new EnvioMaterial($productSend);
+                            Mail::to($this->order->user->email)->send($correo);
+
+                            //guardar envio en base de datos de enviados
+                            Enviado::create([
+                                'email' => $this->order->user->email,
+                                'order_id' => $this->order->id,
+                                'product_id' => $productSend->id,
+                            ]);
+                        }
+                    } else {
+                        set_time_limit(0);
+                        //enviar correo sin  folio
+
+                        $correo = new EnvioMaterial($productSend);
+                        Mail::to($this->order->user->email)->send($correo);
+
+                        //guardar envio en base de datos de enviados
+                        Enviado::create([
+                            'email' => $this->order->user->email,
+                            'order_id' => $this->order->id,
+                            'product_id' => $productSend->id,
+                        ]);
+                    }
+
+                    array_push($enviados, '<br>' . $productSend->title); //agregar solo informacion
+                }
             }
 
 
@@ -290,6 +288,62 @@ class ShowSales extends Component
                     email: $this->order->user->email
                 );
             }
+        } catch (\Throwable $th) {
+            $this->dispatch('error', message: 'Error al reenviar el email - ' . $th->getMessage());
+        }
+    }
+    #[On('resend-package')]
+    public function resendPackage($id)
+    {
+        $packageSend = Package::findOrFail($id);
+        $enviados = array(); //iniciar enviados vacio
+
+
+        try {
+            foreach ($packageSend->products as $item) {
+                $productSend = Product::findOrFail($item->id);
+                //dd($productSend);
+                //validar si es un PDF y tiene folio activado
+                if ($productSend->format == 'pdf' && $productSend->folio == 1) {
+                    //agregar licencia
+                    $addLicense = new AddLicense($productSend->id, $this->order->id);
+                    if ($addLicense->setLicenseExternal()) {
+
+                        set_time_limit(0);
+                        //enviar correo con folio
+                        $correo = new EnvioMaterial($productSend);
+                        Mail::to($this->order->user->email)->send($correo);
+
+                        //guardar envio en base de datos de enviados
+                        Enviado::create([
+                            'email' => $this->order->user->email,
+                            'order_id' => $this->order->id,
+                            'product_id' => $productSend->id,
+                        ]);
+                    }
+                } else {
+                    set_time_limit(0);
+                    //enviar correo sin  folio
+
+                    $correo = new EnvioMaterial($productSend);
+                    Mail::to($this->order->user->email)->send($correo);
+
+                    //guardar envio en base de datos de enviados
+                    Enviado::create([
+                        'email' => $this->order->user->email,
+                        'order_id' => $this->order->id,
+                        'product_id' => $productSend->id,
+                    ]);
+                }
+
+                array_push($enviados, '<br>' . $productSend->title); //agregar solo informacion
+            }
+            $this->dispatch(
+                'sendSuccessHtmlMany',
+                note: 'Se ha enviado correctamente a:',
+                enviados: $enviados,
+                email: $this->order->user->email
+            );
         } catch (\Throwable $th) {
             $this->dispatch('error', message: 'Error al reenviar el email - ' . $th->getMessage());
         }

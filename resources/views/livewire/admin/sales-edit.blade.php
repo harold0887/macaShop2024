@@ -10,7 +10,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 col-md-6 px-0 d-flex align-items-center">
-                                <h4 class="card-title font-weight-bold">Editar orden {{ $order->id }}</h4>
+                                <span class="my-0 fw-bold text-muted">Editar orden {{ $order->id }}</span>
                                 <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->id) }}">
                                     <i class=" material-icons">visibility</i>
                                 </a>
@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body ">
 
-                        <div class="row  py-4 ">
+                        <div class="row py-lg-4 ">
                             <div class="col-12 col-lg-10">
                                 <div class="row">
                                     <div class="form-group col-12 col-lg-3 ">
@@ -36,10 +36,10 @@
                                         <small class=" text-danger"> {{ $message }} </small>
                                         @enderror
                                     </div>
-                                    <div class="form-group col-12 col-lg-3 ">
+                                    <!-- <div class="form-group col-12 col-lg-3 ">
                                         <label class="bmd-label-floating">Id Mercado Pago</label>
                                         <input type="text" class="form-control" wire:model.defer="mercadoPago">
-                                    </div>
+                                    </div> -->
                                     <div class="input-group col-12 col-lg-3">
                                         <label class="bmd-label-floating">Status</label>
                                         <select class="form-control" name="fop" wire:model.defer="status">
@@ -54,9 +54,13 @@
                                             <option value="charged_back">charged_back</option>
                                         </select>
                                     </div>
+                                    <div class="form-group col-12 col-md-3">
+                                        <label class="bmd-label-floating">Comentarios</label>
+                                        <input type="text" class="form-control" wire:model.defer="comentario">
+                                    </div>
                                 </div>
+                                @if(Auth::user()->id ==1)
                                 <div class="row">
-
                                     <div class="form-group col-12 col-md-3">
                                         <label class="bmd-label-floating">Total de la compra</label>
                                         <input type="number" class="form-control" wire:model.defer="priceOrder">
@@ -69,13 +73,8 @@
                                         <label class="bmd-label-floating">Link de Pago</label>
                                         <input type="text" class="form-control" wire:model.defer="link">
                                     </div>
-
-                                    <div class="form-group col-12 col-md-3">
-                                        <label class="bmd-label-floating">Comentarios</label>
-                                        <input type="text" class="form-control" wire:model.defer="comentario">
-                                    </div>
-
                                 </div>
+                                @endif
                             </div>
                             <div class="col-12 col-lg-2">
                                 <div class="row d-flex">
@@ -104,8 +103,8 @@
                                     Agregar membresías a la orden
                                 </h2>
                                 @foreach($memberships as $membership)
-                                <div class="row pt-2">
-                                    <div class="col-6 col-lg-8 align-self-center">
+                                <div class="row  justify-content-between">
+                                    <div class="col-auto col-lg-8 align-self-center">
                                         @role('admin')
                                         <a class="btn btn-success btn-link p-0 m-0" href="{{ route('memberships.edit', $membership->id) }}" target="_blank">
                                             <i class="material-icons">edit</i>
@@ -114,7 +113,7 @@
                                         {{ $membership->title }} - ${{ $membership->price_with_discount }}
 
                                     </div>
-                                    <div class="col-6 col-lg-4">
+                                    <div class="col-auto col-lg-4">
 
                                         @php
                                         $exist= false;
@@ -129,22 +128,26 @@
                                         @if($exist)
                                         <button type="submit" class="btn p-1  btn-danger p-0" wire:click="removeMembership('{{ $membership->id }}')">
                                             <i class="material-icons">close</i>
-                                            Eliminar
+
                                         </button>
                                         @else
                                         <button class="btn p-1  btn-success p-0" wire:click="addMembership('{{ $membership->id }}')">
                                             <i class="material-icons">add</i>
-                                            Agergar
                                         </button>
                                         @endif
                                     </div>
                                 </div>
                                 @endforeach
-                                <div class="row pt-2">
-                                    <div class="col-6 col-lg-8 align-self-center">
+                                <div class="row  justify-content-between">
+                                    <div class="col-auto col-lg-8 align-self-center">
+                                        @role('admin')
+                                        <a class="btn btn-success btn-link p-0 m-0" href="{{ route('memberships.edit', $registroAsistenciaPro->id) }}" target="_blank">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        @endrole
                                         {{ $registroAsistenciaPro->title }}
                                     </div>
-                                    <div class="col-6 col-lg-4">
+                                    <div class="col-auto col-lg-4">
 
                                         @php
                                         $exist= false;
@@ -159,12 +162,12 @@
                                         @if($exist)
                                         <button type="submit" class="btn p-1  btn-danger p-0" wire:click="removeMembership('{{ $registroAsistenciaPro->id }}')">
                                             <i class="material-icons">close</i>
-                                            Eliminar
+
                                         </button>
                                         @else
                                         <button class="btn p-1  btn-success p-0" wire:click="addMembership('{{ $registroAsistenciaPro->id }}')">
                                             <i class="material-icons">add</i>
-                                            Agergar
+
                                         </button>
                                         @endif
                                     </div>
@@ -174,11 +177,16 @@
                                     Agregar paquetes a la orden
                                 </h2>
                                 @foreach($packages as $package)
-                                <div class="row pt-2">
-                                    <div class="col-6 col-lg-8 align-self-center">
+                                <div class="row  justify-content-between">
+                                    <div class="col-auto col-lg-8 align-self-center">
+                                        @role('admin')
+                                        <a class="btn btn-success btn-link p-0 m-0" href="{{ route('package.edit', $package->id) }}" target="_blank">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        @endrole
                                         {{ $package->title }}
                                     </div>
-                                    <div class="col-6 col-lg-4">
+                                    <div class="col-auto col-lg-4">
                                         @php
                                         $exist= false;
                                         @endphp
@@ -192,12 +200,12 @@
                                         @if($exist)
                                         <button type="submit" class="btn p-1  btn-danger p-0" wire:click="removePackage('{{ $package->id }}')">
                                             <i class="material-icons">close</i>
-                                            Eliminar
+
                                         </button>
                                         @else
                                         <button class="btn p-1  btn-success p-0" wire:click="addPackage('{{ $package->id }}')">
                                             <i class="material-icons">add</i>
-                                            Agergar
+
                                         </button>
                                         @endif
                                     </div>
@@ -222,11 +230,16 @@
                                     </div>
                                 </div>
                                 @foreach($products as $products)
-                                <div class="row pt-2">
-                                    <div class="col-6 col-lg-8 align-self-center {{$products->status==0 ? 'text-danger':''}}">
+                                <div class="row  justify-content-between">
+                                    <div class="col-10 col-lg-8 align-self-center {{$products->status==0 ? 'text-danger':''}}">
+                                        @role('admin')
+                                        <a class="btn btn-success btn-link p-0 m-0" href="{{ route('products.edit', $products->id) }}" target="_blank">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        @endrole
                                         {{ $products->title }}
                                     </div>
-                                    <div class="col-6 col-lg-4">
+                                    <div class="col-2 col-lg-4">
 
                                         @php
                                         $exist= false;
@@ -243,12 +256,12 @@
                                         @if($exist)
                                         <button type="submit" class="btn p-1  btn-danger p-0" wire:click="removeProduct('{{ $products->id }}')">
                                             <i class="material-icons">close</i>
-                                            Eliminar
+
                                         </button>
                                         @else
                                         <button class="btn p-1  btn-success p-0" wire:click="addProduct('{{ $products->id }}')">
                                             <i class="material-icons">add</i>
-                                            Agergar
+
                                         </button>
                                         @endif
 

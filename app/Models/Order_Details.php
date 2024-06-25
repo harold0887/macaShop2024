@@ -76,4 +76,15 @@ class Order_Details extends Model
         })
             ->where('package_id', '!=', null);
     }
+
+    //retorna los paquetes de una orden en especifico
+    public function scopeShowOrderMemberships($query, $idOrder)
+    {
+        $query->when($idOrder ?? null, function ($query, $idOrder) {
+            $query->whereHas('order', function ($query) use ($idOrder) {
+                $query->where('id', $idOrder);
+            });
+        })
+            ->where('membership_id', '!=', null);
+    }
 }

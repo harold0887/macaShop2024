@@ -172,18 +172,7 @@
                                             @endif
                                             Rol
                                         </th>
-                                        <th style="cursor:pointer" wire:click="setSort('created_by')">
-                                            @if($sortField=='created_by')
-                                            @if($sortDirection=='asc')
-                                            <i class="fa-solid fa-arrow-down-a-z"></i>
-                                            @else
-                                            <i class="fa-solid fa-arrow-up-z-a"></i>
-                                            @endif
-                                            @else
-                                            <i class="fa-solid fa-sort mr-1"></i>
-                                            @endif
-                                            Creado por
-                                        </th>
+
                                         <th style="cursor:pointer" wire:click="setSort('ips_count')">
                                             @if($sortField=='ips_count')
                                             @if($sortDirection=='asc')
@@ -251,7 +240,7 @@
 
                                             @endforeach
                                         </td>
-                                        <td>{{$user->create_by}}</td>
+
 
                                         <td>{{$user->ips->count()}}</td>
 

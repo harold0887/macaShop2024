@@ -56,6 +56,13 @@
                                                 <option value="charged_back">Congracargo</option>
                                             </select>
                                         </div>
+                                        <div class="col-12 col-lg-auto py-0 ">
+                                            <select class="form-control d-flex d-flex align-items-center " wire:model.live="filters.origen">
+                                                <option value="">Selecciona una opcion...</option>
+                                                <option value="externo">Externo</option>
+                                                <option value="web">Web</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-8   align-self-md-center">

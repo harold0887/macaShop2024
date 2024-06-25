@@ -2,7 +2,6 @@
     @include('includes.spinner-livewire')
     <div class="container-fluid">
         <div class="row ">
-
             <div class="col-12  px-0">
                 <div class="card ">
                     <div class="card-header card-header-primary card-header-icon ">
@@ -37,7 +36,7 @@
                                                             <div class="d-flex align-items-center">
                                                                 <i class="fa-solid fa-list mr-2  float-left "></i>
 
-                                                                <span class="text-base">Resumen de compra {{$order->id}}</span>
+                                                                <span class="text-base">Información de la compra</span>
                                                             </div>
                                                         </a>
                                                     </div>
@@ -141,16 +140,16 @@
                                                             @if (isset($products) && $products->count() > 0)
                                                             @foreach($products as $item)
                                                             <div class="row pt-2">
-                                                                <div class="col-4 col-md-1 my-1">
+                                                                <div class="col-4 col-md-2 my-1">
                                                                     <img src="{{ Storage::url($item->product->itemMain) }} " class="img-thumbnail w-75">
                                                                 </div>
-                                                                <div class="col-6 align-self-center">
+                                                                <div class="col-7 col-md-3 align-self-center ">
                                                                     <span class="fw-bold text-muted">{{ $item->product->title }}</span>
 
                                                                     <span class="d-block">Precio: ${{ $item->price }}</span>
                                                                 </div>
 
-                                                                <div class="col-12 col-md-3 text-center align-self-center">
+                                                                <div class="col-12 col-md-3 text-center align-self-center ">
                                                                     <div class="row mx-0">
                                                                         <div class="col-12">
                                                                             @if ($order->status == 'approved' && $order->active)
@@ -167,27 +166,12 @@
                                                                                     <i class="material-icons">download</i> Descargar
                                                                                 </button>
                                                                                 @endif
-
-                                                                            </div>
-                                                                            <div>
-                                                                                <div>
-                                                                                    <button class="btn btn-outline-primary btn-round " disabled wire:loading wire:target="sendEmail">
-                                                                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                                        enviando...
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div>
-                                                                                    <button class="btn btn-outline-info btn-round " disabled wire:loading wire:target="download">
-                                                                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                                        Descargando...
-                                                                                    </button>
-                                                                                </div>
                                                                             </div>
                                                                             @endif
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-12 py-0">
+                                                                <div class="col-12 col-md-4 py-0 shadow-sm rounded">
                                                                     @if(isset($enviados) && $enviados->count() > 0)
                                                                     <div class="table-responsive ">
                                                                         <table class="table table-hover table-responsive my-0">
@@ -202,7 +186,7 @@
                                                                                 @if ($enviado->product_id== $item->product->id && $enviado->order_id== $order->id)
                                                                                 <tr class="text-xxs sm:text-xxs lg:text-sm">
                                                                                     <td class="py-1">{{$enviado->email}}</td>
-                                                                                    <td class="py-1">{{$enviado->created_at}}</td>
+                                                                                    <td class="py-1">{{date_format($enviado->created_at, 'd-M-Y g:i a')}}</td>
                                                                                 </tr>
                                                                                 @endif
                                                                                 @endforeach
@@ -212,10 +196,8 @@
 
                                                                     @endif
                                                                 </div>
-
-
                                                             </div>
-                                                            <hr style="border: solid 1px red;">
+                                                            <hr class="text-muted">
                                                             @endforeach
                                                             @endif
                                                         </div>
@@ -243,46 +225,36 @@
                                                             @if(isset($packages) && $packages->count() > 0)
                                                             @foreach($packages as $item)
                                                             <div class="row pt-2">
-                                                                <div class="col-md-2 my-1">
+                                                                <div class="col-4 col-md-2 my-1">
                                                                     <img src="{{ Storage::url($item->package->itemMain) }} " class="img-thumbnail w-100">
                                                                 </div>
-                                                                <div class="col-12 col-md-6 align-self-center">
+                                                                <div class="col-7 col-md-3 align-self-center">
                                                                     <span class="fw-bold text-muted">{{ $item->package->title }}</span>
                                                                     <span class="d-block">Precio: ${{ $item->price }}</span>
                                                                 </div>
-                                                                <div class="col-12 col-md-4 text-center align-self-center">
+                                                                <div class="col-12 col-md-3 text-center align-self-center">
 
                                                                     @if ($order->status == 'approved' && $order->active)
 
                                                                     <div wire:loading.remove>
-                                                                        <button class="btn btn-outline-primary btn-round w-100" wire:click.prevent="resendPackage({{ $item->package->id }},{{ $order->id }})">
-                                                                            Reenviar paquete
-                                                                        </button>
-                                                                        <div wire:loading.remove>
-                                                                            <button class="btn btn-outline-info btn-round w-100" wire:click="showPackages('{{ $item->package->id }}')">
-                                                                                ver materiales
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <div>
-                                                                            <button class="btn btn-outline-primary btn-round " disabled wire:loading wire:target="sendEmail">
-                                                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                                enviando...
-                                                                            </button>
-                                                                        </div>
-                                                                        <div>
-                                                                            <button class="btn btn-outline-info btn-round " disabled wire:loading wire:target="download">
-                                                                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                                Descargando...
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
 
+                                                                        @if($order->payment_type=='Externo')
+                                                                        <button class="btn btn-sm btn-outline-primary btn-round w-100 btn-sm" onclick="confirmResendPackage('{{ $item->package->id }}', '{{ $item->package->title }}')">
+                                                                            Reenviar
+                                                                        </button>
+                                                                        <button class="btn btn-outline-info btn-round w-100 btn-sm" wire:click="showPackages('{{ $item->package->id }}')">
+                                                                            ver materiales
+                                                                        </button>
+                                                                        @else
+                                                                        <button class="btn btn-outline-info btn-round w-100 btn-sm" wire:click="showPackages('{{ $item->package->id }}')">
+                                                                            ver materiales
+                                                                        </button>
+                                                                        @endif
+
+                                                                    </div>
 
                                                                     @endif
                                                                 </div>
-
                                                             </div>
                                                             {{$item->package->products1}}
                                                             <hr class="text-muted">
@@ -311,35 +283,17 @@
                                                     <div id="collapse32" class="collapse {{$memberships->count() > 0 ?'show':''}}" role="tabpanel" aria-labelledby="heading32" data-parent="#accordionEx5">
                                                         <div class="card-body rgba-black-light white-text z-depth-1">
                                                             @if(isset($memberships) && $memberships->count() > 0)
-                                                            @foreach($memberships as $membership)
+                                                            @foreach($memberships as $item)
 
 
                                                             <div class="row pt-2">
-                                                                <div class="col-md-2 my-1">
-                                                                    <img src="{{ Storage::url($membership->itemMain) }} " class="img-thumbnail w-75">
+                                                                <div class="col-4 col-md-2 my-1">
+                                                                    <img src="{{ Storage::url($item->membership->itemMain) }} " class="img-thumbnail w-100">
                                                                 </div>
-                                                                <div class="col-12 col-md-6 align-self-center">
-                                                                    <span class="fw-bold text-muted">{{ $membership->title }}</span>
-                                                                    <span class="d-block">Precio: ${{ $membership->price }}</span>
-
+                                                                <div class="col-7 align-self-center">
+                                                                    <span class="fw-bold text-muted">{{ $item->membership->title }}</span>
+                                                                    <span class="d-block">Precio: ${{ $item->membership->price }}</span>
                                                                 </div>
-                                                                <div class="col-12 col-md-2 text-center align-self-center">
-                                                                    @if($membership->active == 0 )
-                                                                    <small>Esta membresía requiere activación.</small>
-                                                                    <br><br>
-
-                                                                    <a href="https://api.whatsapp.com/send?phone=+9981838908&text=Quiero%20activar%20mi%20orden%20de%20compra%20web: {{ $membership->order_id }}" target="_blank">
-                                                                        <img src="{{ asset('img/whatsapp1.png') }}" alt="logo WhatsApp" width="60">
-                                                                    </a>
-
-
-                                                                    @else
-
-
-                                                                    @endif
-
-                                                                </div>
-
                                                             </div>
                                                             <hr class="text-muted">
                                                             @endforeach
@@ -348,6 +302,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- Accordion card -->
+                                                @if(isset($packagesSelect) && $packagesSelect->count() > 0)
                                                 <!-- Accordion card -->
                                                 <div class="card mb-4">
 
@@ -356,22 +311,22 @@
                                                         <a data-toggle="collapse" data-parent="#accordionEx6" href="#collapse33" aria-expanded="true" aria-controls="collapse33">
                                                             <div class="d-flex align-items-center">
                                                                 <i class="fa-solid fa-list mr-2  float-left "></i>
-                                                                <span class="text-base">Productos del paquete ({{$productsPackagesOrder->count()}})</span>
+                                                                <span class="text-base">Productos del paquete ({{$packagesSelect->products->count()}})</span>
                                                             </div>
 
                                                         </a>
                                                     </div>
 
                                                     <!-- Card body -->
-                                                    <div id="collapse33" class="collapse {{$productsPackagesOrder->count() > 0 ?'show':''}}" role="tabpanel" aria-labelledby="heading32" data-parent="#accordionEx6">
+                                                    <div id="collapse33" class="collapse {{$packagesSelect->count() > 0 ?'show':''}}" role="tabpanel" aria-labelledby="heading32" data-parent="#accordionEx6">
                                                         <div class="card-body rgba-black-light white-text z-depth-1">
-                                                            @if(isset($productsPackagesOrder) && $productsPackagesOrder->count() > 0)
-                                                            @foreach($productsPackagesOrder as $product)
+
+                                                            @foreach($packagesSelect->products as $product)
                                                             <div class="row pt-2">
-                                                                <div class="col-md-2 my-1">
+                                                                <div class="col-4 col-md-2 my-1">
                                                                     <img src="{{ Storage::url($product->itemMain) }} " class="img-thumbnail w-75">
                                                                 </div>
-                                                                <div class="col-12 col-md-6 align-self-center">
+                                                                <div class="col-7 col-md-3 align-self-center ">
                                                                     <span class="fw-bold text-muted">{{ $product->title }}</span>
                                                                     <span class="d-block">Precio: ${{ $product->price }}</span>
                                                                     @if($product->status==0)
@@ -379,55 +334,51 @@
                                                                     @endif
 
                                                                 </div>
-                                                                <div class="col-12 col-md-2 text-center align-self-center">
-
-                                                                    @if($product->folio == 1 && $order->active == 0 )
-                                                                    <small>Este documento requiere activación.</small>
-                                                                    <br><br>
-
-                                                                    <a href="https://api.whatsapp.com/send?phone=+9981838908&text=Quiero%20activar%20mi%20orden%20de%20compra%20web: {{ $product->order_id }}" target="_blank">
-                                                                        <img src="{{ asset('img/whatsapp1.png') }}" alt="logo WhatsApp" width="60">
-                                                                    </a>
-
-                                                                    @else
-                                                                    <div wire:loading.remove>
-
-                                                                        <button class="btn btn-outline-info btn-round w-100" wire:click.prevent="download('{{ $product->id }}')">
-                                                                            <i class="material-icons">download</i> Descargar
-                                                                        </button>
-                                                                    </div>
-                                                                    <button class="btn btn-outline-info btn-round w-100" type="button" disabled wire:loading wire:target="download">
-                                                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                                                        Descargando...
-                                                                    </button>
-                                                                    @endif
-
-
-
-
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    @if(isset($enviados) && $enviados->count() > 0)
-
-                                                                    <table class="table table-hover table-responsive ">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th><b>Email</b></th>
-                                                                                <th><b>Fecha de envio</b></th>
-
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody class="h5 ">
-                                                                            @foreach($enviados as $enviado)
-                                                                            @if ($enviado->product_id== $product->id )
-                                                                            <tr>
-                                                                                <td>{{$enviado->emal}}</td>
-                                                                                <td>{{$enviado->created_at}}</td>
-                                                                            </tr>
+                                                                <div class="col-12 col-md-3 text-center align-self-center ">
+                                                                    <div class="row mx-0">
+                                                                        <div class="col-12">
+                                                                            @if ($order->status == 'approved' && $order->active)
+                                                                            <div wire:loading.remove>
+                                                                                @if($order->payment_type=='Externo')
+                                                                                <button class="btn btn-sm btn-outline-primary btn-round w-100" onclick="confirmResend('{{ $product->id }}', '{{ $product->title }}')">
+                                                                                    Reenviar
+                                                                                </button>
+                                                                                <button class="btn btn-sm btn-outline-info btn-round w-100" wire:click.prevent="downloadExternal({{ $product->id }})">
+                                                                                    <i class="material-icons">download</i> Descargar
+                                                                                </button>
+                                                                                @else
+                                                                                <button class="btn btn-sm btn-outline-info btn-round w-100" wire:click.prevent="download({{ $product->id }})">
+                                                                                    <i class="material-icons">download</i> Descargar
+                                                                                </button>
+                                                                                @endif
+                                                                            </div>
                                                                             @endif
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 col-md-4 py-0 shadow-sm rounded">
+                                                                    @if(isset($enviados) && $enviados->count() > 0)
+                                                                    <div class="table-responsive ">
+                                                                        <table class="table table-hover table-responsive my-0">
+                                                                            <thead>
+                                                                                <tr class="text-xxs sm:text-xxs lg:text-sm">
+                                                                                    <td class="py-0">Email</td>
+                                                                                    <td class="py-0">Envio</td>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @foreach($enviados as $enviado)
+                                                                                @if ($enviado->product_id== $product->id && $enviado->order_id== $order->id)
+                                                                                <tr class="text-xxs sm:text-xxs lg:text-sm">
+                                                                                    <td class="py-1">{{$enviado->email}}</td>
+                                                                                    <td class="py-1">{{date_format($enviado->created_at, 'd-M-Y g:i a')}}</td>
+                                                                                </tr>
+                                                                                @endif
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
                                                                     @endif
                                                                 </div>
 
@@ -435,11 +386,12 @@
                                                             </div>
                                                             <hr style="border: solid 1px red;">
                                                             @endforeach
-                                                            @endif
+
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- Accordion card -->
+                                                @endif
                                             </div>
                                             <!--/.Accordion wrapper-->
 
@@ -613,6 +565,27 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 Livewire.dispatch('resend-product', {
+                    id: id
+                });
+            } else {
+
+            }
+        });
+    }
+    //Confirmar reenvio de un paquete
+    function confirmResendPackage(id, title) {
+        event.preventDefault();
+        Swal.fire({
+            title: "¿Realmente quiere reenviar el " + title + " ? ",
+            text: "No podrás revertir esto.!",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, enviar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Livewire.dispatch('resend-package', {
                     id: id
                 });
             } else {

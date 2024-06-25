@@ -82,18 +82,7 @@
                     <th>email</th>
                     <th>WhatsApp</th>
                     <th>Facebook</th>
-                    <th style="cursor:pointer" wire:click="setSort('agenda')">
-                        @if($sortField=='agenda')
-                        @if($sortDirection=='asc')
-                        <i class="fa-solid fa-arrow-down-a-z"></i>
-                        @else
-                        <i class="fa-solid fa-arrow-up-z-a"></i>
-                        @endif
-                        @else
-                        <i class="fa-solid fa-sort mr-1"></i>
-                        @endif
-                        Agenda
-                    </th>
+                    <th>Comentario</th>
 
                 </tr>
             </thead>
@@ -159,16 +148,9 @@
                     <td>
                         {{ $order->order->user->facebook }}
                     </td>
+
                     <td>
-                        <div class="togglebutton">
-                            <label>
-                                <input wire:click="updateAgenda({{ $order->id }})" type="checkbox" {{ $order->agenda == 1 ? 'checked ' : '' }}>
-                                <span class="toggle"></span>
-                            </label>
-                        </div>
-                    </td>
-                    <td>
-                        <input id="nota{{ $order->id }}" style="padding-top:0; padding-bottom:0; border:none;" class="border text-muted rounded" type="text" value="{{ $order->order->contacto }}">
+                        <input id="nota{{ $order->id }}" style="padding-top:0; padding-bottom:0; border:none;" class="border text-muted rounded" type="text" value="{{ $order->order->contacto }}" disabled>
                     </td>
 
                     <td>
@@ -176,9 +158,9 @@
                     </td>
                     <td class="td-actions">
                         <div class="btn-group m-0 d-flex" style="box-shadow: none !important">
-                            <button class="btn btn-info btn-link text-success " onclick="udateData('{{ $order->id }}','nota{{ $order->id }}')">
+                            <!-- <button class="btn btn-info btn-link text-success " onclick="udateData('{{ $order->id }}','nota{{ $order->id }}')">
                                 <i class=" material-icons ">save</i>
-                            </button>
+                            </button> -->
                             <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->order->id) }}" target="_blank">
                                 <i class=" material-icons">visibility</i>
                             </a>

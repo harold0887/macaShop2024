@@ -61,6 +61,13 @@ class Order extends Model
         })
             ->when($filters['status'] ?? null, function ($query, $status) {
                 $query->where('status', $status);
+            })
+            ->when($filters['origen'] ?? null, function ($query, $origen) {
+                if ($origen == "externo") {
+                    $query->where('payment_type', 'Externo');
+                } else {
+                    $query->where('payment_type', '!=', 'Externo');
+                }
             });
     }
 }
