@@ -286,13 +286,14 @@
                                                             @foreach($memberships as $item)
 
 
+
                                                             <div class="row pt-2">
                                                                 <div class="col-4 col-md-2 my-1">
                                                                     <img src="{{ Storage::url($item->membership->itemMain) }} " class="img-thumbnail w-100">
                                                                 </div>
                                                                 <div class="col-7 align-self-center">
                                                                     <span class="fw-bold text-muted">{{ $item->membership->title }}</span>
-                                                                    <span class="d-block">Precio: ${{ $item->membership->price }}</span>
+                                                                    <span class="d-block">Precio: ${{ $item->price }}</span>
                                                                 </div>
                                                             </div>
                                                             <hr class="text-muted">

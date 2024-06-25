@@ -8,7 +8,7 @@
                         <div class="card-icon">
                             <i class="material-icons">receipt</i>
                         </div>
-                        <div class="row">
+                        <div class="row ">
                             <div class="col-12 col-md-6 px-0 d-flex align-items-center">
                                 <span class="my-0 fw-bold text-muted">Editar orden {{ $order->id }}</span>
                                 <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->id) }}">
@@ -18,8 +18,7 @@
                         </div>
                     </div>
                     <div class="card-body ">
-
-                        <div class="row py-lg-4 ">
+                        <div class="row py-lg-2">
                             <div class="col-12 col-lg-10">
                                 <div class="row">
                                     <div class="form-group col-12 col-lg-3 ">
@@ -63,7 +62,7 @@
                                 <div class="row">
                                     <div class="form-group col-12 col-md-3">
                                         <label class="bmd-label-floating">Total de la compra</label>
-                                        <input type="number" class="form-control" wire:model.defer="priceOrder">
+                                        <input type="number" class="form-control" wire:model.defer="suma">
                                     </div>
                                     <div class="form-group col-12 col-md-3">
                                         <label class="bmd-label-floating">Fecha de compra</label>
@@ -97,9 +96,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-12 col-md-6 rounded  pl-4 border">
-                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl">
+                        <div class="row  ">
+                            <div class="col-12 col-md-6 rounded  pl-4 border shadow-sm order-2 order-lg-1 my-2">
+                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl  my-0">
                                     Agregar membresías a la orden
                                 </h2>
                                 @foreach($memberships as $membership)
@@ -173,7 +172,7 @@
                                     </div>
                                 </div>
 
-                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top">
+                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top my-0">
                                     Agregar paquetes a la orden
                                 </h2>
                                 @foreach($packages as $package)
@@ -213,7 +212,7 @@
                                 @endforeach
                                 <div class="row">
                                     <div class="col-12">
-                                        <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top">
+                                        <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top my-0">
                                             Agregar documentos a la orden
                                         </h2>
                                     </div>
@@ -278,48 +277,48 @@
                                 @endforeach
 
                             </div>
-                            <div class="col-md-6  rounded border">
-                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl">
+                            <div class="col-md-6  rounded border shadow-sm order-1 order-lg-2 my-2">
+                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl my-0">
                                     Membresías incluidas
                                 </h2>
                                 @foreach($MembershipsIcluded as $item)
-                                <div class="row pt-2">
-                                    <div class="col-md-2 my-1">
+                                <div class="row ">
+                                    <div class="col-4 col-md-2">
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
-                                    <div class="col-12 col-md-9 align-self-center">
+                                    <div class="col-8 col-md-10 align-self-center ">
                                         {{ $item->title }} - ${{ $item->price }}
                                     </div>
 
                                 </div>
                                 @endforeach
-                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top">
+                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top my-0">
                                     Paquetes incluidos
                                 </h2>
 
                                 @foreach($PackagesIcluded as $item)
-                                <div class="row pt-2">
-                                    <div class="col-md-2 my-1">
+                                <div class="row ">
+                                    <div class="col-4 col-md-2">
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
-                                    <div class="col-12 col-md-9 align-self-center">
-                                        {{ $item->title }}
+                                    <div class="col-8 col-md-10 align-self-center ">
+                                        {{ $item->title }} - ${{ $item->price }}
                                     </div>
 
                                 </div>
                                 @endforeach
 
-                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top">
+                                <h2 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl border-top my-0">
                                     Productos incluidos
                                 </h2>
 
                                 @foreach($productsIncluded as $item)
-                                <div class="row pt-2">
-                                    <div class="col-md-2 my-1">
+                                <div class="row ">
+                                    <div class="col-4 col-md-2">
                                         <img src="{{ Storage::url($item->itemMain) }} " class="img-thumbnail">
                                     </div>
-                                    <div class="col-12 col-md-9 align-self-center">
-                                        {{ $item->title }}
+                                    <div class="col-8 col-md-10 align-self-center ">
+                                        {{ $item->title }} - ${{ $item->price }}
                                     </div>
 
                                 </div>

@@ -18,7 +18,6 @@ class SalesEdit extends Component
     protected $listeners = ['some-event2' => '$refresh'];
     public $order, $ids, $patch, $search = '', $contacto, $status, $mercadoPago, $facebook, $comentario, $link;
     public $suma;
-    public $priceOrder;
     public $dateOrder;
     protected $rules = [
         'contacto' => ['required', 'string'],
@@ -43,7 +42,7 @@ class SalesEdit extends Component
     }
     public function render()
     {
-        $this->priceOrder = $this->order->amount;
+
         $this->dateOrder = (new DateTime($this->order->created_at))->format('Y-m-d');
         $products = Product::where('price', '>', 0)
             ->where(function ($query) {
@@ -112,6 +111,10 @@ class SalesEdit extends Component
 
 
         $this->suma = $sumaProductos + $sumaMembresias + $sumaPackages;
+        $this->order->update([
+            'amount' => $this->suma,
+        ]);
+
 
         $registroAsistenciaPro = Membership::findOrFail(2013);
 
@@ -136,9 +139,7 @@ class SalesEdit extends Component
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $this->order->update([
-                'amount' => $this->order->amount + $product->price_with_discount,
-            ]);
+
 
             $this->dispatch('success-auto-close', message: 'El producto se agrego de manera correcta');
         } catch (\Throwable $th) {
@@ -150,9 +151,7 @@ class SalesEdit extends Component
         try {
             $product = Product::findOrFail($id);
             $this->order->products()->detach($id);
-            $this->order->update([
-                'amount' => $this->order->amount - $product->price_with_discount,
-            ]);
+
 
             $this->dispatch('success-auto-close', message: 'El producto se elimino de manera correcta');
         } catch (\Throwable $th) {
@@ -170,9 +169,7 @@ class SalesEdit extends Component
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $this->order->update([
-                'amount' => $this->order->amount + $package->price_with_discount,
-            ]);
+
 
             $this->dispatch('success-auto-close', message: 'El paquete se agrego de manera correcta');
         } catch (\Throwable $th) {
@@ -184,9 +181,7 @@ class SalesEdit extends Component
         try {
             $package = Package::findOrFail($id);
             $this->order->Packages()->detach($id);
-            $this->order->update([
-                'amount' => $this->order->amount - $package->price_with_discount,
-            ]);
+
 
             $this->dispatch('success-auto-close', message: 'El paquete se elimino de manera correcta');
         } catch (\Throwable $th) {
@@ -204,9 +199,7 @@ class SalesEdit extends Component
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $this->order->update([
-                'amount' => $this->order->amount + $membership->price_with_discount,
-            ]);
+
 
             $this->dispatch('success-auto-close', message: 'La membresía se agrego de manera correcta');
         } catch (\Throwable $th) {
@@ -218,9 +211,7 @@ class SalesEdit extends Component
         try {
             $membership = Membership::findOrFail($id);
             $this->order->Memberships()->detach($id);
-            $this->order->update([
-                'amount' => $this->order->amount - $membership->price_with_discount,
-            ]);
+
 
             $this->dispatch('success-auto-close', message: 'La membresía se elimino de manera correcta');
         } catch (\Throwable $th) {
