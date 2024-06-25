@@ -18,7 +18,8 @@ class AddLicense
         $this->product = Product::findOrFail($id);
         $this->order = Order::findOrFail($order);
         $this->message = "Documento con derechos de autor © Material didáctico MaCa. Queda prohibida su reventa";
-        $this->licencia = "w" . $this->order->user->id . "- licencia de uso personal para " . $this->order->user->name . " - " . $this->order->user->email;
+        // $this->licencia = "w" . $this->order->user->id . "- licencia de uso personal para " . $this->order->user->name . " - " . $this->order->user->email;
+        $this->licencia = "w" . $this->order->user->id . "- licencia de uso personal para " . $this->order->user->email;
         $this->licenciaExternal = "MaCa-" . substr($this->order->id, -5)  . " - licencia de uso personal para " . $this->order->user->email;
     }
 
