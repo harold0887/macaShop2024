@@ -21,8 +21,7 @@ class SalesEdit extends Component
     public $dateOrder;
     protected $rules = [
         'contacto' => ['required', 'string'],
-        'facebook' => 'required|string',
-        'priceOrder' => 'required|numeric',
+        'facebook' => 'required|string'
     ];
 
     public function mount()
