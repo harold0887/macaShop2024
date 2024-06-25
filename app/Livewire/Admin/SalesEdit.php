@@ -233,7 +233,6 @@ class SalesEdit extends Component
                 'payment_id' => $this->mercadoPago,
                 'contacto' => $this->comentario,
                 'link' => $this->link,
-                'amount' => $this->priceOrder,
             ]);
             //actualizar la fecha solo si se cambia
             if ((new DateTime($this->order->created_at))->format('Y-m-d') != $this->dateOrder) {
