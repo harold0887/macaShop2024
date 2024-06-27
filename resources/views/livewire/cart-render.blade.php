@@ -128,7 +128,7 @@
                     <div class="col-12 pt-3">
                         <div class="row ">
                             <div class="col-11">
-                                <input type="text" class="form-control rounded @if($errorSeach)border border-danger @endif" placeholder="Email (obligatorio)" wire:model.defer="email">
+                                <input type="text" class="form-control rounded " placeholder="Email (obligatorio)" wire:model="email">
                                 @error('email')
                                 <small class=" text-danger"> {{ $message }} </small>
                                 @enderror
@@ -186,7 +186,7 @@
 
                     <div class="col-12 text-center py-3">
                         <div wire:loading.remove>
-                            <button class="btn btn-primary " wire:click="validateUser">
+                            <button class="btn btn-primary " @if($email=='' ) disabled @endif wire:click="validateUser">
                                 <span>Enviar</span>
                             </button>
                         </div>

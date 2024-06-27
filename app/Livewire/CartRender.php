@@ -190,6 +190,15 @@ class CartRender extends Component
                         'whatsapp' => $this->whats,
                     ]);
                 }
+                if (!$user->facebook && $this->face != null) {
+                    $user->update([
+                        'facebook' => $this->face,
+                    ]);
+                } else {
+                    $user->update([
+                        'comment' => $user->comment . "- new face" . $user->face
+                    ]);
+                }
             }
 
 
