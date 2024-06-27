@@ -105,6 +105,33 @@
 @endif
 
 
+@if (session('sendSuccessOrder'))
+<script>
+    var note = "asdasddadas"
+    var email = "pubadasd@gmail.com"
+    var text =
+        "<span class='font-weight-bold'>" +
+        "{{session('sendSuccessOrder')}}" +
+        "</span>" +
+        "<span> <br><br> " +
+        note +
+        "</span>" +
+        "<span class='font-italic font-weight-bold'> " +
+        email +
+        "</span>";
+
+    Swal.fire({
+        title: "Enviado!",
+        html: text,
+        icon: "success",
+        showCloseButton: false,
+        showCancelButton: false,
+        focusConfirm: false,
+    });
+</script>
+@endif
+
+
 
 
 @endpush

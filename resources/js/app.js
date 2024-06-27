@@ -440,6 +440,33 @@ Livewire.on('infoPro', ({ message }) => {
   });
 
 })
+Livewire.on('confirmUserCreate', ({ email }) => {
+  var text =
+    "<span class='text-lg'> No existe algún usuario con el correo:</span>" +
+    "<span class='font-weight-bold font-italic text-lg'> <br> " +
+    email +
+    "</span>";
+  Swal.fire({
+    title: text,
+    text: "¿Desea crear un nuevo usuario?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si, crear y registrar venta",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Livewire.dispatch('create-and-send');
+    } else {
+      Swal.fire({
+        title: "Cancelado!",
+        text: "El envio se ha cancelado :)",
+        icon: "error"
+      });
+    }
+  });
+
+})
 
 
 

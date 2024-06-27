@@ -27,7 +27,7 @@ class UsersController extends Controller
     {
 
         $request->validate([
-            'name' => ['required'],
+            // 'name' => ['required'],
             'email' => 'required|email|unique:users',
             'whatsapp' => ['required', 'unique:users'],
         ]);
@@ -37,7 +37,7 @@ class UsersController extends Controller
 
         try {
             $newuser = User::create([
-                'name' => request('name'),
+                'name' => request('email'),
                 'email' => request('email'),
                 'password' => $encryptedPassword,
                 'whatsapp' => request('whatsapp'),

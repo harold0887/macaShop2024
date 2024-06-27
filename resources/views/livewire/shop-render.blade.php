@@ -36,7 +36,7 @@
                 </div>
                 <!--row products-->
                 <div class="row  justify-content-center px-0 mt-2">
-                    @if (isset($products) && $products->count() > 2)
+                    @if (isset($products) && $membership != null && $products->count() > 2)
 
                     <div class="col-6 col-md-4 col-lg-3 " style="position: relative; padding:5px !important">
                         <div class=" animate__animated  animate__shakeX animate__repeat-2	  mt-0 card card-primary card-product {{($membership->discount_percentage > 0) ? 'border  border-primary' : 'border' }}" style=" overflow: hidden;">

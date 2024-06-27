@@ -1,8 +1,7 @@
 <div class="container bg-white shadow my-1 rounded ">
     @include('includes.modal.login-modal')
-
+    @include('includes.spinner-livewire')
     <div class="content-main">
-
         <div class="row">
             <div class="col-12">
                 <nav aria-label="breadcrumb ">
@@ -83,7 +82,7 @@
                         </span>
                         @endif
 
-                        
+
 
                         @elseif($item->associatedModel->model == 'Package')
                         <span class="d-block fw-bold text-muted">{{ $item->name }}</span>
@@ -108,6 +107,108 @@
 
             <div class="col-12 col-lg-3 mt-5 mt-lg-0 px-4">
 
+                @role('admin')
+                @if($emailExist)
+                <small class=" text-success">El email ya existe</small>
+                @endif
+                @if(isset($userValidate) && $userValidate->whatsapp)
+                <small class=" text-success"> y cuenta con whatsApp registrado</small>
+                @endif
+                <div class="row membership-sticky bg-white rounded shadow ">
+                    <div class="col-12    text-center">
+                        <span class=" h3">Resumen de la orden</span>
+                    </div>
+                    <div class="col-7  py-4 text-muted">Subtotal {{ \Cart::getTotalQuantity() }} artículo(s): </div>
+                    <div class="col-5 py-4 text-end text-muted">${{ \Cart::getTotal() }} MXN</div>
+                    <div class="col-12">
+                        <hr class="text-muted">
+                    </div>
+                    <div class="col-6  font-weight-bold h3">Total: </div>
+                    <div class="col-6  font-weight-bold text-end h3">${{ \Cart::getTotal() }} MXN</div>
+                    <div class="col-12 pt-3">
+                        <div class="row ">
+                            <div class="col-11">
+                                <input type="text" class="form-control rounded @if($errorSeach)border border-danger @endif" placeholder="Email (obligatorio)" wire:model.defer="email">
+                                @error('email')
+                                <small class=" text-danger"> {{ $message }} </small>
+                                @enderror
+
+                            </div>
+                            <!-- <div class="col-auto  px-0 text-center">
+                                <button class="btn btn-success btn-link text-primary mx-0 px-0" wire:click.delay.longest="validateEmail">
+                                    <i class="material-icons text-primary">person_search</i>
+                                </button>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-11 pt-3">
+                        <input type="text" class="form-control rounded " placeholder="WhatsApp (obligatorio)" wire:model.defer="whats">
+                        @error('whats')
+                        <small class=" text-danger"> {{ $message }} </small>
+                        @enderror
+                    </div>
+                    @if($membershipExist)
+                    <div class="col-11 pt-3">
+                        <input type="text" class="form-control rounded " placeholder="Facebook (obligatorio)" wire:model.defer="face">
+                        @error('face')
+                        <small class=" text-danger"> {{ $message }} </small>
+                        @enderror
+                    </div>
+                    @endif
+
+                    <div class="col-12 mt-3">
+                        <div class="togglebutton">
+                            <label>
+                                <input wire:click="changeWeb()" type="checkbox" {{ $web == 1 ? 'checked ' : '' }}>
+                                <span class="toggle"></span>
+                                Enviar sin comprobante
+                            </label>
+                        </div>
+                    </div>
+                    @if ( $web == 0)
+                    <div class="col-12 pt-3 text-center">
+
+                        <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                        <div>
+                            <span class="btn btn-outline-primary  btn-file   btn-round">
+                                <span class="fileinput-new ">Selecciona comprobante</span>
+                                <input type="file" name="itemMain" accept="image/*" style="max-width: 100%;" wire:model="payment" />
+                            </span>
+                        </div>
+                        @error('payment')
+                        <small class=" text-danger"> {{ $message }} </small>
+                        @enderror
+                    </div>
+                    @endif
+
+
+
+
+                    <div class="col-12 text-center py-3">
+                        <div wire:loading.remove>
+                            <button class="btn btn-primary " wire:click="validateUser">
+                                <span>Enviar</span>
+                            </button>
+                        </div>
+                        <button class="btn btn-outline-primary btn-round " disabled wire:loading wire:target="submit">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            enviando...
+                        </button>
+                    </div>
+                    @if ( $web == 0)
+                    <div class="col-12 text-center">
+                        @if ($payment)
+                        <img class="w-75 rounded shadow" src="{{ $payment->temporaryUrl() }}">
+                        @endif
+                    </div>
+                    @endif
+
+
+
+                </div>
+
+
+                @else
                 <div class="row membership-sticky bg-white rounded shadow-sm text-muted ">
                     <div class="col-12    text-center">
                         <span class=" h3">Resumen de la orden</span>
@@ -143,6 +244,7 @@
                         Los recursos comprados se pueden descargar inmediatamente desde su cuenta*
                     </span>
                 </div>
+                @endif
 
 
             </div>

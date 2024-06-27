@@ -236,7 +236,6 @@ class ShowSales extends Component
 
     public function changeWeb()
     {
-
         $this->web == false ? $this->web = true : $this->web = false;
     }
     #[On('resend-product')]

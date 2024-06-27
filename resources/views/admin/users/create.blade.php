@@ -28,7 +28,7 @@
                                 <form id="create-product-admin" action="{{ route('users.store') }}" method="POST">
                                     @csrf
 
-                                    <div class="form-row ">
+                                    <!-- <div class="form-row ">
                                         <div class="form-group col-12 col-md-4">
                                             <label class="bmd-label-floating">Nombre completo</label>
                                             <input type="text" class="form-control" name="name" value="{{ old('name') }}">
@@ -37,7 +37,7 @@
                                             @enderror
                                         </div>
 
-                                    </div>
+                                    </div> -->
                                     <div class="form-row ">
                                         <div class="form-group col-12 col-md-4">
                                             <label class="bmd-label-floating">{{ __('Email') }}</label>

@@ -551,6 +551,7 @@
 
 
 </div>
+@include('includes.alert-error')
 <script>
     //Confirmar reenvio de un producto
     function confirmResend(id, title) {

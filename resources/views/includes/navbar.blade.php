@@ -57,8 +57,6 @@
             <i class="material-icons">home</i><span class="fw-bold">Inicio</span>
           </a>
         </li>
-
-
         <li class="nav-item{{ $activePage == 'shop' ? ' active' : '' }}">
           <a href="{{ route('shop.index') }}" class="nav-link {{ $navbarClass }}">
             <i class="material-icons">shopping_bag</i><span class="fw-bold">Tienda</span>
