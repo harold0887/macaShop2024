@@ -9,7 +9,7 @@
 ])
 
 @section('content')
-<div class="container">
+<div class="container" style="padding-top: 0 !important;">
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
             <form class="form" method="POST" action="{{ route('login') }}">
@@ -67,20 +67,20 @@
                             </div>
                         </a>
                     </div>
+                    <div class="row px-3">
+                        <div class="col-12 text-center mb-2 border-top">
+                            @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}" style="text-decoration: none !important;">
+                                <small class="text-muted fw-bold text-muted">{{ __('Forgot password') }} ? click aqui.</small>
+                            </a>
+                            @endif
+                        </div>
+                    </div>
 
 
                 </div>
 
             </form>
-            <div class="row">
-                <div class="col-6">
-                    @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" style="text-decoration: none !important;">
-                        <small class="text-white fw-bold">{{ __('Forgot password') }} ?</small>
-                    </a>
-                    @endif
-                </div>
-            </div>
         </div>
     </div>
 </div>
