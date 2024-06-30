@@ -97,6 +97,17 @@ class IndexProducts extends Component
             $this->dispatch('error', message: $e->getMessage());
         }
     }
+    public function changeEnvio($id, $envio)
+    {
+        try {
+            Product::findOrFail($id)->update([
+                'envio' => $envio == 0 ? true : false
+            ]);
+            $this->dispatch('success-auto-close', message: "El cambio se realizo con éxito");
+        } catch (QueryException $e) {
+            $this->dispatch('error', message: $e->getMessage());
+        }
+    }
 
     public function changeFolio($id, $status)
     {
@@ -132,7 +143,7 @@ class IndexProducts extends Component
     {
         try {
             $document = Product::findOrFail($id);
-            return Storage::download( $document->document, $document->title);
+            return Storage::download($document->document, $document->title);
         } catch (Throwable $th) {
             $this->dispatch('error', message: 'Error al descargar el documento - ' . $th->getMessage());
         }

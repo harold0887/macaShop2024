@@ -230,32 +230,38 @@ class CartRender extends Component
 
                             set_time_limit(0);
                             //enviar correo con folio
+                            if ($productSend->envio) {
+                                $correo = new EnvioMaterial($productSend);
+                                Mail::to($newOrder->user->email)->send($correo);
+                                //guardar envio en base de datos de enviados
+                                Enviado::create([
+                                    'email' => $newOrder->user->email,
+                                    'order_id' => $newOrder->id,
+                                    'product_id' => $productSend->id,
+                                ]);
+                                array_push($enviados, '<br>' . $productSend->title); //agregar solo informacion
+                            } else {
+                                array_push($enviados, '<br>' . $productSend->title . " (Solo registro)"); //agregar solo informacion
+                            }
+                        }
+                    } else {
+                        set_time_limit(0);
+                        //enviar correo sin  folio
+
+                        if ($productSend->envio) {
                             $correo = new EnvioMaterial($productSend);
                             Mail::to($newOrder->user->email)->send($correo);
-
                             //guardar envio en base de datos de enviados
                             Enviado::create([
                                 'email' => $newOrder->user->email,
                                 'order_id' => $newOrder->id,
                                 'product_id' => $productSend->id,
                             ]);
+                            array_push($enviados, '<br>' . $productSend->title); //agregar solo informacion
+                        } else {
+                            array_push($enviados, '<br>' . $productSend->title . " (Solo registro)"); //agregar solo informacion
                         }
-                    } else {
-                        set_time_limit(0);
-                        //enviar correo sin  folio
-
-                        $correo = new EnvioMaterial($productSend);
-                        Mail::to($newOrder->user->email)->send($correo);
-
-                        //guardar envio en base de datos de enviados
-                        Enviado::create([
-                            'email' => $newOrder->user->email,
-                            'order_id' => $newOrder->id,
-                            'product_id' => $productSend->id,
-                        ]);
                     }
-
-                    array_push($enviados, '<br>' . $productSend->title); //agregar solo informacion
                 }
 
                 if ($item->associatedModel->model == 'Package') {

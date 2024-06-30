@@ -57,6 +57,22 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        @if(Auth::user()->id ==1)
+                                        <th style="cursor:pointer" wire:click="setSort('envio')">
+                                            @if($sortField=='envio')
+                                            @if($sortDirection=='asc')
+                                            <i class="fa-solid fa-arrow-down-a-z"></i>
+                                            @else
+                                            <i class="fa-solid fa-arrow-up-z-a"></i>
+                                            @endif
+                                            @else
+                                            <i class="fa-solid fa-sort mr-1"></i>
+                                            @endif
+                                            Envio
+                                        </th>
+
+                                        @endif
+
                                         <th style="cursor:pointer" wire:click="setSort('id')">
                                             @if($sortField=='id')
                                             @if($sortDirection=='asc')
@@ -163,6 +179,18 @@
                                 <tbody>
                                     @foreach ($products as $product)
                                     <tr class="{{ $product->percentage > 0 ? 'text-danger' : '' }} {{ Storage::exists($product->document) ? '' : 'table-danger' }} {{ Storage::exists($product->itemMain) ? '' : 'table-danger' }}  ">
+                                        @if(Auth::user()->id ==1)
+                                        <td>
+                                            <div class="togglebutton" wire:change="changeEnvio({{ $product->id }}, '{{ $product->envio }}')">
+                                                <label>
+                                                    <input type="checkbox" {{ $product->envio == 1 ? 'checked ' : '' }}>
+                                                    <span class="toggle"></span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        @endif
+
+
                                         <td>{{ $product->id }}</td>
                                         <td>{{ $product->title }}</td>
                                         <td>{{ $product->price }}</td>
