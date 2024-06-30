@@ -9,16 +9,16 @@
 ])
 
 @section('content')
-<div class="container">
+<div class="container" style="padding-top: 0 !important;">
     <div class="row">
         <div class="col-md-4 ml-auto mr-auto">
 
-            <div class="card card-login card-primary card-hidden mb-3 border border-primary">
+            <div class="card card-login card-primary card-hidden mb-3 ">
                 <div class="card-header card-header-primary d-flex align-items-center justify-content-center ">
                     <i class="material-icons mr-2">person_add</i>
                     <h4 class="card-title"><strong>{{ __('Register') }}</strong></h4>
                 </div>
-              
+
 
                 <div class="card-body ">
                     <div class="row">

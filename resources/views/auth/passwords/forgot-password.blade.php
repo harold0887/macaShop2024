@@ -9,20 +9,20 @@
 ])
 
 @section('content')
-<div class="container">
+<div class="container" style="padding-top: 0 !important;">
   <div class="row align-items-center">
     <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
       <form id="forgot-password" class="form" method="POST" action="{{ route('password.email') }}">
         @csrf
 
         <div class="card card-login card-hidden mb-3">
-        <div class="card-header card-header-primary d-flex align-items-center justify-content-center ">
+          <div class="card-header card-header-primary d-flex align-items-center justify-content-center ">
             <span class="material-symbols-outlined mr-2">
               passkey
             </span>
             <h4 class="card-title"><strong>{{ __('Reset Password') }}</strong></h4>
           </div>
-  
+
           <div class="card-body">
             <div class="text-center">
               <span class="text-muted">Ingresa tu correo electrónico para recibir un link y reestablecer tu contarseña.</span>

@@ -182,21 +182,20 @@ class CartRender extends Component
                 $user = $userExist;
                 if ($user->whatsapp) {
                     $user->update([
-                        'whatsapp' => $this->whats,
-                        'comment' => $user->comment . "- w before " . $user->whatsapp
+                        'comment' => $user->comment . "- new wats (" . now()->format('d-m') . ") " . $this->whats
                     ]);
                 } else {
                     $user->update([
                         'whatsapp' => $this->whats,
                     ]);
                 }
-                if (!$user->facebook && $this->face != null) {
+                if ($user->facebook) {
                     $user->update([
-                        'facebook' => $this->face,
+                        'comment' => $user->comment . "- new face (" . now()->format('d-m') . ") " . $this->face
                     ]);
                 } else {
                     $user->update([
-                        'comment' => $user->comment . "- new face" . $user->face
+                        'facebook' => $this->face,
                     ]);
                 }
             }

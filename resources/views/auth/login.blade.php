@@ -15,7 +15,7 @@
             <form class="form" method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <div class="card card-login card-primary card-hidden mb-3 border border-primary">
+                <div class="card card-login card-primary card-hidden mb-3 ">
                     <div class="card-header card-header-primary d-flex align-items-center justify-content-center ">
                         <i class="material-icons mr-2">fingerprint</i>
                         <h4 class="card-title"><strong>Ingresa con tu email</strong></h4>
@@ -68,9 +68,9 @@
                         </a>
                     </div>
                     <div class="row px-3">
-                        <div class="col-12 text-center mb-2 border-top">
+                        <div class="col-12 text-center my-2 border-top">
                             @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" style="text-decoration: none !important;">
+                            <a href="{{ route('password.request') }}">
                                 <small class="text-muted fw-bold text-muted">{{ __('Forgot password') }} ? click aqui.</small>
                             </a>
                             @endif
