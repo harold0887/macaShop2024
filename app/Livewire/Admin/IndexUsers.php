@@ -35,7 +35,7 @@ class IndexUsers extends Component
             ->withCount('ips')
             ->withCount('roles')
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate(100);
+            ->paginate(50);
         return view('livewire.admin.index-users', compact('users'));
     }
 

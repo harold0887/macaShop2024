@@ -49,6 +49,11 @@
                         </div>
                         <h3 class="title text-center  text-sm sm:text-2x1 md:text-2xl  lg:text-2xl  my-2">
                             Membresía {{ $membership->title }}
+                            @role('admin')
+                            <a class="btn btn-success btn-link p-0 m-0" href="{{ route('memberships.edit', $membership->id) }}" target="_blank">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            @endrole
                         </h3>
                         <div class="card-description  mt-0">
                             <span class="text-primary text-uppercase fw-bold h3 d-block text-center">

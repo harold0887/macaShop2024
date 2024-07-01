@@ -1,7 +1,5 @@
 
 
-
-
 $(function () {
 
     extraBtn()
@@ -398,7 +396,7 @@ Livewire.on('sendSuccessHtml', ({ product, note, email }) => {
 })
 
 //escuchar evento mostrar correos enviados
-Livewire.on("sendSuccessHtmlMany", function ({ note, enviados, email }) {
+Livewire.on("sendSuccessHtmlMany", function ({ note, enviados, email, order }) {
     var text =
         "<span class='font-weight-bold'>" +
         enviados +
@@ -408,7 +406,8 @@ Livewire.on("sendSuccessHtmlMany", function ({ note, enviados, email }) {
         "</span>" +
         "<span class='font-italic font-weight-bold'> " +
         email +
-        "</span>";
+        "</span><br><br>" +
+        "<a href=https://materialdidacticomaca.com/dashboard/sales/" + order + ">Ver de talle de compra " + order + "</a>";
 
     Swal.fire({
         title: "Enviado!",

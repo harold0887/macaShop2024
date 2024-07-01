@@ -40,7 +40,7 @@ class IndexSales extends Component
     {
         $orders = Order::filter($this->filters)
             ->orderBy($this->sortField, $this->sortDirection)
-            ->paginate(100);
+            ->paginate(50);
 
         $ingresos = Order::filter($this->filters)
             ->where('status', 'approved')

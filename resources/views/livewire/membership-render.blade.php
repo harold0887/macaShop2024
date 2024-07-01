@@ -95,6 +95,11 @@
                         </div>
                         <h3 class="card-title text-center text-dark my-3 text-muted">
                             <a href="{{route('membership.show',$membership->slug)}}">Membresía {{ $membership->title }}</a>
+                            @role('admin')
+                            <a class="btn btn-success btn-link p-0 m-0" href="{{ route('memberships.edit', $membership->id) }}" target="_blank">
+                                <i class="material-icons">edit</i>
+                            </a>
+                            @endrole
                         </h3>
                         <div class="card-description">
                             <span class="text-primary text-uppercase fw-bold h3 d-block text-center">

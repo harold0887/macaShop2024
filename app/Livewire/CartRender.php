@@ -345,7 +345,8 @@ class CartRender extends Component
                 'sendSuccessHtmlMany',
                 note: 'Se ha enviado correctamente a:',
                 enviados: $enviados,
-                email: $newOrder->user->email
+                email: $newOrder->user->email,
+                order: $newOrder->id
             );
         } catch (\Throwable $th) {
             if ($th->getCode() == 23000) {
