@@ -18,11 +18,9 @@ class BestSeler extends Component
         $products =   Product::withCount('sales')
 
             ->orderBy('sales_count', 'desc')
+            ->where('status', true)
             ->take(10)
             ->get();
-
-
-
         return view('livewire.best-seler', compact('products'));
     }
     public function addCart($id, $model)
@@ -58,21 +56,20 @@ class BestSeler extends Component
             $this->price = $product->price_with_discount;
 
 
-   
+
 
             $this->dispatch('cart:update');
 
 
 
-            $this->dispatch('addCartAlert', 
+            $this->dispatch(
+                'addCartAlert',
                 title: $this->title,
-                price:  $this->price. " MXN",
-                img:  $this->img
+                price: $this->price . " MXN",
+                img: $this->img
             );
-
-
         } catch (Throwable $th) {
-            $this->dispatch('error', message:"Error al agregar el producto al carrito - " . $th->getMessage());
+            $this->dispatch('error', message: "Error al agregar el producto al carrito - " . $th->getMessage());
         }
     }
 }
