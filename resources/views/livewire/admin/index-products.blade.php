@@ -213,7 +213,25 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            {{ $product->sales_count }}
+                                            <div class="row">
+                                                <table>
+
+
+                                                    <tr style="background-color: #11ffee00 !important;">
+                                                        <td class="py-0 px-1">web</td>
+                                                        <td class="py-0 px-1"> {{ $product->salesWeb }}</td>
+
+                                                    </tr>
+                                                    <tr style="background-color: #11ffee00 !important; ">
+                                                        <td class="py-0 px-1" style="border:none !important">Externo</td>
+                                                        <td class="py-0 px-1" style="border:none !important">{{ $product->salesexternal }}</td>
+                                                    </tr>
+                                                    <tr style="background-color: #11ffee00 !important; ">
+                                                        <td class="py-0 px-1" style="border:none !important">Total</td>
+                                                        <td class="py-0 px-1" style="border:none !important">{{ $product->salesAll }}</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
 
                                         </td>
                                         <td>{{ $product->grado->name }}</td>

@@ -23,7 +23,7 @@ class Product extends Model
   //Relacion muchos a muchos con Order
   public function  orders(): BelongsToMany
   {
-    return $this->belongsToMany(Order::class, 'order_details', 'product_id', 'order_id');
+    return $this->belongsToMany(Order::class, 'order_details', 'product_id', 'order_id')->orderByPivot('created_at', 'desc');
   }
 
 

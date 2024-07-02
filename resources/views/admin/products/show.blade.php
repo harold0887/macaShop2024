@@ -41,44 +41,53 @@
                 <div class="col-12 col-lg-6 mt-4 mt-lg-0">
                     <div class="row">
                         <div class="col-12">
-                            <h2 class="title text-center text-primary text-sm sm:text-2x1 md:text-2xl  lg:text-2xl my-0">Ventas web del producto {{$product->sales_count}} </h2>
+                            <h2 class="title text-center text-primary text-sm sm:text-2x1 md:text-2xl  lg:text-2xl my-0">Ventas del producto {{$product->sales_count}} </h2>
                         </div>
                         <div class="col-12">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-sm">
+                            <div class="table-responsive ">
+                                <table class="table table-striped text-xs">
                                     <thead>
                                         <tr>
+                                            <th>Index</th>
+                                            <th style="cursor:pointer">
 
-                                            <th>
-                                                Order ID
+                                                Order
                                             </th>
-                                            <th>
-                                                Precio Order
+                                            <th style="cursor:pointer">
+
+                                                Fecha
                                             </th>
-                                            <th>
-                                                status
+                                            <th style="cursor:pointer">
+                                                Pago
+                                            </th>
+                                            <th style="cursor:pointer">
+                                                Status
+                                            </th>
+                                            <th style="cursor:pointer">
+                                                Price
                                             </th>
 
-                                            <th>
-                                                Actions
-                                            </th>
+
+
+                                            <th>email</th>
+                                            <th>WhatsApp</th>
+                                            <th>Facebook</th>
+                                            <th>Comentario</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($product->orders as $order)
 
+                                        <tr class=" {{$order->active==0 ? 'table-danger':''}} ">
+                                            <td>{{$loop->index+1}} </td>
+                                            <td>{{ $order->id }}</td>
 
-                                        <tr class="p-0">
-                                            <!-- <td class="p-0 m-0 w-50">
-                                                {{ $order }}
-                                            </td> -->
-                                            <td class="p-0 m-0">{{ $order->pivot->order_id }}</td>
-                                            <td>
-                                            {{ $order->amount }}
-                                            </td>
+                                            <td>{{date_format($order->created_at, 'd-M-Y g:i a')}}</td>
+                                            <td>{{ $order->payment_type }}</td>
                                             <td>
                                                 @if($order->status == 'create')
-                                                <div class="d-flex align-items-center">
+                                                <div class="d-flex align-items-center text-muted">
                                                     <i class="material-icons mr-1">pending_actions</i>Pendiente de pago
                                                 </div>
                                                 @elseif ($order->status == 'approved')
@@ -86,11 +95,11 @@
                                                     <i class="material-icons mr-1">check_circle</i>Aprobado
                                                 </div>
                                                 @elseif($order->status == 'pending')
-                                                <div class="d-flex align-items-center">
+                                                <div class="d-flex align-items-center text-muted">
                                                     <i class="material-icons mr-1">pending</i>Deposito pendiente
                                                 </div>
                                                 @elseif($order->status == 'in_process')
-                                                <div class="d-flex align-items-center">
+                                                <div class="d-flex align-items-center text-muted">
                                                     <i class="material-icons mr-1">watch_later</i>En proceso.
                                                 </div>
                                                 @elseif($order->status == 'cancelled')
@@ -105,24 +114,55 @@
                                                 <div class="d-flex align-items-center text-danger">
                                                     <i class="material-icons mr-1">settings_backup_restore</i>Reembolsado
                                                 </div>
+                                                @elseif($order->status == 'charged_back')
+                                                <div class="d-flex align-items-center text-danger">
+                                                    <span class="material-symbols-outlined mr-1">
+                                                        send_money
+                                                    </span>
+                                                    Contracargo
+                                                </div>
                                                 @endif
                                             </td>
-                                            <td class="p-0 m-0">
-                                                <a class="btn btn-info btn-link m-0 p-0" href=" {{route('sales.show',$order->pivot->order_id)}}" target="_blank">
-                                                    <i class=" material-icons ">visibility</i>
-                                                </a>
+                                            <td>
+                                                {{ $order->price }}
+                                            </td>
+
+
+                                            <td>
+                                                {{ $order->user->email }}
+                                            </td>
+
+                                            <td>
+                                                {{ $order->user->whatsapp }}
+                                            </td>
+                                            <td>
+                                                {{ $order->user->facebook }}
+                                            </td>
+
+
+
+                                            <td>
+
+                                            </td>
+                                            <td class="td-actions">
+                                                <div class="btn-group m-0 d-flex" style="box-shadow: none !important">
+                                                    <!-- <button class="btn btn-info btn-link text-success " onclick="udateData('{{ $order->id }}','nota{{ $order->id }}')">
+                                <i class=" material-icons ">save</i>
+                            </button> -->
+                                                    <a class="btn btn-info btn-link" href="{{ route('sales.show', $order->id) }}" target="_blank">
+                                                        <i class=" material-icons">visibility</i>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                             </div>
-
-
-
-
-
                         </div>
+
+
+
                     </div>
 
 

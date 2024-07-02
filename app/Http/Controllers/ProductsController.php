@@ -112,8 +112,8 @@ class ProductsController extends Controller
         $product = Product::withCount(['sales' => function ($query) {
             $query->whereHas('order', function ($query) {
                 $query
-                    ->where('status', 'approved')
-                    ->where('payment_type', '!=', 'externo');
+                    ->where('status', 'approved');
+                // ->where('payment_type', '!=', 'externo');
             });
         }])->findOrFail($id);
 

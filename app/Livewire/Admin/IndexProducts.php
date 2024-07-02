@@ -30,13 +30,22 @@ class IndexProducts extends Component
         $products = Product::where(function ($query) {
             $query->where('title', 'like', '%' . $this->search . '%')
                 ->orWhere('id', 'like', '%' . $this->search . '%');
-        })->withCount(['sales' => function ($query) {
+        })->withCount(['sales as salesWeb' => function ($query) {
             $query->whereHas('order', function ($query) {
                 $query
                     ->where('status', 'approved')
-                    ->where('payment_type', '!=', 'externo');
+                    ->where('payment_type', '!=', 'externo')
+                    ->whereNotIn('customer_id', [1, 5, 8218]);
             });
         }])
+            ->withCount(['sales as salesexternal' => function ($query) {
+                $query->whereHas('order', function ($query) {
+                    $query
+                        ->where('status', 'approved')
+                        ->where('payment_type', 'externo')
+                        ->whereNotIn('customer_id', [1, 5, 8218]);
+                });
+            }])
             ->withCount('descargas')
             ->orderBy($this->sortField, $this->sortDirection)
             ->paginate(50);
