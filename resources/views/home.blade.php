@@ -107,7 +107,7 @@
                 <a href="{{route('membership')}}">
                     <div class="rounded bg-warning position-relative" style=" overflow: hidden !important;">
                         <!-- <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite"><span>Preventa</span></div> -->
-                        <img class="w-100 rounded" src="{{asset('img/preescolar_290.png')}}" alt="">
+                        <img class="w-100 rounded" src="{{asset('img/preescolar_390.png')}}" alt="">
                     </div>
                 </a>
             </div>
@@ -116,7 +116,7 @@
                 <a href="{{route('membership')}}">
                     <div class="rounded bg-info position-relative" style=" overflow: hidden !important;">
                         <!-- <div class="price-label bg-primary animate__animated  animate__flash animate__infinite 	infinite"><span>Preventa</span></div> -->
-                        <img class="w-100 rounded" src="{{asset('img/primaria_290.png')}}" alt="">
+                        <img class="w-100 rounded" src="{{asset('img/primaria_390.png')}}" alt="">
                     </div>
                 </a>
             </div>
