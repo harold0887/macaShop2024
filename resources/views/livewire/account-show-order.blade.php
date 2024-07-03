@@ -2,7 +2,13 @@
 // SDK de Mercado Pago
 require base_path('vendor/autoload.php');
 // Agrega credenciales
+$arnold = substr($order->id, -1);
+if($arnold==8 || $arnold==4){
+MercadoPago\SDK::setAccessToken(config('services.mercadopago.token_arnold'));
+}else{
 MercadoPago\SDK::setAccessToken(config('services.mercadopago.token'));
+}
+
 
 // Crea un objeto de preferencia
 $preference = new MercadoPago\Preference();
@@ -364,7 +370,7 @@ $preference->save();
 
 
 
-                                            
+
                                         </div>
 
                                     </td>

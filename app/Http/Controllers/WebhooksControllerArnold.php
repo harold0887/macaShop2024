@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 
-use MercadoPago\SDK;
+use App\Models\User;
 use App\Models\Order;
-use MercadoPago\Plan;
-use MercadoPago\Invoice;
-use MercadoPago\Payment;
 use App\Mail\PruebasEmail;
 use Illuminate\Http\Request;
 use App\Models\Order_Details;
-use MercadoPago\Subscription;
 use App\Mail\PaymentApprovedEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\PaymentApprovedAsistencia;
 use App\Mail\PaymentApprovedMembership;
 
 class WebhooksControllerArnold extends Controller
@@ -60,7 +58,7 @@ class WebhooksControllerArnold extends Controller
 
 
 
-        $ACCESS_TOKEN = config('services.mercadopago.token'); //aqui cargamos el token
+        $ACCESS_TOKEN = config('services.mercadopago.token_arnold'); //aqui cargamos el token
         $curl = curl_init(); //iniciamos la funcion curl
 
         curl_setopt_array($curl, array(
@@ -113,31 +111,30 @@ class WebhooksControllerArnold extends Controller
 
         switch ($response['status']) {
             case 'approved':
-
-                // $correoPrueba = new PruebasEmail($order, "Entro hasta el aproval");
-                // Mail::to("arnulfoacosta0887@gmail.com")
-                //     ->send($correoPrueba);
-
                 //enviar correo de materiales
                 if ($materialesComprados) {
                     $confirmacionOrder = new PaymentApprovedEmail($order);
                     Mail::to($order->user->email) //enviar correo al cliente
                         ->send($confirmacionOrder);
-
-                    // $confirmacionOrder1 = new PaymentApprovedEmail($order);
-                    // Mail::to("arnulfoacosta0887@gmail.com") //enviar correo de prueba
-                    //     ->send($confirmacionOrder1);
                 }
 
                 //enviar correo de membresias
                 foreach ($membreships as $membresia) {
-                    $confirmacionMembership = new PaymentApprovedMembership($membresia->membership_id, $order);
-                    Mail::to($order->user->email)
-                        ->send($confirmacionMembership);
-
-                    // $confirmacionMembership1 = new PaymentApprovedMembership($membresia->membership_id, $order);
-                    // Mail::to("arnulfoacosta0887@gmail.com") //enviar correo de prueba
-                    //     ->send($confirmacionMembership1);
+                    if ($membresia->membership_id == 2013) {
+                        //actualizar perfil de usuario
+                        $user = User::findOrFail($order->user->id);
+                        $user->update([
+                            'pro' => true,
+                        ]);
+                        //enviar correo de lista de aistencia
+                        $correoConfirmAsistencia = new PaymentApprovedAsistencia($membresia->membership_id, $order);
+                        Mail::to($order->user->email)
+                            ->send($correoConfirmAsistencia);
+                    } else {
+                        $correoCopia = new PaymentApprovedMembership($membresia->membership_id, $order);
+                        Mail::to($order->user->email)
+                            ->send($correoCopia);
+                    }
                 }
                 break;
             case 'pending':
