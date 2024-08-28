@@ -176,7 +176,10 @@
 
 
     <!-- iconos awesome -->
-    <script src="https://kit.fontawesome.com/58c5330fd0.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/58c5330fd0.js" crossorigin="anonymous"></script> -->
+
+    <!-- iconos awesome new gmail -->
+    <script src="https://kit.fontawesome.com/7a5f1c379e.js" crossorigin="anonymous"></script>
 
 
 

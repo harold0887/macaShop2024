@@ -19,7 +19,11 @@
     <div class="collapse navbar-collapse justify-content-end">
 
 
+
       <ul class="navbar-nav">
+
+
+
 
         <li class="nav-item dropdown">
           <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

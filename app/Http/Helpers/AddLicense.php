@@ -41,7 +41,7 @@ class AddLicense
             $pdf->AddPage($size['orientation']);
             $pdf->useTemplate($templateId, ['adjustPageSize' => true]);
             $pdf->SetFont('Arial', 'i', 8);
-            //$pdf->SetTextColor(181, 178, 178);
+            $pdf->SetTextColor(181, 178, 178);
             $pdf->SetXY(2, 0);
             $pdf->Write(8, utf8_decode($this->message));
             $pdf->SetXY(2, 4);
@@ -73,7 +73,7 @@ class AddLicense
             $pdf->AddPage($size['orientation']);
             $pdf->useTemplate($templateId, ['adjustPageSize' => true]);
             $pdf->SetFont('Arial', 'i', 8);
-            //$pdf->SetTextColor(181, 178, 178);
+            $pdf->SetTextColor(181, 178, 178);
             $pdf->SetXY(2, 0);
             $pdf->Write(8, utf8_decode($this->message));
             $pdf->SetXY(2, 4);
@@ -101,7 +101,7 @@ class AddLicense
             $pdf->AddPage($size['orientation']);
             $pdf->useTemplate($templateId, ['adjustPageSize' => true]);
             $pdf->SetFont('Arial', 'i', 8);
-            //$pdf->SetTextColor(181, 178, 178);
+            $pdf->SetTextColor(181, 178, 178);
             $pdf->SetXY(2, 0);
             $pdf->Write(8, utf8_decode($this->message));
             $pdf->SetXY(2, 4);

@@ -14,7 +14,7 @@ use Livewire\WithPagination;
 class DashboardRender extends Component
 {
     use WithPagination;
-    public $search = '';
+    public $search;
     public $day;
     public  $salesDay, $salesMonth, $salesYear;
     public $sortDirection = 'desc', $sortField = 'created_at';
@@ -55,7 +55,7 @@ class DashboardRender extends Component
             })->orderBy($this->sortField, $this->sortDirection)
             ->paginate(50);
 
-        //dd( $this->orders);
+
 
         $this->salesMonth = Order::whereMonth('created_at', $this->monthSelect)
             ->whereYear('created_at', $this->yearSelect)
