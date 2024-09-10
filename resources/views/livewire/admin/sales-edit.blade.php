@@ -80,7 +80,9 @@
                             </div>
                             <div class="col-12 col-lg-2">
                                 <div class="row d-flex">
-                                    @if($order->active == 0)
+
+                                    @if($order->status=='approved')
+                                    @if($order->active == 0 )
                                     <div class="col-12">
                                         <button class="btn  btn-success btn-round   w-100" wire:click='activeOrder'>
                                             activar compra
@@ -96,6 +98,12 @@
 
                                     </div>
                                     @endif
+                                    @else
+                                    <span class="font-italic text-danger">This order is {{$order->status=='create'? 'payment pending':$order->status }}</span>
+                                    @endif
+
+
+
 
                                     <div class="col-12 py-0 pt-lg-3 d-flex justify-content-center align-item-center ">
                                         <button class="btn btn-info btn-link text-info my-0" wire:click='save'>
