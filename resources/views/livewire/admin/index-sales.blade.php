@@ -271,9 +271,9 @@
                                                     <i class="material-icons">edit</i>
                                                 </a>
                                                 @if($order->status == 'create' && 2 > $order->payment_reminder )
-                                                <button class="btn btn-success btn-link text-primary" onclick="confirmSendEmail('{{ $order->id }}')">
+                                                <!-- <button class="btn btn-success btn-link text-primary" onclick="confirmSendEmail('{{ $order->id }}')">
                                                     <i class="material-icons text-primary">mark_email_unread</i>
-                                                </button>
+                                                </button> -->
                                                 @endif
 
                                                 <button class="btn btn-success btn-link text-danger " onclick="confirmDelete('{{ $order->id }}', '{{ $order->status }}')">

@@ -175,10 +175,8 @@
     <script src="{{ asset('material') }}/demo/jquery.sharrre.js"></script>
 
 
-    <!-- iconos awesome -->
-    <!-- <script src="https://kit.fontawesome.com/58c5330fd0.js" crossorigin="anonymous"></script> -->
 
-    <!-- iconos awesome new gmail -->
+    <!-- iconos awesome new gmail solo maca-->
     <script src="https://kit.fontawesome.com/7a5f1c379e.js" crossorigin="anonymous"></script>
 
 

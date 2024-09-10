@@ -108,7 +108,16 @@
 
                                                                         </span>
                                                                         <br>
-                                                                        <span class="fw-bold text-muted mr-2">Active: </span><span class="font-italic">{{ $order->active == 1 ? 'Yes' : 'No' }}</span>
+                                                                        <span class="fw-bold text-muted mr-2">Status: </span>
+
+                                                                        @if($order->active==1)
+                                                                        <span class="font-italic text-success">This order is active</span>
+                                                                        @else
+                                                                        <span class="font-italic text-danger">This order is pending activation</span>
+                                                                        @endif
+
+
+
                                                                         <br>
                                                                         <span class="fw-bold text-muted mr-2">Comentarios: </span><span class="font-italic">{{ $order->contacto }}</span>
                                                                     </div>

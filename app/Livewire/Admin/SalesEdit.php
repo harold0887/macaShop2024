@@ -301,8 +301,7 @@ class SalesEdit extends Component
         } catch (QueryException $e) {
             $this->dispatch('error', message: $e->getMessage());
         } finally {
-            //$this->dispatch('some-event2');
-
+            $this->dispatch('some-event2');
         }
     }
 }

@@ -71,7 +71,7 @@ class Product extends Model
   //relacion con comentarios, retorna los comentarios de un producto
   public function comentarios()
   {
-    return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
+    return $this->hasMany(Comment::class)->orderBy('created_at', 'desc')->where('status', true);
   }
 
   //relacion con items, retorna las fotos del producto
