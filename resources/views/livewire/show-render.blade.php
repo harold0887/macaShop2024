@@ -98,6 +98,12 @@
                                     @endif
                                     @endif
                                 </div>
+                                @else
+                                <div class="col-12 text-center mt-2">
+                                    <div class="m-2">
+                                        <span class="text-base text-muted">{{$product->title}}, ya no está en venta o solo está disponible en alguna de nuestras membresías.</span>
+                                    </div>
+                                </div>
 
                                 @endif
                             </div>
@@ -226,7 +232,7 @@
                     @endif
                 </div>
             </div>
-            <div class="col-12 col-lg-3 text-center">
+            <div class="col-12 col-lg-6 text-center">
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <h2 class="title text-center text-primary text-base sm:text-2x1 md:text-2xl  lg:text-2xl ">
@@ -312,5 +318,5 @@
         </div>
 
     </div>
-    
+
 </div>

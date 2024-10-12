@@ -16,13 +16,19 @@ use Illuminate\Support\Facades\Storage;
 class ShopRender extends Component
 {
     use WithPagination, WithoutUrlPagination;
-    public $search = '';
-    public $categoriesSelect = [];
-    public $gradeSelect = [];
+
+
     public $img, $title, $price;
     protected $paginationTheme = 'bootstrap';
-    public $membership;
-    public $icon, $showFilter, $showCategory, $collapseCategory, $showGrade, $collapseGrade;
+    public $membership, $productModal;
+
+
+
+    public $filters = [
+        'search' => '',
+        'categorias' => [],
+        'grados' => [],
+    ];
 
 
 
@@ -36,80 +42,23 @@ class ShopRender extends Component
 
     public function render()
     {
-        $busqueaCat = $this->categoriesSelect;
-        $busqueaGra = $this->gradeSelect;
+        //consultar y mostrar solo categorias que tengan al menos un producto
         $categories = Category::orderBy('name', 'ASC')
             ->select('name', 'id')
             ->whereNotIn('name', ['gratuito'])
+            ->has('productsAll')
             ->get();
 
-        $degrees = Grade::orderBy('name', 'ASC')
+        $grados = Grade::orderBy('name', 'ASC')
             ->select('name', 'id')
             ->get();
 
 
-        $products = Product::where(function ($query) {
-            $query->where('title', 'like', '%' . $this->search . '%')
-                ->orWhere('information', 'like', '%' . $this->search . '%');
-        })->where('price', '>', 0)
-            ->where('status',  true)
-            ->orderBy('title', 'asc')
-            ->whereNotIn('title', ['newsDesktop', 'newsMobile'])
-            ->paginate(39);
-
-     
+        $products = Product::filter($this->filters)->paginate(39);
 
 
 
-
-
-        if (!empty($this->categoriesSelect)) {
-            $products = Product::where(function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('information', 'like', '%' . $this->search . '%');
-            })->where('price', '>', 0)
-                ->where('status',  true)
-                ->orderBy('created_at', 'desc')
-                ->whereHas('categorias', function ($query) use ($busqueaCat) {
-                    $query->whereIn('categories.id', $busqueaCat);
-                })
-                ->whereNotIn('title', ['newsDesktop', 'newsMobile'])
-                ->paginate(40);
-        }
-
-        if (!empty($this->gradeSelect)) {
-            $products = Product::where(function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('information', 'like', '%' . $this->search . '%');
-            })->where('price', '>', 0)
-                ->where('status',  true)
-                ->orderBy('created_at', 'desc')
-                ->whereIn('grade',  $this->gradeSelect)
-                ->whereNotIn('title', ['newsDesktop', 'newsMobile'])
-                ->paginate(40);
-        }
-
-        if (!empty($this->categoriesSelect) && !empty($this->gradeSelect)) {
-            $products = Product::where(function ($query) {
-                $query->where('title', 'like', '%' . $this->search . '%')
-                    ->orWhere('information', 'like', '%' . $this->search . '%');
-            })->where('price', '>', 0)
-                ->where('status',  true)
-                ->orderBy('created_at', 'desc')
-                ->whereIn('grade',  $this->gradeSelect)
-                ->whereHas('categorias', function ($query) use ($busqueaCat) {
-                    $query->whereIn('categories.id', $busqueaCat);
-                })
-                ->whereNotIn('title', ['newsDesktop', 'newsMobile'])
-                ->paginate(40);
-        }
-
-
-        $this->resetPage();
-
-
-
-        return view('livewire.shop-render', compact('products', 'categories', 'degrees'))
+        return view('livewire.shop-render', compact('products', 'categories', 'grados'))
             ->extends('layouts.app', [
                 'class' => 'off-canvas-sidebar',
                 'classPage' => 'login-page',
@@ -125,24 +74,17 @@ class ShopRender extends Component
 
     public function clearSearch()
     {
-        $this->reset(['search']);
+        $this->filters['search'] = '';
     }
 
     public function clearCategories()
     {
-        $this->reset(['categoriesSelect']);
+        $this->filters['categorias'] = [];
     }
     public function clearGrade()
     {
-        $this->reset(['gradeSelect']);
+        $this->filters['grados'] = [];
     }
-
-  
-
-
-
-
-
 
 
 
@@ -187,5 +129,34 @@ class ShopRender extends Component
         } catch (\Throwable $th) {
             $this->dispatch('error', message: "Error al agregar el producto al carrito - " . $th->getMessage());
         }
+    }
+
+    public function setProduct($id)
+    {
+        $this->reset(['productModal']);
+
+        $this->productModal = Product::findOrFail($id);
+        //$this->dispatch('membership-render-refresh')->self();
+
+
+        $items = [];
+
+        foreach ($this->productModal->items as $q) {
+            $items[] = [
+                'photo' => $q->photo,
+
+            ];
+        }
+
+
+
+
+
+        $this->dispatch(
+            'showProductDetails',
+            title: $this->productModal->title,
+            itemMain: $this->productModal->itemMain,
+            items: $items,
+        );
     }
 }

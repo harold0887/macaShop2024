@@ -300,6 +300,8 @@ class MainController extends Controller
 
     public function groupReportPDF($id)
     {
+
+
         //return view('customer.reportes.pdf');
 
         $group = Grupo::findOrFail($id);

@@ -18,7 +18,7 @@
                     <div class="col-12 col-lg-8 pb-5">
                         <div class="search-panels">
                             <div class="search-group">
-                                <input required="" type="text" name="text" autocomplete="on" class="input" wire:model.live.debounce.500ms='search'>
+                                <input required="" type="text" name="text" autocomplete="on" class="input" wire:model.live.debounce.500ms='filters.search'>
                                 <label class="enter-label">Buscar</label>
                                 <div class="btn-box">
 
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <!--row products-->
-                <div class="row  justify-content-center px-0 mt-2">
+                <div class="row   px-0 mt-2">
                     @if (isset($products) && $membership != null && $products->count() > 2)
 
                     <div class="col-6 col-md-4 col-lg-3 " style="position: relative; padding:5px !important">
@@ -59,14 +59,14 @@
                             <div class="card-body   px-1">
                                 <div class="text-center">
                                     @if(!\Cart::get($membership->id))
-                                    <button class=" btn  btn-primary btn-round  px-2 w-full " wire:click="addCart('{{ $membership->id }}','{{ $membership->model }}' )" wire:loading.attr="disabled">
+                                    <button class=" btn btn-lg  btn-primary btn-round  px-2 w-full " wire:click="addCart('{{ $membership->id }}','{{ $membership->model }}' )" wire:loading.attr="disabled">
                                         <div class="d-flex align-items-center ">
                                             <i class="material-icons mr-2 ">shopping_cart</i>
                                             <span class="text-xs fw-bold">Agregar al carrito</span>
                                         </div>
                                     </button>
                                     @else
-                                    <a href="{{ route('cart.index') }}" class="btn btn-primary btn-round">
+                                    <a href="{{ route('cart.index') }}" class="btn btn-lg btn-primary btn-round">
                                         <div class="d-flex align-items-center">
                                             <i class="material-icons mr-2">shopping_cart</i>
                                             <span class="text-xs fw-bold">Ver en el carrito</span>
@@ -179,7 +179,7 @@
                     @endif
 
                     @if (isset($products) && $products->count() > 0)
-                    @foreach($products->filter(fn($product) => empty($products->room_bed)) as $product)
+                    @foreach($products as $product)
 
                     <div class="col-6 col-md-4 col-lg-3 " style="position: relative; padding:5px !important">
                         <div class="card card-primary card-product  ">
@@ -195,14 +195,14 @@
                             <div class="card-body   px-1">
                                 <div class="text-center">
                                     @if(!\Cart::get($product->id))
-                                    <button class=" btn  btn-primary btn-round  px-2 w-full " wire:click="addCart('{{ $product->id }}','Product')" wire:loading.attr="disabled">
+                                    <button class=" btn btn-lg  btn-primary btn-round  px-2 w-full " wire:click="addCart('{{ $product->id }}','Product')" wire:loading.attr="disabled">
                                         <div class="d-flex align-items-center ">
                                             <i class="material-icons mr-2 ">shopping_cart</i>
                                             <span class="text-xs fw-bold">Agregar al carrito</span>
                                         </div>
                                     </button>
                                     @else
-                                    <a href="{{ route('cart.index') }}" class="btn btn-primary btn-round">
+                                    <a href="{{ route('cart.index') }}" class="btn btn-lg btn-primary btn-round">
                                         <div class="d-flex align-items-center">
                                             <i class="material-icons mr-2">shopping_cart</i>
                                             <span class="text-xs fw-bold">Ver en el carrito</span>
@@ -219,9 +219,12 @@
                                     </a>
                                     @endrole
                                 </h3>
+                                <div class="d-flex  text-info align-items-center justify-content-center my-2" style="cursor: pointer;" wire:click="setProduct('{{$product->id}}')">
+                                    <i class="material-icons mr-1">visibility</i><span>Vista rapida</span>
+                                </div>
                                 @foreach($product->membresias as $membresia)
                                 <div class="text-center bg-info  fw-bold rounded p-0 {{$loop->index == 0 ? 'mb-1': ''}} ">
-                                    <a class="my-0 mx-1" href="{{route('membership.show',$membresia->id)}}" style="cursor:pointer; text-decoration: none !important;">
+                                    <a class="my-0 mx-1" href="{{route('membership.show',$membresia->slug)}}" style="cursor:pointer; text-decoration: none !important;">
                                         <span class=" text-xs  text-white">
                                             Incluido en membresía {{$membresia->title}}
                                         </span>
@@ -268,56 +271,63 @@
                         </div>
 
 
-                        @if ($search != '' || $categoriesSelect != null ||$gradeSelect != null)
-                        <div class=" shadow-sm rounded p-1">
+                        @if ($filters['search'] != '' || $filters['categorias'] != null || $filters['grados'] != null)
+                        <div class=" shadow-sm border border-primary rounded p-1">
 
                             <span class="text-base text-center d-block">
-                                Busqueda actual ({{$products->total()}} resultado(s))
+                                Busqueda actual: {{$products->count()}} resultado(s)
                             </span>
 
 
-                            @if ($search != '')
+                            @if ($filters['search'] != '')
                             <div class="d-flex mt-3">
                                 <span class="text-muted text-base w-75">Busqueda exacta:</span>
-                                <i class="close fas fa-times text-danger" style="cursor:pointer" wire:click="clearSearch()" data-placement="top" title="Borrar busqueda"></i>
+                                <i class="material-icons text-danger" wire:click="clearSearch()" style="cursor:pointer" data-placement="top" title="Borrar busqueda">close</i>
+
                             </div>
-                            <span class="badge badge-sm badge-info mr-1" wire:model.live="categoriesSelect">{{$search}}</span>
+                            <span class="badge badge-sm badge-info mr-1" wire:model.live="categoriesSelect">{{$filters['search']}}</span>
                             @endif
-                            @if ($gradeSelect != null)
+                            @if ($filters['grados'] != null)
                             <div class="d-flex mt-3">
                                 <span class="text-muted text-base  w-75">Grado(s): </span>
-                                <i class="close fas fa-times text-danger" style="cursor:pointer" wire:click="clearGrade()" data-placement="top" title="Borrar grados"></i>
+                                <i class="material-icons text-danger" wire:click="clearGrade()" style="cursor:pointer" data-placement="top" title="Borrar grados">close</i>
+
                             </div>
 
-                            @if (isset($degrees) && $degrees->count() > 0)
-                            @foreach ($degrees as $grade)
-                            @foreach($gradeSelect as $gra)
-                            @if($grade->id == $gra)
-                            <span class="badge badge-sm badge-info mr-1">{{$grade->name}}</span>
+                            @foreach ($grados as $grado)
+                            @foreach($filters['grados'] as $gra)
+                            @if($grado->id == $gra)
+                            <span class="badge badge-sm badge-info mr-1">{{$grado->name}}</span>
                             @endif
                             @endforeach
                             @endforeach
                             @endif
-                            @endif
 
 
-                            @if ($categoriesSelect != null)
+
+
+
+
+                            @if ($filters['categorias'] != null)
                             <div class="d-flex mt-3">
                                 <span class="text-muted text-base w-75">Categoria(s): </span>
-                                <i class="close fas fa-times text-danger" style="cursor:pointer" wire:click="clearCategories()" data-placement="top" title="Borrar categorias"></i>
+
+                                <i class="material-icons text-danger" wire:click="clearCategories()" style="cursor:pointer" data-placement="top" title="Borrar categorias">close</i>
+
+
                             </div>
 
 
-                            @if (isset($categories) && $categories->count() > 0)
+
                             @foreach ($categories as $category)
-                            @foreach($categoriesSelect as $cat)
+                            @foreach($filters['categorias'] as $cat)
                             @if($category->id == $cat)
-                            <span class="badge badge-sm badge-info mr-1" wire:model.live="categoriesSelect">{{$category->name}}</span>
+                            <span class="badge badge-sm badge-info mr-1" wire:model.live="categoriesSelect">{{$category->name}} </span>
                             @endif
                             @endforeach
                             @endforeach
                             @endif
-                            @endif
+
 
 
                         </div>
@@ -339,12 +349,12 @@
                                         <span class="text-muted">Grado</span>
                                     </div>
                                     <div class="accordion-collapse px-2">
-                                        @if (isset($degrees) && $degrees->count() > 0)
-                                        @foreach ($degrees as $grade)
+                                        @if (isset($grados) && $grados->count() > 0)
+                                        @foreach ($grados as $grade)
                                         <div class="form-check pt-2">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="{{ $grade->id}}" wire:model.live="gradeSelect">
-                                                {{$grade->name}}
+                                                <input class="form-check-input" type="checkbox" value="{{ $grade->id}}" wire:model.live="filters.grados">
+                                                {{$grade->name}} ({{$grade->products->count()}})
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -354,6 +364,8 @@
                                         @endif
                                     </div>
                                 </div>
+
+
                                 <div class="accordion-item mt-5 pb-2">
                                     <div class="d-flex align-items-center my-2">
                                         <i class="material-icons my-auto mr-2 text-info">category</i>
@@ -364,7 +376,8 @@
                                         @foreach ($categories as $category)
                                         <div class="form-check pt-2">
                                             <label class="form-check-label">
-                                                <input class="form-check-input" type="checkbox" value="{{ $category->id}}" wire:model.live="categoriesSelect"> {{ $category->name}}
+                                                <input class="form-check-input" type="checkbox" value="{{ $category->id}}" wire:model.live="filters.categorias">
+                                                {{ $category->name}} ({{$category->productsAll->count()}})
                                                 <span class="form-check-sign">
                                                     <span class="check"></span>
                                                 </span>
@@ -373,21 +386,10 @@
                                         @endforeach
                                         @endif
                                     </div>
+
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
                     </div>
                 </div>
             </div>

@@ -16,7 +16,6 @@ class BestSeler extends Component
     public function render()
     {
         $products =   Product::withCount('sales')
-
             ->orderBy('sales_count', 'desc')
             ->where('status', true)
             ->take(10)

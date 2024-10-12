@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Product;
@@ -13,27 +14,23 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $newsMobile = Product::where('title', 'newsMobile')
-            ->first();
-        $newsDesktop = Product::where('title', 'newsDesktop')
-            ->first();
+        $banners = Banner::where('status', true)->get();
+
         $comments = Comment::where('best', 1)
             ->where('status', 1)->get();
 
 
-        return view('home', compact('newsMobile', 'newsDesktop', 'comments'));
+        return view('home', compact('banners', 'comments'));
     }
 
     public function mantenimiento()
     {
-        $newsMobile = Product::where('title', 'newsMobile')
-            ->first();
-        $newsDesktop = Product::where('title', 'newsDesktop')
-            ->first();
+        $banners = Banner::where('status', true)->get();
+
         $comments = Comment::where('best', 1)
             ->where('status', 1)->get();
 
-        return view('mantenimiento', compact('newsMobile', 'newsDesktop', 'comments'));
+        return view('mantenimiento', compact('banners', 'comments'));
     }
 
 

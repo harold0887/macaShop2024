@@ -167,7 +167,7 @@ function relacionadosAutoplay() {
         {
           breakpoint: 2048,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: 2,
             slidesToScroll: 1,
           },
         },

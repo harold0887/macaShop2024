@@ -1,5 +1,167 @@
 <div class="content py-0 bg-white">
+
     @include('includes.spinner-livewire')
+
+
+    @if($usersIPSelect != null)
+    <div class="row border rounded mb-4">
+        <div class="col-12 text-center mb-3">
+            <h6 class="card-category text-gray d-inline text-primary">related Users Ip: {{$ipSelect}}</h6>
+
+
+        </div>
+        <div class="col-12 ">
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+
+                                ID
+                            </th>
+
+                            <th>
+
+                                Nombre
+                            </th>
+                            <th>
+
+                                Correo electronico
+                            </th>
+                            <th>
+
+                                Registro
+                            </th>
+                            <th>
+
+
+                                Verified
+                            </th>
+
+                            <th>
+
+                                WhatsApp
+                            </th>
+                            <th>
+
+                                Facebook
+                            </th>
+                            <th>
+
+                                Ventas
+                            </th>
+                            <th style="cursor:pointer">
+                                Membresías
+                            </th>
+                            <th>
+
+                                Rol
+                            </th>
+
+                            <th>
+
+
+                                IP
+                            </th>
+                            <th>
+
+                                Status
+                            </th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($usersIPSelect as $ip)
+
+                        <tr class=" {{ $ip->user->status == 0 ? 'table-danger ' : '' }}">
+                            <td>{{ $ip->user->id }}</td>
+                            <td>{{ $ip->user->name }}</td>
+                            <td class=" {{$ip->user->id != $user->id ? 'text-danger ' : 'text-success' }} }} ">{{ $ip->user->email }}</td>
+                            <td>{{date_format($ip->user->created_at, 'd-M-y')}}</td>
+                            <td class="text-center">
+                                @if($ip->user->email_verified_at != null)
+                                <i class="material-icons text-success">check_circle</i>
+                                @endif
+
+
+                            </td>
+
+                            <td>{{$ip->user->whatsapp}}</td>
+                            <td>{{$ip->user->facebook}}</td>
+                            <td>
+                                {{$ip->user->sales_count}}
+                            </td>
+                            <td>
+                                @foreach($ip->user->orders as $order)
+                                @if($order->status=='approved')
+                                @foreach($order->memberships as $memberships)
+                                <span class="badge badge-info d-block my-1">
+                                    {{$memberships->title}}
+                                </span>
+                                @endforeach
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($ip->user->roles as $role)
+
+                                <span class="badge badge-info  d-block my-1">
+                                    {{ $role->name }}
+                                </span>
+
+                                @endforeach
+                            </td>
+
+
+                            <td>{{$ip->user->ips->count()}}</td>
+
+
+                            <td>
+
+                                <div class="togglebutton" wire:change="changeStatusUser({{ $ip->user->id }}, '{{ $ip->user->status }}')">
+                                    <label>
+                                        <input type="checkbox" {{ $ip->user->status == 1 ? 'checked ' : '' }} name="status">
+                                        <span class="toggle"></span>
+                                    </label>
+                                </div>
+
+
+
+                            </td>
+                            <td class="td-actions p-0">
+                                <div class="btn-group shadow-none">
+                                    <a class="btn btn-info  btn-link" href="{{ route('users.show', $ip->user->id) }}">
+                                        <i class="material-icons text-info">visibility</i>
+                                    </a>
+                                    <a class="btn btn-success btn-link" href="{{ route('users.edit', $ip->user->id) }}">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+
+                                </div>
+                            </td>
+                        </tr>
+
+
+
+
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    @endif
+
     <div class="row ">
         <div class="col-md-4">
             <div class="row">
@@ -92,11 +254,10 @@
 
                             @endif
 
-
-
                         </div>
                     </div>
                 </div>
+
 
 
             </div>
@@ -133,9 +294,7 @@
                                             <th style="cursor:pointer">
                                                 Id
                                             </th>
-                                            <th style="cursor:pointer">
-                                                Id MP
-                                            </th>
+
                                             <th style="cursor:pointer">
                                                 Fecha
                                             </th>
@@ -158,7 +317,7 @@
                                         @foreach ($user->orders as $order)
                                         <tr>
                                             <td>{{ $order->id }}</td>
-                                            <td>{{ $order->payment_id }}</td>
+
                                             <td>{{date_format($order->created_at, 'd-M-Y g:i a')}}</td>
                                             <td>{{ $order->amount }}</td>
                                             <td>{{ $order->payment_type }}</td>
@@ -231,6 +390,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-12">
                     <div class="card shadow">
                         <div class="card-header card-header-icon card-header-primary">
@@ -258,6 +418,9 @@
 
                                             <th style="cursor:pointer">
                                                 Status
+                                            </th>
+                                            <th class="text-center" style="cursor:pointer">
+                                                Relacionados
                                             </th>
                                         </tr>
                                     </thead>
@@ -305,6 +468,15 @@
                                                     <span>Active</span>
                                                 </div>
                                                 @endif
+                                            </td>
+                                            <td class="td-actions">
+                                                <div class="btn-group m-0 d-flex" style="box-shadow: none !important">
+
+                                                    <button wire:click="showRelated('{{ $ip->ip }}')" type="button" class="btn btn-info btn-link" data-toggle="modal" data-target="#exampleModalCenter">
+                                                        <i class=" material-icons">visibility</i>
+                                                    </button>
+                                                </div>
+
                                             </td>
 
                                         </tr>

@@ -65,7 +65,7 @@
         </li>
         <li class="nav-item{{ $activePage == 'package' ? ' active' : '' }} position-relative">
           <a href="{{ route('paquete') }}" class="nav-link {{ $navbarClass }}">
-            <i class="material-icons">library_add</i><span class="fw-bold">Paquetes</span>
+            <i class="material-icons">library_add</i><span class="fw-bold">Paquetes ahorra</span>
           </a>
 
         </li>

@@ -89,4 +89,32 @@ class Product extends Model
   {
     return $this->belongsTo(Grade::class, 'grade');
   }
+
+  //Relacion con detalle de categorias, muchos a muchos tabla intermedia new
+  public function category_product(): HasMany
+  {
+    return $this->hasMany(Category_Product::class, 'product_id', 'id');
+  }
+
+  public function scopeFilter($query, $filters)
+  {
+    $query->when($filters['categorias'] ?? null, function ($query, $categorias) {
+      $query->whereHas('category_product', function ($query) use ($categorias) {
+        $query->whereIn('category_id', $categorias);
+      });
+    })->when($filters['grados'] ?? null, function ($query, $grados) {
+      $query->whereHas('grado', function ($query) use ($grados) {
+        $query->whereIn('id', $grados);
+      });
+    })
+
+      ->when($filters['search'] ?? null, function ($query, $search) {
+        $query->where('title', 'like', '%' . $search . '%')
+          ->orWhere('information', 'like', '%' . $search . '%');
+      })
+      ->where('price', '>', 0)
+      ->where('status',  true)
+      ->orderBy('title', 'asc')
+      ->whereNotIn('title', ['newsDesktop', 'newsMobile']);
+  }
 }

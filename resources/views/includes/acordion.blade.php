@@ -13,7 +13,7 @@
                 </div>
                 <div class="text-center">
                     @foreach($product->membresias as $membresia)
-                    <a href="{{route('membership.show',$membresia->id)}}">
+                    <a href="{{route('membership.show',$membresia->slug)}}">
                         <span class="badge badge-sm badge-info m small px-1 mx-0" style="cursor:pointer">
                             Incluido en la membresía {{$membresia->title}}
                         </span>

@@ -34,24 +34,7 @@
 
             </div>
         </div>
-        <div class="col-12">
 
-            @foreach($estudiantes as $estudiante)
-            <div class="border border-info my-2">
-                @foreach($estudiante->asistencias as $asistenciaindividual)
-                <div class="border border-danger">
-                    {{$asistenciaindividual}}
-                </div>
-
-                @endforeach
-
-
-            </div>
-
-            @endforeach
-
-
-        </div>
         <div class="col-md-12 ml-auto mr-auto">
             <div class="page-categories ">
                 <div class="tab-content tab-space tab-subcategories pt-0">
@@ -120,11 +103,12 @@
                                                         </button>
                                                     </div>
                                                     <div class="col-12 col-lg-auto   text-center">
-                                                        <button class="btn w-100 mt-1  btn-outline-primary m-0 px-2 py-0 mx-1" wire:click="exportPDF()">
+                                                        <button class="btn w-100 mt-1  btn-outline-primary m-0 px-2 py-0 mx-1" wire:click="exportPDFNew()">
                                                             <img src="{{ asset('img') }}/docs/pdf.png" alt="..." width="40">
                                                             Exportar a PDF
                                                         </button>
                                                     </div>
+
                                                 </div>
                                             </div>
 
@@ -227,85 +211,99 @@
                                                         <td>{{$loop->iteration}}.- {{ $estudiante->apellidos }} {{ $estudiante->nombres }}</td>
                                                         <td>
 
+
                                                         </td>
 
+
                                                         @foreach ($diasMes as $dia)
+                                                        @foreach($estudiante->asistencias as $asistenciaindividual)
 
 
-                                                        @foreach($asistencias as $asistencia)
-                                                        @if(date_format(new DateTime($asistencia->dia),'Y-m-d') == $dia->format('Y-m-d') && $asistencia->estudiante_id ==$estudiante->id )
+                                                        @if(date_format(new DateTime($asistenciaindividual->dia),'Y-m-d') == $dia->format('Y-m-d') && $asistenciaindividual->estudiante_id ==$estudiante->id )
                                                         @php
-                                                        $asistencia_select=$asistencia;
+                                                        $asistencia_select=$asistenciaindividual;
                                                         $exist= true;
                                                         @endphp
 
 
                                                         @endif
+
+
+
+
+
+
                                                         @endforeach
+
                                                         @if($exist)
-                                                        <td class="text-center border">
+                                                        <div>
+                                                            <td class="text-center border">
 
-                                                            @if($asistencia_select->status_id == 1)
-                                                            @php
-                                                            $a=$a+1;
-                                                            @endphp
+                                                                @if($asistencia_select->status_id == 1)
+                                                                @php
+                                                                $a=$a+1;
+                                                                @endphp
 
-                                                            <span class="material-symbols-outlined text-lg text-muted">
-                                                                check_box
-                                                            </span>
-                                                            @elseif($asistencia_select->status_id == 2 )
-                                                            @php
-                                                            $f=$f+1;
-                                                            @endphp
-                                                            <span class="text-falta">
-                                                                F
-                                                            </span>
-                                                            @elseif($asistencia_select->status_id == 3)
-                                                            @php
-                                                            $r=$r+1;
-                                                            @endphp
-                                                            <span class="text-retardo">
-                                                                R
-                                                            </span>
-                                                            @elseif($asistencia_select->status_id == 4)
-                                                            @php
-                                                            $fj=$fj+1;
-                                                            @endphp
-                                                            <span class="text-falta-justificada">
-                                                                FJ
-                                                            </span>
-                                                            @elseif($asistencia_select->status_id == 5)
-                                                            <span>
-                                                                -
-                                                            </span>
+                                                                <span class="material-symbols-outlined text-lg text-muted">
+                                                                    check_box
+                                                                </span>
+                                                                @elseif($asistencia_select->status_id == 2 )
+                                                                @php
+                                                                $f=$f+1;
+                                                                @endphp
+                                                                <span class="text-falta">
+                                                                    F
+                                                                </span>
+                                                                @elseif($asistencia_select->status_id == 3)
+                                                                @php
+                                                                $r=$r+1;
+                                                                @endphp
+                                                                <span class="text-retardo">
+                                                                    R
+                                                                </span>
+                                                                @elseif($asistencia_select->status_id == 4)
+                                                                @php
+                                                                $fj=$fj+1;
+                                                                @endphp
+                                                                <span class="text-falta-justificada">
+                                                                    FJ
+                                                                </span>
+                                                                @elseif($asistencia_select->status_id == 5)
+                                                                <span>
+                                                                    -
+                                                                </span>
+
+                                                                @endif
+                                                            </td>
+
+
+                                                            @if(date_format(new DateTime($dia),'l')=='Friday' || $loop->last)
+                                                            <td class="px-8">
+
+                                                            </td>
+
 
                                                             @endif
-                                                        </td>
-
-                                                        @if(date_format(new DateTime($dia),'l')=='Friday' || $loop->last)
-                                                        <td class="px-8">
-
-                                                        </td>
+                                                            <!-- clear exist -->
+                                                            @php
+                                                            $exist= false;
+                                                            @endphp
 
 
+                                                            @else
+                                                            <td class="text-center">
+                                                                -
+                                                            </td>
+                                                            @if(date_format(new DateTime($dia),'l')=='Friday' || $loop->last)
+                                                            <td class="px-8">
+
+                                                            </td>
+
+                                                            @endif
+                                                        </div>
                                                         @endif
-                                                        <!-- clear exist -->
-                                                        @php
-                                                        $exist= false;
-                                                        @endphp
 
 
-                                                        @else
-                                                        <td class="text-center">
-                                                            -
-                                                        </td>
-                                                        @if(date_format(new DateTime($dia),'l')=='Friday' || $loop->last)
-                                                        <td class="px-8">
-
-                                                        </td>
-
-                                                        @endif
-                                                        @endif
                                                         @endforeach
                                                         <td class="text-center border px-8">{{$a}}</td>
                                                         <td class="text-center border px-8">{{$f}}</td>
@@ -317,6 +315,33 @@
                                                         $fj=0;
                                                         $r=0
                                                         @endphp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        <!-- aqui es la division -->
+
+
+
+
                                                     </tr>
                                                     @endforeach
                                                     @endif

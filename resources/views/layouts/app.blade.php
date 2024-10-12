@@ -105,7 +105,7 @@
     </form>
 
 
-    @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support.*','membership.sales'))
+    @if (Route::is('dashboard','dashboard.*','products.*','memberships.*','category.*','package.*','degrees.*','users.*','comments.*','sales.*','ips.*','support.*','membership.sales', 'banners.*'))
     @include('layouts.page_templates.admin')
 
     @elseif(Route::is('profile.*','customer.*','order.*','grupos.*','add-student','group-report','group-report-excel'))
@@ -177,7 +177,10 @@
 
 
     <!-- iconos awesome new gmail solo maca-->
-    <script src="https://kit.fontawesome.com/7a5f1c379e.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/7a5f1c379e.js" crossorigin="anonymous"></script> -->
+
+    <!-- iconos awesome anterior funcionando-->
+    <script src="https://kit.fontawesome.com/58c5330fd0.js" crossorigin="anonymous"></script>
 
 
 

@@ -9,6 +9,7 @@
 ])
 
 @section('content')
+
 <div class="container bg-white shadow my-1 rounded">
     <div class="content-main ">
         <div class="d-block d-lg-none">
@@ -72,20 +73,21 @@
 
 
 
-        <div class="row ">
+        <div class="row mt-1 mb-2 p-1">
             <div class="col-12 rounded  px-0">
                 <div class="">
-                    @if(isset($newsDesktop) && $newsDesktop->items->count() >0)
+                    @if(isset($banners) && $banners->count() >0)
                     <div id="carouselDesktop" class="carousel slide carousel-fade" data-mdb-ride="carousel">
                         <div class="carousel-indicators">
-                            @foreach($newsDesktop->items as $item)
+                            @foreach($banners as $item)
                             <button class=" bg-primary @if ($loop->first) active  @endif" data-mdb-target="#carouselDesktop" data-mdb-slide-to="{{ $loop->index }}" aria-label="Slide {{ $loop->index+1 }}"></button>
                             @endforeach
                         </div>
                         <div class="carousel-inner">
-                            @foreach($newsDesktop->items as $item)
+                            @foreach($banners as $item)
                             <div class="carousel-item   @if ($loop->first) active  @endif  ">
-                                <img class=" w-100 d-block shadow" src="{{ Storage::url($item->photo) }}" alt="">
+                                <img class=" w-100 d-none d-lg-block shadow rounded" src="{{ Storage::url($item->desktop) }}" alt="">
+                                <img class=" w-100 d-block d-lg-none shadow rounded" src="{{ Storage::url($item->mobile) }}" alt="">
                             </div>
                             @endforeach
                         </div>
@@ -94,6 +96,9 @@
                 </div>
             </div>
         </div>
+
+
+
         <div class="row justify-content-between mt-0 mb-lg-4">
 
             <div class="col-6 col-md-3 p-1 text-center">

@@ -19,7 +19,7 @@
           </div>
           <div class="card-body">
             <p class="card-description text-center my-4 text-sm  lg:text-base">
-              Antes de continuar, compruebe el enlace de verificación enviado a su correo electrónico
+              Antes de continuar, por favor confirme que el correo electrónico registrado en su cuenta le pertenece, para ello compruebe el enlace de verificación enviado a su correo electrónico:
               <span class="fw-bold">{{Auth::user()->email}}</span>
             </p>
             <p class="card-description text-center my-4 ">
@@ -30,7 +30,7 @@
               @csrf
               <button type="submit" class="btn btn-primary  btn-round ">Enviar nuevo link</button>
             </form>
-            <p  class="card-description text-center my-4 text-sm">
+            <p class="card-description text-center my-4 text-sm">
               Importante: Consultar tambien su bandeja de correos no deseados o buscar con la direccion de correo materiales.maca57@gmail.com
             </p>
           </div>

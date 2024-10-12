@@ -94,6 +94,9 @@ class CartRender extends Component
 
     public function validateUser()
     {
+        $this->validate([
+            'email' => 'required|string|email',
+        ]);
         $user = User::where('email', $this->email)->first();
         if (!$user) {
             $this->dispatch(
@@ -101,7 +104,11 @@ class CartRender extends Component
                 email: $this->email
             );
         } else {
-            $this->dispatch('create-and-send');
+            if ($user->status) {
+                $this->dispatch('create-and-send');
+            } else {
+                $this->dispatch('error', message: "Error al enviar el producto, el usuario esta bloqueado revisar los detalles en usuarios.");
+            }
         }
     }
 

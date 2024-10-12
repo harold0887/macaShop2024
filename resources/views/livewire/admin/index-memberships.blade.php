@@ -120,8 +120,8 @@
                                             Precio con descuento
                                         </th>
                                         <th>Materiales</th>
-                                        <th style="cursor:pointer" wire:click="setSort('sales_count')">
-                                            @if($sortField=='sales_count')
+                                        <th style="cursor:pointer" wire:click="setSort('salesAll')">
+                                            @if($sortField=='salesAll')
                                             @if($sortDirection=='asc')
                                             <i class="fa-solid fa-arrow-down-a-z"></i>
                                             @else

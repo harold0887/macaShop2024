@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BannerController;
 use App\Livewire\CartRender;
 use App\Livewire\FreeRender;
 use App\Livewire\ShopRender;
@@ -117,6 +118,7 @@ Route::group(['middleware' => ['role:admin']], function () {
   Route::get('/verifiedUsers', [HomeController::class, 'verifiedUsers'])->name('verifiedUsers');
   Route::get('dashboard/memberships/sales/{id}', [HomeController::class, 'showMemembershipSales'])->name('membership.sales');
   Route::get('dashboard/users/{id}', ShowUser::class)->name('users.show');
+  Route::resource('dashboard/banners', BannerController::class)->only(['index', 'create', 'store']);
 });
 
 

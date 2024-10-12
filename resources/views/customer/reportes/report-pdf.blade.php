@@ -179,28 +179,43 @@
 
             </tr>
         </thead>
+
+
         <tbody>
             @if(isset($estudiantes) && $estudiantes->count() > 0)
             @foreach ($estudiantes as $estudiante)
 
             <tr>
+
                 <td>{{$loop->iteration}}.- {{ $estudiante->apellidos }} {{ $estudiante->nombres }}</td>
                 <td>
 
+
                 </td>
 
+
                 @foreach ($diasMes as $dia)
+                @foreach($estudiante->asistencias as $asistenciaindividual)
 
 
-                @foreach($estudiante->asistencias as $asistencia)
-                @if(date_format(new DateTime($asistencia->dia),'Y-m-d') == $dia->format('Y-m-d') && $asistencia->estudiante_id ==$estudiante->id )
+                @if(date_format(new DateTime($asistenciaindividual->dia),'Y-m-d') == $dia->format('Y-m-d') && $asistenciaindividual->estudiante_id ==$estudiante->id )
                 @php
-                $asistencia_select=$asistencia;
+                $asistencia_select=$asistenciaindividual;
                 $exist= true;
                 @endphp
+
+
                 @endif
+
+
+
+
+
+
                 @endforeach
+
                 @if($exist)
+
                 <td class="text-center border ">
 
                     @if($asistencia_select->status_id == 1)
@@ -237,16 +252,19 @@
                     @endif
                 </td>
 
+
                 @if(date_format(new DateTime($dia),'l')=='Friday' || $loop->last)
                 <td class="px-8">
 
                 </td>
+
 
                 @endif
                 <!-- clear exist -->
                 @php
                 $exist= false;
                 @endphp
+
 
                 @else
                 <td class="text-center">
@@ -258,7 +276,10 @@
                 </td>
 
                 @endif
+
                 @endif
+
+
                 @endforeach
                 <td class="text-center border px-8">{{$a}}</td>
                 <td class="text-center border px-8">{{$f}}</td>
@@ -270,6 +291,14 @@
                 $fj=0;
                 $r=0
                 @endphp
+
+
+
+                <!-- aqui es la division -->
+
+
+
+
             </tr>
             @endforeach
             @endif

@@ -129,6 +129,12 @@
           <p>Rutas de apoyo</p>
         </a>
       </li>
+      <li class="nav-item{{ $activePage == 'banners' ? ' active' : '' }}">
+        <a class="nav-link" href="{{ route('banners.index') }}">
+          <i class="material-icons">photo_library</i>
+          <p>Banners</p>
+        </a>
+      </li>
     </ul>
   </div>
 </div>

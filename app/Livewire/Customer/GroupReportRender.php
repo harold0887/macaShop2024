@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
+
 class GroupReportRender extends Component
 {
 
@@ -24,6 +25,13 @@ class GroupReportRender extends Component
     public $monthSelectName;
     //public $firstDay, $lastDay;
 
+    public $filters = [
+
+        'yearSelect1' => '2024',
+        'monthSelect1' => '9',
+
+    ];
+
 
     public function mount()
     {
@@ -34,34 +42,24 @@ class GroupReportRender extends Component
         $this->group = Grupo::findOrFail($this->ids);
         $this->monthSelect = now()->format('m');
         $this->yearSelect = now()->format('Y');
-        // $this->firstDay = now()->format('Y-m-01');
-        // $this->lastDay = now()->format('Y-m-t');
-
-        //dd($this->firstDay. " - ". $this->lastDay);
     }
     public function render()
     {
 
 
-        $estudiantes = Estudiante::where('grupo_id', $this->group->id)
+        $month = $this->monthSelect;
+        $year = $this->yearSelect;
+
+        $estudiantes = Estudiante::with(['asistencias' => function ($query) use ($month, $year) {
+            $query->whereMonth('dia', $month)
+                ->whereYear('dia', $year);
+        }])
+            ->where('grupo_id', $this->group->id)
             ->whereHas('grupo', function ($query) {
                 $query
                     ->where('user_id', Auth::user()->id);
             })
-            ->where(function ($query) {
-                $query->where('nombres', 'like', '%' . $this->search . '%')
-                    ->orWhere('apellidos', 'like', '%' . $this->search . '%');
-            })
-            ->orderBy('apellidos', 'asc')
-            ->get();
-
-        $asistencias = Asistencia::whereHas('estudiante', function ($query) {
-            $query
-                ->where('grupo_id', $this->group->id);
-        })
-            ->whereMonth('dia', $this->monthSelect)
-            ->whereYear('dia', $this->yearSelect)
-            ->get();
+            ->orderBy('apellidos', 'asc')->get();
 
 
         $dt2 = Carbon::createFromDate($this->yearSelect . "-" . $this->monthSelect . '-01');
@@ -89,10 +87,10 @@ class GroupReportRender extends Component
 
 
 
-        return view('livewire.customer.group-report-render', compact('estudiantes', 'asistencias', 'lastDay', 'diasMes'));
+        return view('livewire.customer.group-report-rendernew', compact('estudiantes', 'lastDay', 'diasMes'));
     }
 
-    public function export()
+    public function exportPDF()
     {
 
 
@@ -169,9 +167,88 @@ class GroupReportRender extends Component
         }
     }
 
-    public function exportExcel()
+    public function exportPDFNew()
     {
+
+        $month = $this->monthSelect;
+        $year = $this->yearSelect;
+        $estudiantes = Estudiante::with(['asistencias' => function ($query) use ($month, $year) {
+            $query->whereMonth('dia', $month)
+                ->whereYear('dia', $year);
+        }])
+            ->where('grupo_id', $this->group->id)
+            ->whereHas('grupo', function ($query) {
+                $query
+                    ->where('user_id', Auth::user()->id);
+            })
+            ->orderBy('apellidos', 'asc')->get();
+
+        $asistencias = Asistencia::whereHas('estudiante', function ($query) {
+            $query
+                ->where('grupo_id', $this->group->id);
+        })
+            ->whereMonth('dia', $this->monthSelect)
+            ->whereYear('dia', $this->yearSelect)
+            //       ->where('status_id', 1)
+            ->get();
+
+
+        $dt2 = Carbon::createFromDate($this->yearSelect . "-" . $this->monthSelect . '-01');
+
+
+
+
+        $lastDay = $dt2->LastOfMonth()->format('d');
+
+
+        $diasMes = [];
+
+        for ($i = 0; $i < $lastDay; $i++) {
+
+            $day = Carbon::create($this->yearSelect, $this->monthSelect, 01)->addDays($i);
+
+            if ($day->format('l') == 'Saturday' || $day->format('l') == 'Sunday') {
+            } else {
+
+
+                array_push($diasMes, $day);
+            }
+        }
+
+
+        $this->setNames();
+
+        $monthSelectName = $this->monthSelectName;
+        $yearSelect = $this->yearSelect;
+
+
+
+
+
+        try {
+            if ($this->group->user_id == Auth::user()->id) {
+                if (Auth::user()->pro) {
+                    $pdf = Pdf::loadView('customer.reportes.report-pdf', compact('asistencias', 'estudiantes', 'lastDay', 'diasMes', 'monthSelectName', 'yearSelect'))
+                        ->setWarnings(false)->save('myfile.pdf');
+
+                    Pdf::setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+
+                    $file = "myfile.pdf";
+                    return response()->download($file, "Report " . $this->monthSelectName . " " . $this->yearSelect . " " . $this->group->grado_grupo . " - " . $this->group->escuela . ".pdf");
+                } else {
+                    $this->dispatch('infoPro', message: 'La versión gratuita no cuenta con este servicio, si necesita exportar el reporte en PDF. Adquiera la versión PRO');
+                }
+            } else {
+                abort(403);
+            }
+        } catch (\Throwable $th) {
+            $this->dispatch('error', message: 'Error al exportar- ' . $th->getMessage());
+        }
     }
+
+
+
+    public function exportExcel() {}
 
 
 
